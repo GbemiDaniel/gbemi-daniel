@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/sigil-d-lime.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="./image-slot.js"></script>
+  <style>
+    body{margin:0;background:#120E17;}
+    @media(max-width:699px){body{padding-top:60px;}}
+    @keyframes typeCursor{0%,50%{opacity:1;}51%,100%{opacity:0;}}
+    @keyframes dashDrawUnder{from{stroke-dashoffset:120;}to{stroke-dashoffset:0;}}
+    @keyframes conceptFlicker{0%,100%{opacity:1;filter:none;}20%{opacity:0.7;filter:brightness(1.4) saturate(1.5);}40%{opacity:1;filter:none;}60%{opacity:0.75;filter:brightness(0.75);}80%{opacity:1;filter:none;}}
+    @keyframes floatIn{from{opacity:0;transform:translateY(20px) rotate(var(--rot,0deg));}to{opacity:1;transform:translateY(0) rotate(var(--rot,0deg));}}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1400px 900px at 15% -10%, #1C1522 0%, #120E17 55%);color:#F2EFE9;font-family:'Space Grotesk',sans-serif;display:flex;">
+
+  <dc-import name="Nav" hint-size="140px,100vh"></dc-import>
+
+  <div id="main-content" style="flex:1;min-width:0;">
+
+    <!-- HEADER -->
+    <section style="position:relative;overflow:hidden;max-width:1200px;margin:0 auto;padding:64px 32px 40px;">
+      <a href="Work.dc.html" style="font-size:13px;color:rgba(242,239,233,0.5);text-decoration:none;" style-hover="color:#C9F31D;">← Back to work</a>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin:24px 0 16px;">// <span style="color:#C9F31D;">02</span> — CONCEPTS</div>
+      <h1 style="font-size:clamp(28px,4.2vw,44px);font-weight:700;margin:0 0 16px;line-height:1.15;">What if<span style="display:inline-block;width:2px;height:0.9em;background:#C9F31D;vertical-align:middle;margin:0 2px;animation:typeCursor 0.9s step-end infinite;"></span> — <span style="color:#C9F31D;">no client, no deadline.</span></h1>
+      <p style="font-size:15px;color:rgba(242,239,233,0.55);margin:0;max-width:560px;">Unfinished by design — some of these never needed to ship to prove the point.</p>
+    </section>
+
+    <!-- GRID -->
+    <section style="max-width:1200px;margin:0 auto;padding:8px 32px 96px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:36px;">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="1">
+          <a href="{{ p.href }}" style="--rot:{{ p.rot }};position:relative;text-decoration:none;color:inherit;display:block;border-radius:10px;border:1.5px dashed rgba(201,243,29,0.3);overflow:visible;transform:rotate({{ p.rot }});animation:floatIn 0.6s cubic-bezier(0.16,1,0.3,1) both;transition:border-color 0.3s ease;" style-hover="animation:conceptFlicker 0.5s steps(1,end) 1;border-color:#C9F31D;">
+            <span style="position:absolute;top:-8px;left:24px;width:34px;height:16px;background:rgba(242,239,233,0.15);transform:rotate(-4deg);z-index:2;border-radius:1px;"></span>
+            <div style="position:relative;overflow:hidden;border-radius:9px 9px 0 0;">
+              <image-slot id="{{ p.imgId }}" src="{{ p.imgSrc }}" style="width:100%;height:200px;filter:saturate(0.9);" shape="rect" placeholder="Drop project image"></image-slot>
+              <span style="position:absolute;top:14px;right:14px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;color:rgba(242,239,233,0.6);background:rgba(11,8,16,0.7);border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:4px 10px;transform:rotate(3deg);">PROTOTYPE</span>
+            </div>
+            <div style="padding:20px;background:#0B0810;border-radius:0 0 9px 9px;">
+              <div style="display:flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11px;color:#C9F31D;margin-bottom:8px;">
+                <span>{{ p.category }}</span>
+              </div>
+              <h3 style="font-size:19px;font-weight:600;margin:0 0 8px;">{{ p.title }}</h3>
+              <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0 0 14px;">{{ p.description }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <sc-for list="{{ p.tagList }}" as="tag" hint-placeholder-count="2">
+                  <span style="font-family:'Space Mono',monospace;font-size:10px;color:rgba(242,239,233,0.55);border:1px solid rgba(242,239,233,0.15);border-radius:100px;padding:3px 8px;">{{ tag }}</span>
+                </sc-for>
+                <span style="margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;color:rgba(242,239,233,0.35);align-self:center;">{{ p.year }}</span>
+              </div>
+            </div>
+          </a>
+        </sc-for>
+        <div style="--rot:0.8deg;transform:rotate(0.8deg);border:1.5px dashed rgba(201,243,29,0.2);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:340px;padding:20px;text-align:center;animation:floatIn 0.6s cubic-bezier(0.16,1,0.3,1) 0.15s both;">
+          <span style="font-family:'Space Mono',monospace;font-size:26px;color:rgba(201,243,29,0.6);">?</span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.06em;color:rgba(242,239,233,0.4);">Still sketching<br>the next one</span>
+        </div>
+      </div>
+    </section>
+
+    <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PROJECTS = [
+  { key: 'nightline-c', num: '01', title: 'Nightline — Concept', description: 'An exploration in real-time transit UI, built with no client and no deadline.', category: 'CONCEPT', tagList: ['React', 'Mapbox'], year: '2024', href: 'Work.dc.html', imgId: 'c-1', imgSrc: 'https://picsum.photos/seed/nightline-concept/800/600', rot: '-1.2deg' },
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    return { projects: PROJECTS };
+  }
+}
+
+</script>
+</body>
+</html>

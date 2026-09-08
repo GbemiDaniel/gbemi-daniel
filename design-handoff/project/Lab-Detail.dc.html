@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/sigil-d-lime.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#120E17;}
+    @media(max-width:699px){body{padding-top:60px;}}
+    @keyframes orbitSpinBig{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+    .lab-node-strip::-webkit-scrollbar{height:0;}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1400px 900px at 15% -10%, #1C1522 0%, #120E17 55%);color:#F2EFE9;font-family:'Space Grotesk',sans-serif;display:flex;">
+
+  <dc-import name="Nav" hint-size="140px,100vh"></dc-import>
+
+  <div id="main-content" style="flex:1;min-width:0;">
+
+    <!-- HEADER -->
+    <section style="max-width:1400px;margin:0 auto;padding:32px 24px 24px;">
+      <a href="Lab.dc.html" style="font-size:13px;color:rgba(242,239,233,0.5);text-decoration:none;" style-hover="color:#C9F31D;">← Lab</a>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px;">
+        <h1 style="font-size:clamp(22px,3.6vw,36px);font-weight:700;margin:0;">ORBIT</h1>
+        <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Interaction</span>
+      </div>
+      <p style="font-size:14px;color:rgba(242,239,233,0.55);margin:8px 0 0;max-width:600px;">
+        <sc-if value="{{ descExpanded }}" hint-placeholder-val="{{ false }}">A satellite element that tracks a fixed anchor, built for cursor-follow menus that shouldn't feel laggy — decoupled from scroll, driven entirely by a CSS animation loop instead of a JS tick. <span onClick="{{ toggleDesc }}" style="color:#C9F31D;cursor:pointer;">less</span></sc-if>
+        <sc-if value="{{ descCollapsed }}" hint-placeholder-val="{{ true }}">A satellite element that tracks a fixed anchor, built for cursor-follow menus... <span onClick="{{ toggleDesc }}" style="color:#C9F31D;cursor:pointer;">more</span></sc-if>
+      </p>
+    </section>
+
+    <!-- MOBILE TABS -->
+    <div class="lab-mobile-tabs" style="display:{{ tabsDisplay }};max-width:1400px;margin:0 auto;padding:0 24px 16px;gap:8px;">
+      <span onClick="{{ showProcessTab }}" style="flex:1;text-align:center;padding:9px 0;border-radius:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.05em;cursor:pointer;background:{{ processTabBg }};color:{{ processTabColor }};border:1px solid rgba(201,243,29,0.2);">PROCESS</span>
+      <span onClick="{{ showLiveTab }}" style="flex:1;text-align:center;padding:9px 0;border-radius:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.05em;cursor:pointer;background:{{ liveTabBg }};color:{{ liveTabColor }};border:1px solid rgba(201,243,29,0.2);margin-left:8px;">LIVE</span>
+    </div>
+
+    <!-- WORKSHOP -->
+    <section style="max-width:1400px;margin:0 auto;padding:0 24px 96px;display:flex;gap:20px;flex-wrap:wrap;align-items:stretch;">
+
+      <!-- LEFT: THOUGHT-PROCESS CANVAS -->
+      <div style="display:{{ processDisplay }};flex:1 1 340px;min-width:280px;flex-direction:column;background:#0B0810;border:1px solid rgba(201,243,29,0.12);border-radius:16px;overflow:hidden;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px 4px;">
+          <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;color:rgba(242,239,233,0.3);">PROCESS</span>
+          <div style="display:flex;gap:6px;">
+            <span onClick="{{ setNodeSet3 }}" style="font-family:'Space Mono',monospace;font-size:9px;padding:3px 8px;border-radius:100px;cursor:pointer;border:1px solid {{ ns3Border }};color:{{ ns3Color }};">3 nodes</span>
+            <span onClick="{{ setNodeSet4 }}" style="font-family:'Space Mono',monospace;font-size:9px;padding:3px 8px;border-radius:100px;cursor:pointer;border:1px solid {{ ns4Border }};color:{{ ns4Color }};">4 nodes</span>
+            <span onClick="{{ setNodeSet6 }}" style="font-family:'Space Mono',monospace;font-size:9px;padding:3px 8px;border-radius:100px;cursor:pointer;border:1px solid {{ ns6Border }};color:{{ ns6Color }};">6 nodes</span>
+          </div>
+        </div>
+
+        <div ref="{{ canvasRef }}" class="lab-node-strip" style="position:relative;padding:20px;flex:1;display:flex;flex-direction:{{ nodeFlexDirection }};gap:22px;overflow-x:{{ nodeOverflowX }};">
+          <svg style="position:absolute;top:0;left:0;width:{{ svgW }};height:{{ svgH }};pointer-events:none;" viewBox="0 0 {{ svgW }} {{ svgH }}">
+            <path d="{{ connectorPath }}" stroke="rgba(201,243,29,0.35)" stroke-width="1.2" fill="none"></path>
+            <circle r="3" fill="#C9F31D">
+              <animateMotion dur="4s" repeatCount="indefinite" begin="0s" path="{{ connectorPath }}"></animateMotion>
+            </circle>
+            <circle r="3" fill="#C9F31D">
+              <animateMotion dur="4s" repeatCount="indefinite" begin="1.3s" path="{{ connectorPath }}"></animateMotion>
+            </circle>
+            <circle r="3" fill="#C9F31D">
+              <animateMotion dur="4s" repeatCount="indefinite" begin="2.6s" path="{{ connectorPath }}"></animateMotion>
+            </circle>
+          </svg>
+
+          <sc-for list="{{ nodeList }}" as="node" hint-placeholder-count="4">
+            <div ref="{{ node.setRef }}" style="position:relative;flex-shrink:0;margin-left:{{ node.indent }};width:{{ node.cardWidth }};background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);border:1px solid rgba(201,243,29,0.2);border-radius:10px;padding:14px;">
+              <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#C9F31D;margin-bottom:8px;">{{ node.kind }}</div>
+
+              <sc-if value="{{ node.isText }}" hint-placeholder-val="{{ false }}">
+                <div style="font-family:'Space Mono',monospace;font-size:11px;line-height:1.5;color:rgba(242,239,233,0.7);">{{ node.body }}</div>
+              </sc-if>
+
+              <sc-if value="{{ node.isToggles }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ node.items }}" as="item" hint-placeholder-count="2">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                      <span style="width:20px;height:11px;border-radius:100px;background:{{ item.trackColor }};position:relative;flex-shrink:0;"><span style="position:absolute;top:1.5px;{{ item.dotSide }}:1.5px;width:8px;height:8px;border-radius:50%;background:{{ item.dotColor }};"></span></span>
+                      <span style="font-family:'Space Mono',monospace;font-size:11px;color:{{ item.textColor }};">{{ item.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ node.isTags }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                  <sc-for list="{{ node.items }}" as="tag" hint-placeholder-count="3">
+                    <span style="font-family:'Space Mono',monospace;font-size:10px;color:rgba(242,239,233,0.6);border:1px solid rgba(242,239,233,0.15);border-radius:100px;padding:3px 8px;">{{ tag }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ node.isVersions }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:14px;">
+                  <sc-for list="{{ node.items }}" as="v" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                      <span style="width:14px;height:14px;border-radius:50%;background:{{ v.dotBg }};border:1px solid {{ v.dotBorder }};"></span>
+                      <span style="font-family:'Space Mono',monospace;font-size:9px;color:{{ v.labelColor }};">{{ v.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- RIGHT: LIVE STAGE -->
+      <div style="display:{{ stageDisplay }};flex:1 1 460px;min-width:280px;flex-direction:column;background:#0B0810;border:1px solid rgba(201,243,29,0.12);border-radius:16px;overflow:hidden;">
+        <div style="min-height:280px;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%, rgba(201,243,29,0.05), transparent 65%);padding:32px 0;">
+          <div style="position:absolute;top:16px;left:20px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:13px;font-weight:700;">ORBIT</span>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:2px 8px;">Interaction</span>
+          </div>
+
+          <div style="position:relative;width:{{ stageSize }};height:{{ stageSize }};">
+            <div style="position:absolute;inset:0;animation:orbitSpinBig {{ orbitDuration }} linear infinite;">
+              <span style="position:absolute;top:0;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#C9F31D;box-shadow:0 0 {{ glowSize }} rgba(201,243,29,{{ glowOpacity }});"></span>
+            </div>
+            <span style="position:absolute;top:50%;left:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:rgba(242,239,233,0.5);"></span>
+            <div style="position:absolute;inset:0;border:1px dashed rgba(242,239,233,0.15);border-radius:50%;"></div>
+          </div>
+        </div>
+
+        <!-- CONTROL STRIP -->
+        <div style="border-top:1px solid rgba(201,243,29,0.12);padding:18px 20px;display:flex;flex-wrap:wrap;gap:22px;">
+          <div style="flex:1 1 100%;min-width:140px;">
+            <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;color:rgba(242,239,233,0.45);margin-bottom:8px;">
+              <span>SPEED</span><span>{{ speedLabel }}</span>
+            </div>
+            <input type="range" min="1" max="10" value="{{ speedValue }}" onInput="{{ onSpeedChange }}" style="width:100%;accent-color:#C9F31D;">
+          </div>
+          <div style="flex:1 1 100%;min-width:140px;">
+            <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;color:rgba(242,239,233,0.45);margin-bottom:8px;">RADIUS</div>
+            <div style="display:flex;border:1px solid rgba(201,243,29,0.2);border-radius:100px;overflow:hidden;">
+              <span onClick="{{ setTight }}" style="flex:1;text-align:center;padding:8px 0;cursor:pointer;font-family:'Space Mono',monospace;font-size:10px;background:{{ tightBg }};color:{{ tightColor }};transition:background 0.2s ease,color 0.2s ease;">TIGHT</span>
+              <span onClick="{{ setWide }}" style="flex:1;text-align:center;padding:8px 0;cursor:pointer;font-family:'Space Mono',monospace;font-size:10px;background:{{ wideBg }};color:{{ wideColor }};transition:background 0.2s ease,color 0.2s ease;">WIDE</span>
+            </div>
+          </div>
+          <div style="flex:1 1 100%;min-width:140px;">
+            <div style="display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.06em;color:rgba(242,239,233,0.45);margin-bottom:8px;">
+              <span>GLOW</span><span>{{ glowLabel }}</span>
+            </div>
+            <input type="range" min="0" max="10" value="{{ glowValue }}" onInput="{{ onGlowChange }}" style="width:100%;accent-color:#C9F31D;">
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const NODE_SETS = {
+  3: [
+    { kind: 'CONCEPT', type: 'text', body: "Cursor-follow menus feel laggy when tied to scroll/mousemove. Give the follower its own loop instead." },
+    { kind: 'STACK', type: 'tags', items: ['@keyframes', 'transform: rotate', 'position: absolute'] },
+    { kind: 'DECISIONS', type: 'toggles', items: [{ label: 'Decoupled from scroll', on: true }, { label: 'CSS-only, no JS tick', on: true }] },
+  ],
+  4: [
+    { kind: 'CONCEPT', type: 'text', body: "Cursor-follow menus feel laggy when tied to scroll/mousemove. Give the follower its own loop instead." },
+    { kind: 'DECISIONS', type: 'toggles', items: [{ label: 'Decoupled from scroll', on: true }, { label: 'CSS-only, no JS tick', on: true }, { label: 'Spring physics (skipped)', on: false }] },
+    { kind: 'STACK', type: 'tags', items: ['@keyframes', 'transform: rotate', 'position: absolute'] },
+    { kind: 'ITERATIONS', type: 'versions', items: [{ label: 'v1', final: false }, { label: 'v2', final: false }, { label: 'final', final: true }] },
+  ],
+  6: [
+    { kind: 'CONCEPT', type: 'text', body: "Cursor-follow menus feel laggy when tied to scroll/mousemove. Give the follower its own loop instead." },
+    { kind: 'CONSTRAINTS', type: 'text', body: "Must run on the compositor thread only — no main-thread ticking, no layout thrash." },
+    { kind: 'DECISIONS', type: 'toggles', items: [{ label: 'Decoupled from scroll', on: true }, { label: 'CSS-only, no JS tick', on: true }] },
+    { kind: 'DATA', type: 'tags', items: ['radius: 35px', 'duration: 3.2s', 'easing: linear'] },
+    { kind: 'STACK', type: 'tags', items: ['@keyframes', 'transform: rotate', 'position: absolute'] },
+    { kind: 'ITERATIONS', type: 'versions', items: [{ label: 'v1', final: false }, { label: 'v2', final: false }, { label: 'v3', final: false }, { label: 'final', final: true }] },
+  ],
+};
+
+class Component extends DCLogic {
+  state = { speed: 5, glow: 5, radius: 'wide', nodeSetSize: 4, bp: 'desktop', activeTab: 'process', descExpanded: false, svgW: 400, svgH: 300, connectorPath: '' };
+  nodeEls = [];
+
+  componentDidMount() {
+    this.updateBreakpoint();
+    window.addEventListener('resize', this.onResize);
+    this.measure();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+  onResize = () => {
+    this.updateBreakpoint();
+    this.measure();
+  };
+  updateBreakpoint() {
+    const w = window.innerWidth;
+    const bp = w < 700 ? 'mobile' : w < 1100 ? 'tablet' : 'desktop';
+    if (bp !== this.state.bp) this.setState({ bp });
+  }
+  measure() {
+    requestAnimationFrame(() => {
+      const container = this.canvasEl;
+      if (!container) return;
+      const rect0 = container.getBoundingClientRect();
+      const w = Math.max(1, rect0.width);
+      const h = Math.max(1, container.scrollHeight, rect0.height);
+      const pts = this.nodeEls.filter(Boolean).map((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - rect0.left + container.scrollLeft, y: r.top + r.height / 2 - rect0.top + container.scrollTop };
+      });
+      const horizontal = this.state.bp === 'tablet';
+      let d = '';
+      if (pts.length > 1) {
+        d = `M${pts[0].x},${pts[0].y} `;
+        for (let i = 1; i < pts.length; i++) {
+          const p0 = pts[i - 1], p1 = pts[i];
+          if (horizontal) {
+            d += `C${(p0.x + p1.x) / 2},${p0.y} ${(p0.x + p1.x) / 2},${p1.y} ${p1.x},${p1.y} `;
+          } else {
+            d += `C${p0.x},${(p0.y + p1.y) / 2} ${p1.x},${(p0.y + p1.y) / 2} ${p1.x},${p1.y} `;
+          }
+        }
+      }
+      const totalW = horizontal ? Math.max(w, container.scrollWidth) : w;
+      this.setState({ svgW: totalW, svgH: h, connectorPath: d });
+    });
+  }
+  toggleDesc = () => this.setState({ descExpanded: !this.state.descExpanded });
+
+  renderVals() {
+    const bp = this.state.bp;
+    const speed = this.state.speed;
+    const duration = (2.2 - (speed - 1) * 0.16).toFixed(2) + 's';
+    const glow = this.state.glow;
+    const wide = this.state.radius === 'wide';
+    const isMobile = bp === 'mobile';
+    const isTablet = bp === 'tablet';
+    const showProcess = !isMobile || this.state.activeTab === 'process';
+    const showLive = !isMobile || this.state.activeTab === 'live';
+    const nsSize = this.state.nodeSetSize;
+    const rawNodes = NODE_SETS[nsSize];
+
+    const nodeList = rawNodes.map((n, i) => {
+      const indent = (!isTablet && !isMobile && i % 2 === 1) ? '14%' : '0';
+      const cardWidth = isTablet ? '220px' : (isMobile ? '100%' : '78%');
+      const base = {
+        kind: n.kind,
+        indent,
+        cardWidth,
+        isText: n.type === 'text',
+        isToggles: n.type === 'toggles',
+        isTags: n.type === 'tags',
+        isVersions: n.type === 'versions',
+        body: n.body,
+        setRef: (el) => { this.nodeEls[i] = el; if (el) this.measure(); },
+      };
+      if (n.type === 'toggles') {
+        base.items = n.items.map((it) => ({
+          label: it.label,
+          trackColor: it.on ? '#C9F31D' : 'rgba(242,239,233,0.15)',
+          dotColor: it.on ? '#120E17' : 'rgba(242,239,233,0.5)',
+          dotSide: it.on ? 'right' : 'left',
+          textColor: it.on ? 'rgba(242,239,233,0.7)' : 'rgba(242,239,233,0.4)',
+        }));
+      } else if (n.type === 'tags') {
+        base.items = n.items;
+      } else if (n.type === 'versions') {
+        base.items = n.items.map((v) => ({
+          label: v.label,
+          dotBg: v.final ? '#C9F31D' : 'transparent',
+          dotBorder: v.final ? '#C9F31D' : 'rgba(242,239,233,0.3)',
+          labelColor: v.final ? '#C9F31D' : 'rgba(242,239,233,0.35)',
+        }));
+      }
+      return base;
+    });
+
+    return {
+      descExpanded: this.state.descExpanded,
+      descCollapsed: !this.state.descExpanded,
+      toggleDesc: this.toggleDesc,
+      tabsDisplay: isMobile ? 'flex' : 'none',
+      showProcessTab: () => this.setState({ activeTab: 'process' }, () => this.measure()),
+      showLiveTab: () => this.setState({ activeTab: 'live' }),
+      processTabBg: this.state.activeTab === 'process' ? '#C9F31D' : 'transparent',
+      processTabColor: this.state.activeTab === 'process' ? '#120E17' : 'rgba(242,239,233,0.6)',
+      liveTabBg: this.state.activeTab === 'live' ? '#C9F31D' : 'transparent',
+      liveTabColor: this.state.activeTab === 'live' ? '#120E17' : 'rgba(242,239,233,0.6)',
+      processDisplay: showProcess ? 'flex' : 'none',
+      stageDisplay: showLive ? 'flex' : 'none',
+      nodeFlexDirection: isTablet ? 'row' : 'column',
+      nodeOverflowX: isTablet ? 'auto' : 'visible',
+      canvasRef: (el) => { this.canvasEl = el; if (el) this.measure(); },
+      svgW: this.state.svgW,
+      svgH: this.state.svgH,
+      connectorPath: this.state.connectorPath,
+      nodeList,
+      setNodeSet3: () => this.setState({ nodeSetSize: 3 }, () => this.measure()),
+      setNodeSet4: () => this.setState({ nodeSetSize: 4 }, () => this.measure()),
+      setNodeSet6: () => this.setState({ nodeSetSize: 6 }, () => this.measure()),
+      ns3Border: nsSize === 3 ? '#C9F31D' : 'rgba(242,239,233,0.15)',
+      ns3Color: nsSize === 3 ? '#C9F31D' : 'rgba(242,239,233,0.4)',
+      ns4Border: nsSize === 4 ? '#C9F31D' : 'rgba(242,239,233,0.15)',
+      ns4Color: nsSize === 4 ? '#C9F31D' : 'rgba(242,239,233,0.4)',
+      ns6Border: nsSize === 6 ? '#C9F31D' : 'rgba(242,239,233,0.15)',
+      ns6Color: nsSize === 6 ? '#C9F31D' : 'rgba(242,239,233,0.4)',
+      stageSize: wide ? '160px' : '100px',
+      orbitDuration: duration,
+      speedLabel: speed + '/10',
+      speedValue: speed,
+      onSpeedChange: (e) => this.setState({ speed: Number(e.target.value) }),
+      glowLabel: glow + '/10',
+      glowValue: glow,
+      glowSize: (4 + glow * 1.6).toFixed(0) + 'px',
+      glowOpacity: (0.2 + glow * 0.06).toFixed(2),
+      onGlowChange: (e) => this.setState({ glow: Number(e.target.value) }),
+      setTight: () => this.setState({ radius: 'tight' }),
+      setWide: () => this.setState({ radius: 'wide' }),
+      tightBg: wide ? 'transparent' : '#C9F31D',
+      tightColor: wide ? 'rgba(242,239,233,0.5)' : '#120E17',
+      wideBg: wide ? '#C9F31D' : 'transparent',
+      wideColor: wide ? '#120E17' : 'rgba(242,239,233,0.5)',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #120e17;
+  --color-band: #0b0810;
+  --color-accent: #c9f31d;
+  --color-ink: #f2efe9;
+
+  --font-grotesk: var(--font-space-grotesk), sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
+  --font-script: var(--font-dancing-script), cursive;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+html {
+  height: 100%;
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100%;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-grotesk);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 699px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+@keyframes scrollBob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+}
+
+@keyframes arrowPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(201, 243, 29, 0.6);
+  }
+  40% {
+    transform: scale(1.15) rotate(10deg);
+    box-shadow: 0 0 0 10px rgba(201, 243, 29, 0);
+  }
+  70% {
+    transform: scale(1.05) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(201, 243, 29, 0);
+  }
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

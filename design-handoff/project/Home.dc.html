@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/sigil-d-lime.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="./image-slot.js"></script>
+  <style>
+    body{margin:0;background:#120E17;}
+    @media(max-width:699px){body{padding-top:60px;}}
+    @keyframes glowPulse{0%,100%{opacity:0.5}50%{opacity:1}}
+    @keyframes scrollBob{0%,100%{transform:translateY(0);opacity:0.4;}50%{transform:translateY(4px);opacity:1;}}
+    @keyframes arrowPulse{0%{transform:scale(1) rotate(0deg);box-shadow:0 0 0 0 rgba(201,243,29,0.6);}40%{transform:scale(1.15) rotate(10deg);box-shadow:0 0 0 10px rgba(201,243,29,0);}70%{transform:scale(1.05) rotate(-5deg);}100%{transform:scale(1.1) rotate(0deg);box-shadow:0 0 0 0 rgba(201,243,29,0);}}
+    @keyframes kenburns{0%{transform:scale(1) translate(0,0);}100%{transform:scale(1.12) translate(-1.5%,-1.5%);}}
+    @keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+    .hero-rail{display:flex;}
+    .hero-rail-spacer{display:block;}
+    @media (max-width:1024px){.hero-rail{display:none !important;} .hero-rail-spacer{display:none !important;}}
+    @media (max-width:700px){.work-card-2,.work-card-3{margin-top:0 !important;} .work-teaser{padding:56px 20px !important;}}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1400px 900px at 15% -10%, #1C1522 0%, #120E17 55%);color:#F2EFE9;font-family:'Space Grotesk',sans-serif;display:flex;">
+
+  <dc-import name="Nav" hint-size="140px,100vh"></dc-import>
+
+  <div id="main-content" style="flex:1;min-width:0;">
+
+  <!-- HERO -->
+  <section data-section-index="1" style="position:relative;overflow:hidden;padding:40px 0 96px;">
+    <div style="position:absolute;top:-120px;right:-10%;width:520px;height:520px;background:radial-gradient(circle,rgba(140,210,60,0.16),transparent 70%);filter:blur(50px);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-220px;left:-10%;width:120%;height:340px;background:radial-gradient(ellipse at center,rgba(90,150,45,0.14),transparent 70%);filter:blur(60px);transform:rotate(-4deg);pointer-events:none;"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:0 32px;">
+    <div style="margin-bottom:40px;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;line-height:1.7;color:rgba(242,239,233,0.45);">
+        <div>&gt; frontend engineer</div>
+        <div>+ react / next.js / typescript</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:32px;align-items:stretch;">
+      <div style="flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:40px;align-items:stretch;">
+        <div style="flex:1 1 280px;min-width:260px;display:flex;flex-direction:column;min-height:0;">
+          <div style="display:flex;gap:16px;">
+            <div style="width:1px;background:rgba(255,255,255,0.15);flex-shrink:0;position:relative;">
+              <span style="position:absolute;top:-14px;left:-5px;font-size:12px;color:rgba(242,239,233,0.3);">+</span>
+            </div>
+            <h1 style="font-size:clamp(24px,3.4vw,40px);line-height:1.15;letter-spacing:-0.02em;font-weight:600;margin:0;">Obsessed with building interfaces that are <span style="color:#C9F31D;">engineered</span> as carefully as they're designed.</h1>
+          </div>
+          <p style="font-size:14px;line-height:1.6;color:rgba(242,239,233,0.62);max-width:420px;margin:24px 0 0 17px;">I build fast, accessible interfaces where the code holds up as well as the design — the kind of details a Figma file never shows you.</p>
+          <div style="margin:36px 0 0 17px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.08em;color:rgba(242,239,233,0.3);line-height:1.6;white-space:nowrap;" data-comment-anchor="d87cb555f0-div">BUILDING DIGITAL EXPERIENCES /</div>
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;max-width:420px;margin:auto 0 0 17px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.08);" data-comment-anchor="ddf51505c0-div">
+            <a href="Work.dc.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;" style-hover="opacity:0.8;">
+              <span style="width:40px;height:40px;border-radius:50%;background:#C9F31D;color:#120E17;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s ease,box-shadow 0.3s ease;" style-hover="animation:arrowPulse 0.6s cubic-bezier(0.34,1.56,0.64,1) 1;">→</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#F2EFE9;">VIEW MY WORK</span>
+            </a>
+            <span style="flex:1;min-width:40px;height:1px;background:repeating-linear-gradient(to right,rgba(255,255,255,0.25) 0 4px,transparent 4px 8px);"></span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:rgba(242,239,233,0.4);display:inline-flex;align-items:center;gap:5px;">SCROLL <span style="display:inline-block;animation:scrollBob 1.6s ease-in-out infinite;">↓</span></span>
+          </div>
+        </div>
+        <div style="flex:1 1 280px;min-width:260px;position:relative;">
+          <span style="position:absolute;top:-10px;left:-10px;width:22px;height:22px;border-top:2px solid #C9F31D;border-left:2px solid #C9F31D;"></span>
+          <span style="position:absolute;top:-10px;right:-10px;width:22px;height:22px;border-top:2px solid #C9F31D;border-right:2px solid #C9F31D;"></span>
+          <span style="position:absolute;bottom:-10px;left:-10px;width:22px;height:22px;border-bottom:2px solid #C9F31D;border-left:2px solid #C9F31D;"></span>
+          <span style="position:absolute;bottom:-10px;right:-10px;width:22px;height:22px;border-bottom:2px solid #C9F31D;border-right:2px solid #C9F31D;"></span>
+          <image-slot id="hero-photo" src="https://picsum.photos/seed/daniel-portrait/800/1000" style="width:100%;height:clamp(300px,36vw,440px);" shape="rounded" radius="12" placeholder="Drop Daniel's photo"></image-slot>
+          <div style="position:absolute;top:16px;left:16px;font-family:'Space Mono',monospace;font-size:11px;color:#F2EFE9;background:rgba(11,8,16,0.55);backdrop-filter:blur(4px);padding:5px 9px;border-radius:4px;line-height:1.5;">DEE.JPG<br><span style="color:rgba(242,239,233,0.55);font-size:10px;">2026-08-24 17:42</span></div>
+          <div style="position:absolute;top:16px;right:16px;font-family:'Space Mono',monospace;font-size:11px;color:rgba(242,239,233,0.7);background:rgba(11,8,16,0.55);backdrop-filter:blur(4px);padding:5px 9px;border-radius:4px;">VIEW_001</div>
+          <div style="position:absolute;bottom:16px;left:16px;font-family:'Space Mono',monospace;font-size:11px;color:rgba(242,239,233,0.7);background:rgba(11,8,16,0.55);backdrop-filter:blur(4px);padding:5px 9px;border-radius:4px;">LAGOS, NG</div>
+          <div style="position:absolute;bottom:16px;right:16px;font-family:'Space Mono',monospace;font-size:11px;color:rgba(242,239,233,0.7);background:rgba(11,8,16,0.55);backdrop-filter:blur(4px);padding:5px 9px;border-radius:4px;">3024×4032</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- WORK TEASER -->
+  <section data-section-index="2" class="work-teaser" style="max-width:1200px;margin:0 auto;padding:80px 32px;border-top:1px solid rgba(201,243,29,0.12);">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px;margin-bottom:48px;">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin-bottom:16px;"><span style="color:#C9F31D;">01</span> — WORK</div>
+        <h2 style="font-size:clamp(26px,3.6vw,38px);font-weight:700;line-height:1.15;margin:0 0 16px;max-width:520px;">THINGS I'VE BUILT &amp; BROKEN &amp; <span style="color:#C9F31D;">REBUILT.</span></h2>
+        <a href="Work.dc.html" style="font-size:13px;color:rgba(242,239,233,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:8px;" style-hover="color:#C9F31D;">→ VIEW ALL PROJECTS</a>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;">
+      <a href="Case-Study.dc.html" style="flex:1 1 280px;min-width:0;text-decoration:none;color:inherit;display:block;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="transform:translateY(-4px);">
+        <div style="position:relative;border-radius:12px 12px 0 0;border:1px solid rgba(201,243,29,0.15);border-bottom:none;background:#0B0810;padding:10px 14px;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="position:absolute;top:-10px;left:14px;background:#C9F31D;color:#120E17;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:0.05em;padding:3px 8px;border-radius:4px;">FEATURED</span>
+        </div>
+        <image-slot id="work-1-home" src="https://picsum.photos/seed/fintech-dashboard/800/600" style="width:100%;height:200px;border-left:1px solid rgba(201,243,29,0.15);border-right:1px solid rgba(201,243,29,0.15);" shape="rect" placeholder="Drop project image"></image-slot>
+        <div style="border:1px solid rgba(201,243,29,0.15);border-top:none;border-radius:0 0 12px 12px;padding:18px;">
+          <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Fintech Dashboard</h3>
+          <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0 0 14px;">A cleaner data-dense interface for tracking spend across teams.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:11px;color:rgba(201,243,29,0.7);gap:12px;">
+            <span>React / Supabase / Tailwind</span>
+            <span style="color:rgba(242,239,233,0.4);white-space:nowrap;">2026</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="Work.dc.html" class="work-card-2" style="flex:1 1 280px;min-width:0;text-decoration:none;color:inherit;display:block;margin-top:28px;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="transform:translateY(-4px);">
+        <div style="border-radius:12px 12px 0 0;border:1px solid rgba(201,243,29,0.15);border-bottom:none;background:#0B0810;padding:10px 14px;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+        </div>
+        <image-slot id="work-2-home" src="https://picsum.photos/seed/aurora-brand/800/600" style="width:100%;height:200px;border-left:1px solid rgba(201,243,29,0.15);border-right:1px solid rgba(201,243,29,0.15);" shape="rect" placeholder="Drop project image"></image-slot>
+        <div style="border:1px solid rgba(201,243,29,0.15);border-top:none;border-radius:0 0 12px 12px;padding:18px;">
+          <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Aurora Brand Identity</h3>
+          <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0 0 14px;">Full identity system for a solar-tech startup, from mark to motion.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:11px;color:rgba(201,243,29,0.7);gap:12px;">
+            <span>Next.js / Framer Motion</span>
+            <span style="color:rgba(242,239,233,0.4);white-space:nowrap;">2025</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="Work.dc.html" class="work-card-3" style="flex:1 1 280px;min-width:0;text-decoration:none;color:inherit;display:block;margin-top:56px;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="transform:translateY(-4px);">
+        <div style="border-radius:12px 12px 0 0;border:1px solid rgba(201,243,29,0.15);border-bottom:none;background:#0B0810;padding:10px 14px;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+        </div>
+        <image-slot id="work-3-home" src="https://picsum.photos/seed/studio-nine/800/600" style="width:100%;height:200px;border-left:1px solid rgba(201,243,29,0.15);border-right:1px solid rgba(201,243,29,0.15);" shape="rect" placeholder="Drop project image"></image-slot>
+        <div style="border:1px solid rgba(201,243,29,0.15);border-top:none;border-radius:0 0 12px 12px;padding:18px;">
+          <h3 style="font-size:17px;font-weight:600;margin:0 0 8px;">Studio Nine Website</h3>
+          <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0 0 14px;">Marketing site and CMS for a photography collective.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-family:'Space Mono',monospace;font-size:11px;color:rgba(201,243,29,0.7);gap:12px;">
+            <span>React / PostgreSQL</span>
+            <span style="color:rgba(242,239,233,0.4);white-space:nowrap;">2025</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section data-section-index="3" style="max-width:1200px;margin:0 auto;padding:72px 32px;border-top:1px solid rgba(201,243,29,0.12);">
+    <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin-bottom:16px;"><span style="color:#C9F31D;">02</span> — WHAT CLIENTS SAY</div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px;">
+      <div style="flex:1 1 320px;padding:32px;border-radius:16px;border:1px solid rgba(201,243,29,0.15);">
+        <div style="font-size:40px;color:#C9F31D;line-height:1;margin-bottom:16px;font-family:'Space Grotesk',sans-serif;">"</div>
+        <p style="font-size:16px;line-height:1.6;color:rgba(242,239,233,0.8);margin:0 0 20px;">Daniel didn't just make it look better — he rebuilt how the whole team thinks about spend data.</p>
+        <div style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(242,239,233,0.45);padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">Product Lead, Fintech Dashboard</div>
+      </div>
+      <div style="flex:1 1 320px;padding:32px;border-radius:16px;border:1px solid rgba(201,243,29,0.15);">
+        <div style="font-size:40px;color:#C9F31D;line-height:1;margin-bottom:16px;font-family:'Space Grotesk',sans-serif;">"</div>
+        <p style="font-size:16px;line-height:1.6;color:rgba(242,239,233,0.8);margin:0 0 20px;">We handed him a brand with no visual language and got back one that felt inevitable.</p>
+        <div style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(242,239,233,0.45);padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">Founder, Aurora</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section data-section-index="4" style="padding:72px 0 80px;overflow:hidden;background:#0B0810;">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px;margin-bottom:40px;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin-bottom:16px;"><span style="color:#C9F31D;">03</span> — STACK</div>
+      <h2 style="font-size:clamp(26px,3.6vw,38px);font-weight:700;line-height:1.15;margin:0 0 16px;max-width:560px;">What I bring to <span style="color:#C9F31D;">the build.</span></h2>
+      <span style="font-size:13px;color:rgba(242,239,233,0.6);display:inline-flex;align-items:center;gap:8px;">A few of the tools behind the work.</span>
+    </div>
+
+    <div onMouseEnter="{{ pauseMarquee }}" onMouseLeave="{{ resumeMarquee }}" style="position:relative;padding:26px 0;overflow:hidden;-webkit-mask-image:linear-gradient(to right, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);mask-image:linear-gradient(to right, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);">
+      <div style="display:flex;width:max-content;animation:marqueeScroll 26s linear infinite;animation-play-state:{{ marqueeState }};">
+        <div style="display:flex;align-items:center;gap:28px;padding-right:28px;flex-shrink:0;">
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">React &amp; Next.js</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">Web Architecture</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">Brand Design</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">Design Systems</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:28px;padding-right:28px;flex-shrink:0;">
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">React &amp; Next.js</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">Web Architecture</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">Brand Design</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:rgba(242,239,233,0.85);white-space:nowrap;">Design Systems</span>
+          <span style="font-size:clamp(26px,4.4vw,44px);font-weight:700;color:#C9F31D;">/</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:28px auto 0;padding:0 32px;display:flex;gap:12px;flex-wrap:wrap;">
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.05em;border:1px solid rgba(201,243,29,0.2);border-radius:100px;padding:8px 16px;color:rgba(242,239,233,0.6);transition:background 0.25s cubic-bezier(0.16,1,0.3,1),color 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="background:#C9F31D;color:#120E17;border-color:#C9F31D;">01 · React &amp; Next.js</span>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.05em;border:1px solid rgba(201,243,29,0.2);border-radius:100px;padding:8px 16px;color:rgba(242,239,233,0.6);transition:background 0.25s cubic-bezier(0.16,1,0.3,1),color 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="background:#C9F31D;color:#120E17;border-color:#C9F31D;">02 · Web Architecture</span>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.05em;border:1px solid rgba(201,243,29,0.2);border-radius:100px;padding:8px 16px;color:rgba(242,239,233,0.6);transition:background 0.25s cubic-bezier(0.16,1,0.3,1),color 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="background:#C9F31D;color:#120E17;border-color:#C9F31D;">03 · Brand Design</span>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.05em;border:1px solid rgba(201,243,29,0.2);border-radius:100px;padding:8px 16px;color:rgba(242,239,233,0.6);transition:background 0.25s cubic-bezier(0.16,1,0.3,1),color 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="background:#C9F31D;color:#120E17;border-color:#C9F31D;">04 · Design Systems</span>
+    </div>
+  </section>
+
+  <!-- ABOUT TEASER -->
+  <section data-section-index="5" style="max-width:1200px;margin:0 auto;padding:72px 32px 64px;">
+    <div style="margin-bottom:32px;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin-bottom:16px;"><span style="color:#C9F31D;">04</span> — ABOUT</div>
+      <h2 style="font-size:clamp(26px,3.6vw,38px);font-weight:700;line-height:1.15;margin:0 0 16px;max-width:640px;">THERE'S A PERSON BEHIND THE PIXELS — <span style="color:#C9F31D;">AND A FEW OPINIONS.</span></h2>
+      <a href="About.dc.html" style="font-size:13px;color:rgba(242,239,233,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:8px;" style-hover="color:#C9F31D;">→ GET TO KNOW ME</a>
+    </div>
+    <a href="About.dc.html" style="display:block;text-decoration:none;color:inherit;border-radius:12px;border:1px solid rgba(201,243,29,0.15);overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="border-color:rgba(201,243,29,0.4);transform:translateY(-4px);">
+      <div style="display:flex;flex-wrap:wrap;">
+        <div style="flex:0 0 260px;width:260px;">
+          <div style="border-bottom:1px solid rgba(201,243,29,0.15);background:#0B0810;padding:10px 14px;display:flex;align-items:center;gap:6px;">
+            <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+            <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+            <span style="width:7px;height:7px;border-radius:50%;background:rgba(242,239,233,0.2);"></span>
+          </div>
+          <image-slot id="about-teaser-photo" src="https://picsum.photos/seed/daniel-about/800/900" style="width:100%;height:200px;" shape="rect" placeholder="Drop Daniel's photo"></image-slot>
+        </div>
+        <div style="flex:1;min-width:280px;padding:32px 36px;border-left:1px solid rgba(201,243,29,0.15);display:flex;align-items:center;">
+          <p style="font-size:15px;line-height:1.6;color:rgba(242,239,233,0.6);margin:0;max-width:480px;">The stack, the process, and how a designer ended up living in a code editor — the full story is on the About page.</p>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section data-section-index="6" style="position:relative;max-width:1200px;margin:0 auto;padding:80px 32px 96px;overflow:hidden;">
+    <div style="position:absolute;top:-100px;left:-10%;width:480px;height:480px;background:radial-gradient(circle,rgba(140,210,60,0.14),transparent 70%);filter:blur(50px);pointer-events:none;"></div>
+    <div style="position:relative;margin-bottom:40px;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin-bottom:16px;"><span style="color:#C9F31D;">05</span> — CONTACT</div>
+      <h2 style="font-size:clamp(26px,3.6vw,38px);font-weight:700;line-height:1.15;margin:0 0 16px;max-width:560px;">Got an idea worth <span style="color:#C9F31D;">building?</span></h2>
+      <a href="mailto:hello@danieldesigns.com" style="font-size:13px;color:rgba(242,239,233,0.6);text-decoration:none;display:inline-flex;align-items:center;gap:8px;" style-hover="color:#C9F31D;">→ hello@danieldesigns.com</a>
+    </div>
+    <div style="border:1px solid rgba(201,243,29,0.15);border-radius:20px;overflow:hidden;display:flex;flex-wrap:wrap;">
+      <div style="flex:1;min-width:280px;padding:48px;display:flex;align-items:center;">
+        <a href="Contact.dc.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;" style-hover="opacity:0.8;">
+          <span style="width:52px;height:52px;border-radius:50%;background:#C9F31D;color:#120E17;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:transform 0.3s ease,box-shadow 0.3s ease;" style-hover="animation:arrowPulse 0.6s cubic-bezier(0.34,1.56,0.64,1) 1;">→</span>
+          <span style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:0.08em;color:#F2EFE9;">START A CONVERSATION</span>
+        </a>
+      </div>
+      <div style="flex:0 0 150px;display:flex;flex-direction:column;border-left:1px solid rgba(201,243,29,0.15);">
+        <a href="https://github.com/" style="position:relative;flex:1;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.15);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.5);text-decoration:none;overflow:hidden;transition:color 0.25s cubic-bezier(0.16,1,0.3,1),background 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="color:#C9F31D;background:rgba(201,243,29,0.05);">
+          GITHUB
+          <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#120E17;opacity:0;transform:scale(0.6);transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="opacity:1;transform:scale(1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="#C9F31D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </span>
+        </a>
+        <a href="https://x.com/" style="position:relative;flex:1;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.15);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.5);text-decoration:none;overflow:hidden;transition:color 0.25s cubic-bezier(0.16,1,0.3,1),background 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="color:#C9F31D;background:rgba(201,243,29,0.05);">
+          X
+          <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#120E17;opacity:0;transform:scale(0.6);transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="opacity:1;transform:scale(1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#C9F31D"></path></svg>
+          </span>
+        </a>
+        <a href="https://linkedin.com/" style="position:relative;flex:1;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.5);text-decoration:none;overflow:hidden;transition:color 0.25s cubic-bezier(0.16,1,0.3,1),background 0.25s cubic-bezier(0.16,1,0.3,1);" style-hover="color:#C9F31D;background:rgba(201,243,29,0.05);">
+          LINKEDIN
+          <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#120E17;opacity:0;transform:scale(0.6);transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);" style-hover="opacity:1;transform:scale(1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="9" width="4" height="12" fill="#C9F31D"></rect><circle cx="4" cy="4" r="2" fill="#C9F31D"></circle><path d="M10 9h4v2.1c.9-1.4 2.4-2.4 4.3-2.4 3.7 0 4.7 2.4 4.7 5.6V21h-4v-6c0-1.4 0-3.2-2-3.2s-2.3 1.6-2.3 3.1V21h-4V9z" fill="#C9F31D"></path></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+  </div>
+  <div class="hero-rail-spacer" style="flex-shrink:0;width:72px;"></div>
+</div>
+
+<div class="hero-rail" style="position:fixed;top:50%;right:28px;transform:translateY(-50%);flex-direction:column;align-items:flex-end;z-index:50;" data-comment-anchor="cc5d380a39-div">
+  <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:rgba(242,239,233,0.5);text-align:right;line-height:1.7;">{{ activeSectionLabel }}<br>/<br>{{ totalSectionsLabel }}</div>
+  <div style="width:1px;height:110px;background:rgba(255,255,255,0.15);margin:14px 3px;"></div>
+  <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;text-align:right;line-height:1.7;color:rgba(242,239,233,0.35);white-space:nowrap;">CREATIVE<br><span style="color:#F2EFE9;font-weight:700;">DEVELOPER</span><br>/<br>FRONTEND<br>ENGINEER</div>
+  <span style="width:4px;height:4px;border-radius:50%;background:#C9F31D;margin:16px 3px;"></span>
+  <div style="writing-mode:vertical-rl;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.15em;color:rgba(242,239,233,0.35);white-space:nowrap;">SCROLL TO EXPLORE</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { activeSection: 1, marqueeHover: false };
+  componentDidMount() {
+    this.sections = Array.from(document.querySelectorAll('[data-section-index]'));
+    this.onScroll = () => {
+      if (this.ticking) return;
+      this.ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY + window.innerHeight * 0.3;
+        let active = 1;
+        for (const el of this.sections) {
+          if (el.offsetTop <= y) active = Number(el.getAttribute('data-section-index'));
+        }
+        this.setState({ activeSection: active });
+        this.ticking = false;
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+  }
+  renderVals() {
+    return {
+      activeSectionLabel: '0' + this.state.activeSection,
+      totalSectionsLabel: '0' + (this.sections ? this.sections.length : 4),
+      marqueeState: this.state.marqueeHover ? 'paused' : 'running',
+      pauseMarquee: () => this.setState({ marqueeHover: true }),
+      resumeMarquee: () => this.setState({ marqueeHover: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

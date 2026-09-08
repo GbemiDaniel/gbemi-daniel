@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/sigil-d-lime.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <script src="./image-slot.js"></script>
+  <style>
+    body{margin:0;background:#120E17;}
+    @media(max-width:699px){body{padding-top:60px;}}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1400px 900px at 15% -10%, #1C1522 0%, #120E17 55%);color:#F2EFE9;font-family:'Space Grotesk',sans-serif;display:flex;">
+
+  <dc-import name="Nav" hint-size="140px,100vh"></dc-import>
+
+  <div id="main-content" style="flex:1;min-width:0;">
+
+  <!-- MASTHEAD -->
+  <section style="max-width:1200px;margin:0 auto;padding:64px 32px 8px;">
+    <div style="font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,239,233,0.5);margin-bottom:16px;">Writing</div>
+    <h1 style="font-size:clamp(30px,4.5vw,46px);line-height:1.15;font-weight:600;margin:0 0 24px;max-width:760px;">Posts, threads and notes from <span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:#C9F31D;">wherever I published them.</span></h1>
+    <div style="display:flex;align-items:center;gap:12px;padding-bottom:32px;border-bottom:1px solid rgba(201,243,29,0.12);">
+      <image-slot id="writer-avatar" src="https://picsum.photos/seed/daniel-avatar/80/80" style="width:36px;height:36px;" shape="circle" placeholder="Photo"></image-slot>
+      <span style="font-size:13px;color:rgba(242,239,233,0.55);">Collected from X, Dev.to, Medium and LinkedIn — previewed here, read in full where it lives.</span>
+    </div>
+  </section>
+
+  <!-- FEATURED PIECE -->
+  <section style="max-width:1200px;margin:0 auto;padding:48px 32px;">
+    <a href="{{ featured.href }}" onMouseEnter="{{ onFeatEnter }}" onMouseLeave="{{ onFeatLeave }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:40px;align-items:center;text-decoration:none;color:inherit;opacity:{{ featOpacity }};transition:opacity 0.35s ease;">
+      <image-slot id="featured-post" src="{{ featured.coverSrc }}" style="width:100%;height:340px;" shape="rounded" radius="16" placeholder="Drop cover image"></image-slot>
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:12px;color:#C9F31D;margin-bottom:16px;flex-wrap:wrap;">
+          <span style="border:1px solid rgba(201,243,29,0.35);border-radius:100px;padding:4px 10px;">{{ featured.tag }}</span>
+          <span style="display:flex;align-items:center;gap:5px;color:rgba(242,239,233,0.5);">
+            <sc-if value="{{ featured.isX }}" hint-placeholder-val="{{ false }}">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"></path></svg>
+            </sc-if>
+            <sc-if value="{{ featured.isDevto }}" hint-placeholder-val="{{ false }}">
+              <span style="font-weight:700;">dev</span>
+            </sc-if>
+            <sc-if value="{{ featured.isMedium }}" hint-placeholder-val="{{ false }}">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"></circle></svg>
+            </sc-if>
+            {{ featured.platform }}
+          </span>
+          <span style="color:rgba(242,239,233,0.4);">{{ featured.date }} · {{ featured.readTime }}</span>
+        </div>
+        <h2 style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:32px;line-height:1.2;margin:0 0 14px;">{{ featured.title }}</h2>
+        <p style="font-size:15px;line-height:1.7;color:rgba(242,239,233,0.6);margin:0 0 18px;max-width:460px;">{{ featured.excerpt }}</p>
+        <span style="font-size:13px;color:#C9F31D;border-bottom:1px solid #C9F31D;padding-bottom:2px;">Preview the piece →</span>
+      </div>
+    </a>
+    <div style="display:flex;gap:6px;margin-top:24px;padding-left:2px;">
+      <sc-for list="{{ dots }}" as="dot" hint-placeholder-count="3">
+        <span onClick="{{ dot.onClick }}" style="height:6px;width:{{ dot.width }};border-radius:100px;background:{{ dot.color }};cursor:pointer;transition:width 0.3s ease,background 0.3s ease;"></span>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- MORE WRITING -->
+  <section style="max-width:1200px;margin:0 auto;padding:24px 32px 80px;">
+    <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,239,233,0.4);margin-bottom:8px;">More writing</div>
+
+    <sc-for list="{{ posts }}" as="post" hint-placeholder-count="2">
+      <a href="{{ post.href }}" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:28px 0;border-top:1px solid rgba(201,243,29,0.12);flex-wrap:wrap;" style-hover="color:#C9F31D;">
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:600px;">
+          <div style="display:flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:11px;color:rgba(201,243,29,0.7);flex-wrap:wrap;">
+            <span style="border:1px solid rgba(201,243,29,0.25);border-radius:100px;padding:3px 9px;">{{ post.tag }}</span>
+            <span style="display:flex;align-items:center;gap:5px;color:rgba(242,239,233,0.45);">
+              <sc-if value="{{ post.isX }}" hint-placeholder-val="{{ false }}">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"></path></svg>
+              </sc-if>
+              <sc-if value="{{ post.isDevto }}" hint-placeholder-val="{{ false }}">
+                <span style="font-weight:700;letter-spacing:0.02em;">dev</span>
+              </sc-if>
+              <sc-if value="{{ post.isMedium }}" hint-placeholder-val="{{ false }}">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"></circle></svg>
+              </sc-if>
+              <sc-if value="{{ post.isLinkedin }}" hint-placeholder-val="{{ false }}">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="2" y="9" width="4" height="12" fill="currentColor"></rect><circle cx="4" cy="4" r="2" fill="currentColor"></circle><path d="M10 9h4v2.1c.9-1.4 2.4-2.4 4.3-2.4 3.7 0 4.7 2.4 4.7 5.6V21h-4v-6c0-1.4 0-3.2-2-3.2s-2.3 1.6-2.3 3.1V21h-4V9z" fill="currentColor"></path></svg>
+              </sc-if>
+              {{ post.platform }}
+            </span>
+          </div>
+          <h3 style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:22px;margin:0;color:inherit;">{{ post.title }}</h3>
+          <p style="font-size:14px;color:rgba(242,239,233,0.55);margin:0;">{{ post.excerpt }}</p>
+        </div>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;color:rgba(242,239,233,0.4);white-space:nowrap;">{{ post.date }} · {{ post.readTime }}</span>
+      </a>
+    </sc-for>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const POSTS = [
+  { href: 'Article.dc.html?post=prototypes', tag: 'Process', platform: 'Dev.to', isDevto: true, title: 'Why I still hand-code prototypes', excerpt: "Static comps lie about motion and real content. Code doesn't let you get away with it.", date: 'Aug 2026', readTime: '4 min' },
+  { href: 'Article.dc.html?post=shipping-fast', tag: 'Shipping', platform: 'X', isX: true, title: 'Notes on shipping fast', excerpt: 'A real product in front of real people beats another week of polish in Figma.', date: 'Jul 2026', readTime: '5 min' },
+];
+
+const FEATURED = [
+  { href: 'Article.dc.html?post=constraints', tag: 'Craft', platform: 'Medium', isMedium: true, title: 'Designing with constraints', excerpt: 'Why the best interfaces usually come from the projects with the least room to move.', date: 'Sep 2026', readTime: '6 min read', coverSrc: 'https://picsum.photos/seed/writing-desk/900/700' },
+  { href: 'Article.dc.html?post=prototypes', tag: 'Process', platform: 'Dev.to', isDevto: true, title: 'Why I still hand-code prototypes', excerpt: "Static comps lie about motion and real content. Code doesn't let you get away with it.", date: 'Aug 2026', readTime: '4 min read', coverSrc: 'https://picsum.photos/seed/code-prototype/900/700' },
+  { href: 'Article.dc.html?post=shipping-fast', tag: 'Shipping', platform: 'X', isX: true, title: 'Notes on shipping fast', excerpt: 'A real product in front of real people beats another week of polish in Figma.', date: 'Jul 2026', readTime: '5 min read', coverSrc: 'https://picsum.photos/seed/shipping-fast/900/700' },
+];
+
+class Component extends DCLogic {
+  state = { featIndex: 0, fading: false, paused: false };
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      if (this.state.paused) return;
+      this.setState({ fading: true });
+      setTimeout(() => {
+        this.setState((s) => ({ featIndex: (s.featIndex + 1) % FEATURED.length, fading: false }));
+      }, 350);
+    }, 5000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+  jumpTo(i) {
+    this.setState({ fading: true });
+    setTimeout(() => this.setState({ featIndex: i, fading: false }), 350);
+  }
+  renderVals() {
+    const featured = FEATURED[this.state.featIndex];
+    const dots = FEATURED.map((f, i) => ({
+      active: i === this.state.featIndex,
+      color: i === this.state.featIndex ? '#C9F31D' : 'rgba(242,239,233,0.25)',
+      width: i === this.state.featIndex ? '20px' : '6px',
+      onClick: () => this.jumpTo(i),
+    }));
+    return {
+      posts: POSTS,
+      featured,
+      featOpacity: this.state.fading ? 0 : 1,
+      dots,
+      onFeatEnter: () => this.setState({ paused: true }),
+      onFeatLeave: () => this.setState({ paused: false }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

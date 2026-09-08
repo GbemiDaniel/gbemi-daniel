@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/sigil-d-lime.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>body{margin:0;background:#120E17;}
+    @media(max-width:699px){body{padding-top:60px;}}</style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1400px 900px at 15% -10%, #1C1522 0%, #120E17 55%);color:#F2EFE9;font-family:'Space Grotesk',sans-serif;display:flex;">
+
+  <dc-import name="Nav" hint-size="140px,100vh"></dc-import>
+
+  <div id="main-content" style="flex:1;min-width:0;">
+
+  <section style="max-width:900px;margin:0 auto;padding:80px 32px;">
+    <div style="font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(242,239,233,0.5);margin-bottom:20px;">Contact</div>
+    <h1 style="font-size:clamp(32px,5vw,50px);font-weight:600;margin:0 0 40px;line-height:1.12;">Let's build something <span style="color:#C9F31D;text-shadow:0 0 18px rgba(201,243,29,0.5);">timeless</span>.</h1>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:56px;">
+      <form style="display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:rgba(242,239,233,0.5);">Name</label>
+          <input type="text" placeholder="Your name" style="background:rgba(255,255,255,0.03);border:1px solid rgba(201,243,29,0.15);border-radius:10px;padding:14px 16px;color:#F2EFE9;font-family:'Space Grotesk',sans-serif;font-size:15px;outline:none;" style-focus="border-color:#C9F31D;box-shadow:0 0 0 3px rgba(201,243,29,0.15);">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:rgba(242,239,233,0.5);">Email</label>
+          <input type="email" placeholder="you@company.com" style="background:rgba(255,255,255,0.03);border:1px solid rgba(201,243,29,0.15);border-radius:10px;padding:14px 16px;color:#F2EFE9;font-family:'Space Grotesk',sans-serif;font-size:15px;outline:none;" style-focus="border-color:#C9F31D;box-shadow:0 0 0 3px rgba(201,243,29,0.15);">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:rgba(242,239,233,0.5);">Message</label>
+          <textarea placeholder="Tell me about your project" rows="5" style="background:rgba(255,255,255,0.03);border:1px solid rgba(201,243,29,0.15);border-radius:10px;padding:14px 16px;color:#F2EFE9;font-family:'Space Grotesk',sans-serif;font-size:15px;outline:none;resize:vertical;" style-focus="border-color:#C9F31D;box-shadow:0 0 0 3px rgba(201,243,29,0.15);"></textarea>
+        </div>
+        <button type="button" style="align-self:flex-start;background:#C9F31D;color:#120E17;border:none;font-weight:700;font-size:14px;padding:14px 28px;border-radius:100px;cursor:pointer;box-shadow:0 0 24px rgba(201,243,29,0.35);" style-hover="background:#F2EFE9;">Send Message</button>
+      </form>
+
+      <div style="display:flex;flex-direction:column;gap:24px;">
+        <div>
+          <div style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:rgba(242,239,233,0.5);margin-bottom:10px;">Email</div>
+          <a href="mailto:gbemidaniel01@gmail.com" style="font-size:18px;color:#C9F31D;text-decoration:underline;text-underline-offset:4px;">gbemidaniel01@gmail.com</a>
+        </div>
+        <div>
+          <div style="font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:rgba(242,239,233,0.5);margin-bottom:10px;">Elsewhere</div>
+          <div style="display:flex;gap:12px;">
+            <dc-import name="SocialIcon" network="github" size="36" hint-size="36px,36px"></dc-import>
+            <dc-import name="SocialIcon" network="x" size="36" hint-size="36px,36px"></dc-import>
+            <dc-import name="SocialIcon" network="linkedin" size="36" hint-size="36px,36px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>

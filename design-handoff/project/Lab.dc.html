@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/sigil-d-lime.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;background:#120E17;}
+    @media(max-width:699px){body{padding-top:60px;}}
+    @keyframes orbitSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+    @keyframes pingRing{0%{transform:scale(0.3);opacity:0.7;}100%{transform:scale(1.9);opacity:0;}}
+    @keyframes waveDot{0%,100%{opacity:0.15;transform:scale(0.6);}50%{opacity:1;transform:scale(1);}}
+    @keyframes dashDraw{0%{stroke-dashoffset:240;}100%{stroke-dashoffset:0;}}
+    @keyframes noiseShift{0%{background-position:0 0;}100%{background-position:140px 70px;}}
+    @keyframes magnetBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+    @keyframes modalIn{from{opacity:0;transform:scale(0.96);}to{opacity:1;transform:scale(1);}}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(1400px 900px at 15% -10%, #1C1522 0%, #120E17 55%);color:#F2EFE9;font-family:'Space Grotesk',sans-serif;display:flex;">
+
+  <dc-import name="Nav" hint-size="140px,100vh"></dc-import>
+
+  <div id="main-content" style="flex:1;min-width:0;">
+
+    <!-- HEADER -->
+    <section style="max-width:1200px;margin:0 auto;padding:64px 32px 48px;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.1em;color:rgba(242,239,233,0.4);margin-bottom:16px;"><span style="color:#C9F31D;">05</span> — LAB</div>
+      <h1 style="font-size:clamp(28px,4.2vw,44px);font-weight:700;line-height:1.15;margin:0 0 16px;max-width:640px;">A notebook of interfaces, <span style="color:#C9F31D;">mid-thought.</span></h1>
+      <p style="font-size:15px;line-height:1.6;color:rgba(242,239,233,0.6);margin:0;max-width:560px;">Small components, interaction studies, and design-system experiments — some finished, some just proof a hunch works. Click any card to open it up.</p>
+    </section>
+
+    <!-- GRID -->
+    <section style="max-width:1200px;margin:0 auto;padding:0 32px 96px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:24px;">
+
+        <!-- CARD 1: ORBIT -->
+        <div onClick="{{ openCard0 }}" onKeyDown="{{ keyDown0 }}" tabIndex="0" role="button" aria-label="Open ORBIT lab file" style="cursor:pointer;border-radius:14px;border:1px solid {{ ring0 }};background:#0B0810;overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:{{ shadow0 }};outline:none;" onMouseEnter="{{ hoverIn0 }}" onMouseLeave="{{ hoverOut }}" style-hover="transform:translateY(-3px);" style-focus="border-color:#C9F31D;">
+          <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.1);">
+            <div style="position:relative;width:70px;height:70px;">
+              <div style="position:absolute;inset:0;animation:orbitSpin 3.2s linear infinite;">
+                <span style="position:absolute;top:0;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#C9F31D;box-shadow:0 0 10px 2px rgba(201,243,29,0.5);"></span>
+              </div>
+              <span style="position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:rgba(242,239,233,0.5);"></span>
+              <div style="position:absolute;inset:0;border:1px dashed rgba(242,239,233,0.12);border-radius:50%;"></div>
+            </div>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">ORBIT</span>
+              <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Interaction</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0;">A satellite element that tracks a fixed anchor, built for cursor-follow menus.</p>
+          </div>
+        </div>
+
+        <!-- CARD 2: RIPPLE -->
+        <div onClick="{{ openCard1 }}" onKeyDown="{{ keyDown1 }}" tabIndex="0" role="button" aria-label="Open RIPPLE lab file" style="cursor:pointer;border-radius:14px;border:1px solid {{ ring1 }};background:#0B0810;overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:{{ shadow1 }};outline:none;" onMouseEnter="{{ hoverIn1 }}" onMouseLeave="{{ hoverOut }}" style-hover="transform:translateY(-3px);" style-focus="border-color:#C9F31D;">
+          <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.1);overflow:hidden;">
+            <span style="position:absolute;width:60px;height:60px;border-radius:50%;border:1px solid #C9F31D;animation:pingRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite;"></span>
+            <span style="position:absolute;width:60px;height:60px;border-radius:50%;border:1px solid #C9F31D;animation:pingRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite 0.8s;"></span>
+            <span style="position:absolute;width:60px;height:60px;border-radius:50%;border:1px solid #C9F31D;animation:pingRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite 1.6s;"></span>
+            <span style="position:relative;width:10px;height:10px;border-radius:50%;background:#C9F31D;"></span>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">RIPPLE</span>
+              <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Motion</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0;">A click-feedback ping for buttons that don't want a full ripple fill.</p>
+          </div>
+        </div>
+
+        <!-- CARD 3: FIELD -->
+        <div onClick="{{ openCard2 }}" onKeyDown="{{ keyDown2 }}" tabIndex="0" role="button" aria-label="Open FIELD lab file" style="cursor:pointer;border-radius:14px;border:1px solid {{ ring2 }};background:#0B0810;overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:{{ shadow2 }};outline:none;" onMouseEnter="{{ hoverIn2 }}" onMouseLeave="{{ hoverOut }}" style-hover="transform:translateY(-3px);" style-focus="border-color:#C9F31D;">
+          <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.1);">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.1s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.2s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.3s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.4s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.1s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.2s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.3s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.4s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.5s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.2s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.3s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.4s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.5s;"></span>
+              <span style="width:6px;height:6px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.6s;"></span>
+            </div>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">FIELD</span>
+              <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Generative</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0;">A grid of points breathing in a diagonal wave — loading state, reimagined.</p>
+          </div>
+        </div>
+
+        <!-- CARD 4: SPARKLINE -->
+        <div onClick="{{ openCard3 }}" onKeyDown="{{ keyDown3 }}" tabIndex="0" role="button" aria-label="Open SPARKLINE lab file" style="cursor:pointer;border-radius:14px;border:1px solid {{ ring3 }};background:#0B0810;overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:{{ shadow3 }};outline:none;" onMouseEnter="{{ hoverIn3 }}" onMouseLeave="{{ hoverOut }}" style-hover="transform:translateY(-3px);" style-focus="border-color:#C9F31D;">
+          <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.1);">
+            <svg width="140" height="70" viewBox="0 0 140 70" fill="none">
+              <path d="M4 50 L24 30 L44 42 L64 14 L84 34 L104 20 L136 44" stroke="#C9F31D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="240" style="animation:dashDraw 3.5s linear infinite;"></path>
+              <circle cx="136" cy="44" r="3" fill="#C9F31D"></circle>
+            </svg>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">SPARKLINE</span>
+              <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Data Viz</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0;">A self-drawing trend line for dashboards that shouldn't feel static.</p>
+          </div>
+        </div>
+
+        <!-- CARD 5: MAGNET -->
+        <div onClick="{{ openCard4 }}" onKeyDown="{{ keyDown4 }}" tabIndex="0" role="button" aria-label="Open MAGNET lab file" style="cursor:pointer;border-radius:14px;border:1px solid {{ ring4 }};background:#0B0810;overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:{{ shadow4 }};outline:none;" onMouseEnter="{{ hoverIn4 }}" onMouseLeave="{{ hoverOut }}" style-hover="transform:translateY(-3px);" style-focus="border-color:#C9F31D;">
+          <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;gap:14px;border-bottom:1px solid rgba(201,243,29,0.1);">
+            <span style="width:14px;height:14px;border-radius:4px;background:rgba(242,239,233,0.5);animation:magnetBob 1.8s ease-in-out infinite 0s;"></span>
+            <span style="width:20px;height:20px;border-radius:6px;background:#C9F31D;animation:magnetBob 1.8s ease-in-out infinite 0.2s;"></span>
+            <span style="width:14px;height:14px;border-radius:4px;background:rgba(242,239,233,0.5);animation:magnetBob 1.8s ease-in-out infinite 0.4s;"></span>
+          </div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">MAGNET</span>
+              <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Interaction</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0;">Elements that lift toward the cursor before you actually click them.</p>
+          </div>
+        </div>
+
+        <!-- CARD 6: NOISE -->
+        <div onClick="{{ openCard5 }}" onKeyDown="{{ keyDown5 }}" tabIndex="0" role="button" aria-label="Open NOISE lab file" style="cursor:pointer;border-radius:14px;border:1px solid {{ ring5 }};background:#0B0810;overflow:hidden;transition:border-color 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:{{ shadow5 }};outline:none;" onMouseEnter="{{ hoverIn5 }}" onMouseLeave="{{ hoverOut }}" style-hover="transform:translateY(-3px);" style-focus="border-color:#C9F31D;">
+          <div style="position:relative;height:170px;border-bottom:1px solid rgba(201,243,29,0.1);background-image:radial-gradient(rgba(201,243,29,0.35) 1px, transparent 1.5px);background-size:14px 14px;animation:noiseShift 6s linear infinite;"></div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">NOISE</span>
+              <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;">Generative</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:rgba(242,239,233,0.55);margin:0;">A drifting dot field for empty states — texture instead of silence.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <dc-import name="Footer" hint-size="100%,240px"></dc-import>
+  </div>
+</div>
+
+<!-- PLAYGROUND MODAL -->
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeModal }}" style="position:fixed;inset:0;background:rgba(11,8,16,0.82);backdrop-filter:blur(6px);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;">
+    <div onClick="{{ stopProp }}" style="width:min(680px,100%);background:#120E17;border:1px solid rgba(201,243,29,0.25);border-radius:18px;overflow:hidden;animation:modalIn 0.25s cubic-bezier(0.16,1,0.3,1);">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(201,243,29,0.12);background:#0B0810;">
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.08em;color:rgba(242,239,233,0.4);">LAB_FILE — {{ modalCodename }}</span>
+        <span onClick="{{ closeModal }}" onKeyDown="{{ closeModalKeyDown }}" tabIndex="0" role="button" aria-label="Close" style="cursor:pointer;font-size:16px;color:rgba(242,239,233,0.5);line-height:1;outline:none;" style-hover="color:#C9F31D;" style-focus="color:#C9F31D;">×</span>
+      </div>
+      <div style="height:280px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(201,243,29,0.1);position:relative;overflow:hidden;">
+
+        <sc-if value="{{ isModal0 }}" hint-placeholder-val="{{ false }}">
+          <div style="position:relative;width:130px;height:130px;">
+            <div style="position:absolute;inset:0;animation:orbitSpin 3.2s linear infinite;">
+              <span style="position:absolute;top:0;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#C9F31D;box-shadow:0 0 18px 4px rgba(201,243,29,0.5);"></span>
+            </div>
+            <span style="position:absolute;top:50%;left:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:rgba(242,239,233,0.5);"></span>
+            <div style="position:absolute;inset:0;border:1px dashed rgba(242,239,233,0.15);border-radius:50%;"></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isModal1 }}" hint-placeholder-val="{{ false }}">
+          <span style="position:absolute;width:110px;height:110px;border-radius:50%;border:1px solid #C9F31D;animation:pingRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite;"></span>
+          <span style="position:absolute;width:110px;height:110px;border-radius:50%;border:1px solid #C9F31D;animation:pingRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite 0.8s;"></span>
+          <span style="position:absolute;width:110px;height:110px;border-radius:50%;border:1px solid #C9F31D;animation:pingRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite 1.6s;"></span>
+          <span style="position:relative;width:16px;height:16px;border-radius:50%;background:#C9F31D;"></span>
+        </sc-if>
+        <sc-if value="{{ isModal2 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:16px;">
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.1s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.2s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.3s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.4s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.5s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.6s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.1s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.2s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.3s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.4s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.5s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.6s;"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:#C9F31D;animation:waveDot 2s ease-in-out infinite 0.7s;"></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isModal3 }}" hint-placeholder-val="{{ false }}">
+          <svg width="320" height="160" viewBox="0 0 140 70" fill="none">
+            <path d="M4 50 L24 30 L44 42 L64 14 L84 34 L104 20 L136 44" stroke="#C9F31D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="240" style="animation:dashDraw 3.5s linear infinite;"></path>
+            <circle cx="136" cy="44" r="3" fill="#C9F31D"></circle>
+          </svg>
+        </sc-if>
+        <sc-if value="{{ isModal4 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:24px;">
+            <span style="width:22px;height:22px;border-radius:6px;background:rgba(242,239,233,0.5);animation:magnetBob 1.8s ease-in-out infinite 0s;"></span>
+            <span style="width:32px;height:32px;border-radius:8px;background:#C9F31D;animation:magnetBob 1.8s ease-in-out infinite 0.2s;"></span>
+            <span style="width:22px;height:22px;border-radius:6px;background:rgba(242,239,233,0.5);animation:magnetBob 1.8s ease-in-out infinite 0.4s;"></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isModal5 }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(201,243,29,0.35) 1.5px, transparent 2px);background-size:20px 20px;animation:noiseShift 6s linear infinite;"></div>
+        </sc-if>
+
+      </div>
+      <div style="padding:24px 28px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:10px;">
+          <h3 style="font-size:22px;font-weight:700;margin:0;">{{ modalCodename }}</h3>
+          <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.05em;color:#C9F31D;border:1px solid rgba(201,243,29,0.3);border-radius:100px;padding:3px 9px;flex-shrink:0;">{{ modalTag }}</span>
+        </div>
+        <p style="font-size:14px;line-height:1.6;color:rgba(242,239,233,0.6);margin:0;">{{ modalDesc }}</p>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);font-family:'Space Mono',monospace;font-size:11px;color:rgba(242,239,233,0.35);">status: experimental — not yet shipped</div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+function keyActivate(fn) {
+  return (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } };
+}
+
+class Component extends DCLogic {
+  state = { hovered: null, modalOpen: false, selected: null };
+  componentDidMount() {
+    this.onKey = (e) => { if (e.key === 'Escape') this.setState({ modalOpen: false }); };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+  }
+  cardMeta(i) {
+    const data = [
+      ['ORBIT', 'Interaction', "A satellite element that tracks a fixed anchor, built for cursor-follow menus."],
+      ['RIPPLE', 'Motion', "A click-feedback ping for buttons that don't want a full ripple fill."],
+      ['FIELD', 'Generative', "A grid of points breathing in a diagonal wave — loading state, reimagined."],
+      ['SPARKLINE', 'Data Viz', "A self-drawing trend line for dashboards that shouldn't feel static."],
+      ['MAGNET', 'Interaction', "Elements that lift toward the cursor before you actually click them."],
+      ['NOISE', 'Generative', "A drifting dot field for empty states — texture instead of silence."],
+    ];
+    return data[i];
+  }
+  cardVals(i) {
+    const on = this.state.hovered === i;
+    return {
+      ring: on ? 'rgba(201,243,29,0.5)' : 'rgba(201,243,29,0.12)',
+      shadow: on ? '0 16px 36px -12px rgba(201,243,29,0.18)' : '0 0 0 rgba(0,0,0,0)',
+    };
+  }
+  renderVals() {
+    const c = [0,1,2,3,4,5].map((i) => this.cardVals(i));
+    const sel = this.state.selected;
+    const meta = sel !== null ? this.cardMeta(sel) : ['', '', ''];
+    const vals = {
+      modalOpen: this.state.modalOpen,
+      modalCodename: meta[0],
+      modalTag: meta[1],
+      modalDesc: meta[2],
+      closeModal: () => this.setState({ modalOpen: false }),
+      closeModalKeyDown: keyActivate(() => this.setState({ modalOpen: false })),
+      stopProp: (e) => e.stopPropagation(),
+      hoverOut: () => this.setState({ hovered: null }),
+    };
+    for (let i = 0; i < 6; i++) {
+      vals['ring' + i] = c[i].ring;
+      vals['shadow' + i] = c[i].shadow;
+      vals['hoverIn' + i] = () => this.setState({ hovered: i });
+      const openFn = () => this.setState({ modalOpen: true, selected: i });
+      vals['openCard' + i] = openFn;
+      vals['keyDown' + i] = keyActivate(openFn);
+      vals['isModal' + i] = sel === i;
+    }
+    return vals;
+  }
+}
+
+</script>
+</body>
+</html>

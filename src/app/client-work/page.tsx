@@ -7,45 +7,48 @@ import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import styles from "./client-work.module.css";
 
+// Handshakers joins this grid once details are ready — the layout already
+// wraps via `auto-fit`, so a 4th entry drops in as a 4-up grid with no
+// structural change needed.
 const PROJECTS = [
   {
-    key: "fintech-cw",
+    key: "security-engineer-portfolio-cw",
     num: "01",
-    title: "Fintech Dashboard Redesign",
-    description: "A cleaner data-dense interface for tracking spend across teams.",
-    category: "CLIENT WORK",
-    tagList: ["React", "Supabase"],
+    title: "Security Engineer Portfolio",
+    description: "Built a personal website for a security engineer — designed to feel serious, sharp, and trustworthy, the way his work is.",
+    category: "COLLAB",
+    tagList: ["React", "Tailwind"],
     year: "2026",
-    href: "/case-study",
+    href: "/case-study/security-engineer-portfolio",
+    imgSrc: "/images/projects/security-engineer-portfolio/desktop.png",
     featured: true,
     delay: "0.24s",
-    external: false,
   },
   {
-    key: "palli-cw",
+    key: "dice-portfolio-cw",
     num: "02",
-    title: "Palli's Portfolio",
-    description: "A terminal-styled identity platform for a security engineer, built around layered glow and immersive UI.",
+    title: "Dice Portfolio",
+    description: "Worked with a brand and product designer to turn his design into a real, working website — then added extra touches beyond what was originally asked for.",
     category: "COLLAB",
-    tagList: ["Next.js", "Tailwind"],
+    tagList: ["React", "Tailwind"],
     year: "2026",
-    href: "https://okoh-bernard-portfolio.vercel.app/",
+    href: "/case-study/dice-portfolio",
+    imgSrc: "/images/projects/dice-portfolio/desktop.png",
     featured: false,
     delay: "0.32s",
-    external: true,
   },
   {
-    key: "handshakers-cw",
+    key: "skillzbloom-cw",
     num: "03",
-    title: "Handshakers",
-    description: "Details coming soon — my newest build.",
-    category: "CLIENT WORK",
-    tagList: [],
-    year: "—",
-    href: "/work",
+    title: "SkillzBloom",
+    description: "Helped build a platform that helps students track their learning. I built the entire Skills section plus a reusable design system used across the app.",
+    category: "TEAM PROJECT",
+    tagList: ["TypeScript", "Tailwind"],
+    year: "2025",
+    href: "/case-study/skillzbloom",
+    imgSrc: "/images/projects/skillzbloom/desktop.png",
     featured: false,
     delay: "0.4s",
-    external: false,
   },
 ];
 
@@ -101,7 +104,6 @@ export default function ClientWork() {
                 <Link
                   key={p.key}
                   href={p.href}
-                  {...(p.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   onMouseEnter={() => setHovered(p.key)}
                   onMouseLeave={() => setHovered(null)}
                   className={`${styles.curtainRise} relative block overflow-hidden rounded-xl text-inherit no-underline transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[7px]`}
@@ -128,6 +130,7 @@ export default function ClientWork() {
                     <ImageSlot
                       alt={p.title}
                       placeholder="Drop project image"
+                      src={p.imgSrc}
                       shape="rect"
                       className="h-[200px] w-full max-[700px]:h-[150px]"
                     />

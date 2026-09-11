@@ -7,32 +7,44 @@ import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import styles from "./about.module.css";
 
+const INTRO_LEAD =
+  "I'm a frontend engineer with a Computer Science background. I turn ideas, brands, and designs into real, working websites — not just something that looks good in a mockup, but something built to hold up underneath, too.";
+
+const JOURNEY_LOG = [
+  { tag: "first", text: "started with a Computer Science degree" },
+  { tag: "then", text: "joined a team — internship, real code reviews, real constraints" },
+  { tag: "then", text: "shipped work for actual working professionals" },
+  { tag: "now", text: "building solo, start to finish — same goal every time" },
+];
+
+const chromeDot = "h-[7px] w-[7px] rounded-full bg-ink/20";
+
 const SKILLS = [
   {
     num: "01",
     title: "React & Next.js",
-    desc: "Building fast, accessible front ends that hold up in production, not just Figma.",
+    desc: "The tools I use to build fast, modern websites that can grow without falling apart.",
     big: true,
     delay: "0s",
   },
   {
     num: "02",
-    title: "Web Architecture",
-    desc: "Structuring pages and component systems so they're easy to extend later.",
+    title: "Interfaces that move",
+    desc: "Tailwind CSS and Framer Motion — for animation with a purpose, not just movement for the sake of it.",
     big: false,
     delay: "0.08s",
   },
   {
     num: "03",
-    title: "Brand Design",
-    desc: "Marks, type systems, and color palettes that hold together across every touchpoint.",
+    title: "From design to real site",
+    desc: "Turning designs and brand ideas into real, working websites — not just something that looks good in Figma.",
     big: false,
     delay: "0.16s",
   },
   {
     num: "04",
-    title: "Design Systems",
-    desc: "Reusable components and tokens so teams stop rebuilding the same button.",
+    title: "Built to last",
+    desc: "Reusable building blocks so a site's easy to update later, working well with teams on GitHub, and getting things live through Vercel.",
     big: true,
     delay: "0.24s",
   },
@@ -43,23 +55,23 @@ const INTERESTS = ["Street photography", "Pickup basketball", "Vinyl records", "
 const PRINCIPLES = [
   {
     num: "01",
-    title: "Start with constraints",
-    desc: "The best ideas usually show up after the boring limits are on the table.",
+    title: "It starts with who it's for",
+    desc: "Before I open any design tool, I think about who the site is actually for. A security expert's site shouldn't look like a clothing brand's — that shapes everything from there.",
   },
   {
     num: "02",
-    title: "Design in the browser",
-    desc: "Static comps lie about motion, type rendering, and real content. Code doesn't.",
+    title: "I build in the browser, early",
+    desc: "Mockups can hide how things actually move, load, and feel. Building in real code, early, means no surprises later.",
   },
   {
     num: "03",
-    title: "Sweat the transitions",
-    desc: "The gap between states is where most products feel cheap or feel premium.",
+    title: "It has to work for both sides",
+    desc: "A good site makes the business look right and makes visitors' lives easier — at the same time. Neither one should lose.",
   },
   {
     num: "04",
-    title: "Ship, then refine",
-    desc: "A real product in front of real people beats another week of polish in Figma.",
+    title: "Every choice has a reason",
+    desc: "Layout, color, motion — nothing goes on a site just because it's easy or trendy. If I can't explain why it's there, it doesn't belong.",
   },
 ];
 
@@ -103,12 +115,7 @@ export default function About() {
                   clear, fast, and a little bit fun.
                 </span>
               </h1>
-              <p className="m-0 max-w-[520px] text-base leading-[1.7] text-ink/62">
-                I&apos;m a web &amp; brand designer who ended up writing a lot of code, mostly
-                because I got tired of handing off files and hoping they&apos;d survive contact
-                with a browser. These days I do both — design systems in Figma, then the real
-                thing in React.
-              </p>
+              <p className="m-0 max-w-[480px] text-base leading-[1.7] text-ink/62">{INTRO_LEAD}</p>
             </div>
             <div
               className={`relative aspect-[4/5] min-[700px]:aspect-auto min-[700px]:min-h-[420px] ${styles.reveal}`}
@@ -121,12 +128,64 @@ export default function About() {
               <ImageSlot
                 alt="Daniel"
                 placeholder="Drop Daniel's photo"
+                src="/images/portrait-about.jpg"
+                objectPosition="center 20%"
                 shape="rounded"
                 radius={24}
                 className="absolute inset-0 h-full w-full"
               />
               <div className="absolute top-3 left-3 z-[2] rounded bg-[rgba(11,8,16,0.55)] px-2 py-1 font-mono text-[10px] text-ink backdrop-blur-sm">
                 ABOUT.JPG
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PHILOSOPHY + JOURNEY — one clear stance, stated once, paired with
+            a terminal-styled log card that reuses the same chrome-dot bar
+            as the project cards elsewhere on the site (Home, Work) instead
+            of inventing a new component. Desktop runs it as a two-column
+            split (statement left, log right) — the same shape as the Home
+            hero. Mobile stacks it — genuinely different composition, not
+            just smaller type on the same grid. */}
+        <section className="mx-auto max-w-[1200px] border-t border-accent/12 px-8 py-16 max-[700px]:px-5 max-[700px]:py-10">
+          <div
+            className="grid gap-10 min-[700px]:grid-cols-[minmax(0,340px)_1fr] min-[700px]:items-center max-[700px]:gap-6"
+          >
+            <div className={styles.reveal}>
+              <div className="mb-3 text-[13px] tracking-[0.1em] text-ink/50 uppercase">
+                Philosophy
+              </div>
+              <h2 className="m-0 mb-4 text-[clamp(22px,2.6vw,30px)] leading-[1.25] font-semibold">
+                If it could belong to anyone,{" "}
+                <span className="text-accent [text-shadow:0_0_18px_rgba(201,243,29,0.5)]">
+                  it&apos;s not finished.
+                </span>
+              </h2>
+              <p className="m-0 max-w-[360px] text-sm leading-relaxed text-ink/55">
+                A security expert&apos;s site shouldn&apos;t look like a clothing brand&apos;s.
+                Every build starts with who it&apos;s actually for — not a template, not a
+                shortcut.
+              </p>
+            </div>
+
+            <div className={styles.reveal} style={{ animationDelay: "0.12s" }}>
+              <div className="relative flex items-center gap-1.5 rounded-t-xl border border-b-0 border-accent/15 bg-band px-3.5 py-2.5">
+                <span className={chromeDot} />
+                <span className={chromeDot} />
+                <span className={chromeDot} />
+              </div>
+              <div className="rounded-b-xl border border-t-0 border-accent/15 bg-[rgba(0,0,0,0.15)] p-6 font-mono text-[13px] leading-[2] max-[700px]:p-4 max-[700px]:text-[12px] max-[700px]:leading-[1.9]">
+                <div className="mb-2 text-ink/35">
+                  a few milestones along the way
+                  <span className="[animation:blink_1s_step-end_infinite]">_</span>
+                </div>
+                {JOURNEY_LOG.map((entry) => (
+                  <div key={entry.text} className="flex gap-3">
+                    <span className="w-11 shrink-0 text-accent/70">{entry.tag}</span>
+                    <span className="text-ink/65">{entry.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

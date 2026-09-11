@@ -1,7 +1,0 @@
-.noScrollbar {
-  scrollbar-width: none;
-}
-
-.noScrollbar::-webkit-scrollbar {
-  display: none;
-}

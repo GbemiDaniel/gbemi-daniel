@@ -11,47 +11,46 @@ import styles from "./home.module.css";
 
 const WORK_ITEMS = [
   {
-    href: "/case-study",
-    external: false,
+    href: "/case-study/security-engineer-portfolio",
     featured: true,
     stagger: "",
     placeholder: "Drop project image",
-    title: "Fintech Dashboard",
-    desc: "A cleaner data-dense interface for tracking spend across teams.",
-    stack: "React / Supabase / Tailwind",
+    imgSrc: "/images/projects/security-engineer-portfolio/desktop.png",
+    title: "Security Engineer Portfolio",
+    desc: "Built a personal website for a security engineer — designed to feel serious, sharp, and trustworthy, the way his work is.",
+    stack: "React / Tailwind / Framer Motion",
     year: "2026",
   },
   {
-    href: "https://okoh-bernard-portfolio.vercel.app/",
-    external: true,
+    href: "/case-study/chronovault",
     featured: false,
     stagger: "mt-3.5 max-[700px]:mt-0",
     placeholder: "Drop project image",
-    title: "Palli's Portfolio",
-    desc: "A terminal-styled identity platform for a security engineer, built around layered glow and immersive UI.",
-    stack: "Next.js / Tailwind",
+    title: "ChronoVault",
+    desc: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
+    stack: "React / Tailwind / Framer Motion",
     year: "2026",
   },
   {
-    href: "https://chronovault-mvp.vercel.app",
-    external: true,
+    href: "/case-study/skillzbloom",
     featured: false,
     stagger: "mt-7 max-[700px]:mt-0",
     placeholder: "Drop project image",
-    title: "ChronoVault",
-    desc: "A Web3 time capsule for sealing assets and memories until a future date unlocks them.",
-    stack: "Next.js / Framer Motion",
-    year: "2026",
+    imgSrc: "/images/projects/skillzbloom/desktop.png",
+    title: "SkillzBloom",
+    desc: "Helped build a platform that helps students track their learning. I built the entire Skills section — where users see what they've learned, what they're working on, and their progress — plus a reusable design system used across the app.",
+    stack: "TypeScript / Tailwind / Clerk Auth",
+    year: "2025",
   },
 ];
 
-const STACK_WORDS = ["React & Next.js", "Web Architecture", "Brand Design", "Design Systems"];
+const STACK_WORDS = ["React & Next.js", "Tailwind & Framer Motion", "TypeScript", "Git & Vercel"];
 
 const STACK_PILLS = [
   "01 · React & Next.js",
-  "02 · Web Architecture",
-  "03 · Brand Design",
-  "04 · Design Systems",
+  "02 · Tailwind & Framer Motion",
+  "03 · TypeScript & REST APIs",
+  "04 · Git, GitHub & Vercel",
 ];
 
 const CONTACT_SOCIALS = [
@@ -183,8 +182,8 @@ export default function Home() {
                   </div>
                   <Reveal y={16} delay={0.15}>
                     <p className="mt-6 ml-[17px] max-w-[420px] text-sm leading-relaxed text-ink/62">
-                      I build fast, accessible products where the code holds up as well as the
-                      pixels — the part a Figma file never shows you.
+                      I build websites that actually fit the people and businesses they&apos;re
+                      made for — not a template with the colors swapped.
                     </p>
                   </Reveal>
                   <div className="mt-9 ml-[17px] font-mono text-[10px] leading-relaxed tracking-[0.08em] whitespace-nowrap text-ink/30">
@@ -212,6 +211,8 @@ export default function Home() {
                     <ImageSlot
                       alt="Portrait of Daniel"
                       placeholder="Drop Daniel's photo"
+                      src="/images/portrait-hero.jpg"
+                      objectPosition="center 20%"
                       shape="rounded"
                       radius={12}
                       className="h-full w-full"
@@ -279,7 +280,6 @@ export default function Home() {
               <Link
                 key={item.title}
                 href={item.href}
-                {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={`block min-w-0 flex-1 basis-[280px] text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${item.stagger}`}
               >
                 <div className={chromeBar}>
@@ -295,6 +295,7 @@ export default function Home() {
                 <ImageSlot
                   alt={item.title}
                   placeholder={item.placeholder}
+                  src={item.imgSrc}
                   shape="rect"
                   className="h-[200px] w-full border-x border-accent/15 max-[700px]:h-[130px]"
                 />
@@ -375,7 +376,7 @@ export default function Home() {
             className="block overflow-hidden rounded-xl border border-accent/15 text-inherit no-underline transition-[border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-accent/40"
           >
             <div className="flex flex-wrap">
-              <div className="w-[260px] flex-[0_0_260px]">
+              <div className="w-[260px] flex-[0_0_260px] max-[700px]:w-full max-[700px]:flex-[1_1_100%]">
                 <div className="flex items-center gap-1.5 border-b border-accent/15 bg-band px-3.5 py-2.5">
                   <span className={chromeDot} />
                   <span className={chromeDot} />
@@ -384,6 +385,8 @@ export default function Home() {
                 <ImageSlot
                   alt="Daniel"
                   placeholder="Drop Daniel's photo"
+                  src="/images/portrait-about.jpg"
+                  objectPosition="center 20%"
                   shape="rect"
                   className="h-[200px] w-full"
                 />

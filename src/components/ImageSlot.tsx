@@ -26,6 +26,7 @@ export default function ImageSlot({
   className,
   sizes = "100vw",
   priority,
+  objectPosition = "center",
 }: {
   src?: string;
   alt: string;
@@ -36,6 +37,10 @@ export default function ImageSlot({
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Where to anchor the crop when the image's aspect ratio doesn't match
+   * its container (e.g. a tall portrait inside a wide frame). Defaults to
+   * centered, matching the previous hardcoded behavior. */
+  objectPosition?: string;
 }) {
   return (
     <div
@@ -54,7 +59,7 @@ export default function ImageSlot({
           fill
           sizes={sizes}
           priority={priority}
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", objectPosition }}
         />
       ) : (
         <div className={styles.placeholder}>

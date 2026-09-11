@@ -31,7 +31,6 @@ type CombinedItem = {
   href: string;
   imgSrc?: string;
   isLab?: boolean;
-  external?: boolean;
 };
 
 type RawProject = {
@@ -46,39 +45,54 @@ type RawProject = {
   imgSrc: string;
   featured: boolean;
   group: "main" | "concept";
-  external?: boolean;
 };
 
 const COMBINED: CombinedItem[] = [
   {
-    key: "fintech",
-    title: "Fintech Dashboard Redesign",
-    category: "Client Work",
-    year: "2026",
-    href: "/case-study",
-  },
-  {
-    key: "palli",
-    title: "Palli's Portfolio",
+    key: "security-engineer-portfolio",
+    title: "Security Engineer Portfolio",
     category: "Collab",
     year: "2026",
-    href: "https://okoh-bernard-portfolio.vercel.app/",
-    external: true,
+    href: "/case-study/security-engineer-portfolio",
+    imgSrc: "/images/projects/security-engineer-portfolio/desktop.png",
+  },
+  {
+    key: "dice-portfolio",
+    title: "Dice Portfolio",
+    category: "Collab",
+    year: "2026",
+    href: "/case-study/dice-portfolio",
+    imgSrc: "/images/projects/dice-portfolio/desktop.png",
+  },
+  {
+    key: "skillzbloom",
+    title: "SkillzBloom",
+    category: "Team Project",
+    year: "2025",
+    href: "/case-study/skillzbloom",
+    imgSrc: "/images/projects/skillzbloom/desktop.png",
   },
   {
     key: "handshakers",
     title: "Handshakers",
-    category: "Client Work",
+    category: "Independent",
     year: "—",
     href: "/work",
   },
   {
     key: "chronovault",
-    title: "ChronoVault — Concept",
-    category: "Concept",
+    title: "ChronoVault",
+    category: "Collab",
     year: "2026",
-    href: "https://chronovault-mvp.vercel.app",
-    external: true,
+    href: "/case-study/chronovault",
+  },
+  {
+    key: "thrifty",
+    title: "Thrifty",
+    category: "Collab",
+    year: "2026",
+    href: "/case-study/thrifty",
+    imgSrc: "/images/projects/thrifty/desktop.png",
   },
   {
     key: "lab",
@@ -92,38 +106,50 @@ const COMBINED: CombinedItem[] = [
 
 const RAW_PROJECTS: RawProject[] = [
   {
-    key: "fintech-g",
+    key: "security-engineer-portfolio-g",
     num: "01",
-    title: "Fintech Dashboard Redesign",
-    description: "A cleaner data-dense interface for tracking spend across teams.",
-    category: "CLIENT WORK",
-    tagList: ["React", "Supabase"],
+    title: "Security Engineer Portfolio",
+    description: "Built a personal website for a security engineer — designed to feel serious, sharp, and trustworthy, the way his work is.",
+    category: "COLLAB",
+    tagList: ["React", "Tailwind"],
     year: "2026",
-    href: "/case-study",
-    imgSrc: "",
+    href: "/case-study/security-engineer-portfolio",
+    imgSrc: "/images/projects/security-engineer-portfolio/desktop.png",
     featured: true,
     group: "main",
   },
   {
-    key: "palli-g",
+    key: "dice-portfolio-g",
     num: "02",
-    title: "Palli's Portfolio",
-    description: "A terminal-styled identity platform for a security engineer, built around layered glow and immersive UI.",
+    title: "Dice Portfolio",
+    description: "Worked with a brand and product designer to turn his design into a real, working website — then added extra touches beyond what was originally asked for.",
     category: "COLLAB",
-    tagList: ["Next.js", "Tailwind"],
+    tagList: ["React", "Tailwind"],
     year: "2026",
-    href: "https://okoh-bernard-portfolio.vercel.app/",
-    imgSrc: "",
+    href: "/case-study/dice-portfolio",
+    imgSrc: "/images/projects/dice-portfolio/desktop.png",
     featured: false,
     group: "main",
-    external: true,
+  },
+  {
+    key: "skillzbloom-g",
+    num: "03",
+    title: "SkillzBloom",
+    description: "Helped build a platform that helps students track their learning. I built the entire Skills section plus a reusable design system used across the app.",
+    category: "TEAM PROJECT",
+    tagList: ["TypeScript", "Tailwind"],
+    year: "2025",
+    href: "/case-study/skillzbloom",
+    imgSrc: "/images/projects/skillzbloom/desktop.png",
+    featured: false,
+    group: "main",
   },
   {
     key: "handshakers-g",
-    num: "03",
+    num: "04",
     title: "Handshakers",
     description: "Details coming soon — my newest build.",
-    category: "CLIENT WORK",
+    category: "INDEPENDENT",
     tagList: [],
     year: "—",
     href: "/work",
@@ -134,16 +160,28 @@ const RAW_PROJECTS: RawProject[] = [
   {
     key: "chronovault-g",
     num: "01",
-    title: "ChronoVault — Concept",
-    description: "A Web3 time capsule for sealing assets and memories until a future date unlocks them.",
-    category: "CONCEPT",
-    tagList: ["Next.js", "Framer Motion"],
+    title: "ChronoVault",
+    description: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
+    category: "COLLAB",
+    tagList: ["React", "Framer Motion"],
     year: "2026",
-    href: "https://chronovault-mvp.vercel.app",
+    href: "/case-study/chronovault",
     imgSrc: "",
     featured: false,
     group: "concept",
-    external: true,
+  },
+  {
+    key: "thrifty-g",
+    num: "02",
+    title: "Thrifty",
+    description: "An online clothing store frontend — I built out a collaborator's design into a real, working shopping experience.",
+    category: "COLLAB",
+    tagList: ["React", "Next.js"],
+    year: "2026",
+    href: "/case-study/thrifty",
+    imgSrc: "/images/projects/thrifty/desktop.png",
+    featured: false,
+    group: "concept",
   },
 ];
 
@@ -344,7 +382,7 @@ export default function Work() {
   const featuredRowRef = useRef<HTMLDivElement | null>(null);
   const conceptsRowRef = useRef<HTMLDivElement | null>(null);
 
-  const stageH = isMobile ? 540 : 620;
+  const stageH = isMobile ? 600 : isNarrow ? 660 : 760;
 
   useEffect(() => {
     if (!isMobile) return;
@@ -492,8 +530,8 @@ export default function Work() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const cardH = isMobile ? 168 : isNarrow ? 176 : 220;
-  const cardW = isMobile ? 200 : isNarrow ? 200 : 300;
+  const cardH = isMobile ? 224 : isNarrow ? 232 : 280;
+  const cardW = isMobile ? 272 : isNarrow ? 300 : 380;
   const gap = isMobile ? 46 : 64;
   const step1 = cardH / 2 + gap;
   const step2 = step1 + cardH * 0.62 + gap * 0.7;
@@ -513,7 +551,6 @@ export default function Work() {
       <Link
         key={p.key}
         href={p.href}
-        {...(p.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         onMouseEnter={() => setHovered(p.key)}
         onMouseLeave={() => setHovered(null)}
         className={`group relative block w-[min(320px,80vw)] flex-none shrink-0 snap-center overflow-hidden rounded-xl text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 max-[700px]:w-[72vw] ${stackClassFor(i)}`}
@@ -538,6 +575,7 @@ export default function Work() {
           <ImageSlot
             alt={p.title}
             placeholder="Drop project image"
+            src={p.imgSrc}
             shape="rect"
             className="h-[200px] w-full max-[700px]:h-[120px]"
           />
@@ -596,8 +634,8 @@ export default function Work() {
             <span className="text-accent">shipped, broken, and rebuilt.</span>
           </h1>
           <p className="relative m-0 max-w-[560px] text-[15px] text-ink/55">
-            Client work, collaborations, and the concepts that never shipped but taught me
-            something anyway.
+            Real projects for real people — each one built to fit who it&apos;s actually for, not
+            copied from the last one.
           </p>
         </section>
 
@@ -722,6 +760,7 @@ export default function Work() {
                         <ImageSlot
                           alt={card.title}
                           placeholder="Drop project image"
+                          src={card.imgSrc}
                           shape="rect"
                           className="h-full w-full"
                         />
@@ -763,9 +802,21 @@ export default function Work() {
             )}
 
             {isMobile && (
-              <div className="flex shrink-0 flex-col gap-2.5 border-t border-accent/10 px-1 pt-3 pb-1">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-1.5">
+              <div className="flex shrink-0 flex-col gap-3 border-t border-accent/10 px-1 pt-4 pb-1.5">
+                <div className="flex items-baseline justify-between gap-3">
+                  <div className="flex min-w-0 items-baseline gap-2">
+                    <span className="shrink-0 font-mono text-xs text-accent">
+                      {String(active + 1).padStart(2, "0")}
+                    </span>
+                    <span className="truncate text-base font-semibold">{activeItem.title}</span>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <div className="text-[12px] font-semibold">{activeItem.category}</div>
+                    <div className="font-mono text-[10px] text-ink/40">{activeItem.year}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex shrink-0 items-center gap-1.5">
                     <span
                       onClick={prev}
                       onKeyDown={keyActivate(prev)}
@@ -787,25 +838,15 @@ export default function Work() {
                       ↓
                     </span>
                   </div>
-                  <div className="flex min-w-0 flex-1 items-baseline gap-2">
-                    <span className="shrink-0 font-mono text-xs text-accent">
-                      {String(active + 1).padStart(2, "0")}
-                    </span>
-                    <span className="truncate text-[15px] font-semibold">{activeItem.title}</span>
+                  <div className="flex flex-1 gap-1">
+                    {COMBINED.map((c, i) => (
+                      <span
+                        key={c.key}
+                        className="h-[3px] flex-1 rounded-full transition-colors duration-300"
+                        style={{ background: i === active ? "#C9F31D" : "rgba(242,239,233,0.15)" }}
+                      />
+                    ))}
                   </div>
-                  <div className="shrink-0 text-right">
-                    <div className="text-[12px] font-semibold">{activeItem.category}</div>
-                    <div className="font-mono text-[10px] text-ink/40">{activeItem.year}</div>
-                  </div>
-                </div>
-                <div className="flex gap-1">
-                  {COMBINED.map((c, i) => (
-                    <span
-                      key={c.key}
-                      className="h-[3px] flex-1 rounded-full transition-colors duration-300"
-                      style={{ background: i === active ? "#C9F31D" : "rgba(242,239,233,0.15)" }}
-                    />
-                  ))}
                 </div>
               </div>
             )}

@@ -1,0 +1,22 @@
+@keyframes orbitSpinBig {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbitSpin {
+  animation-name: orbitSpinBig;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.nodeStrip {
+  scrollbar-width: none;
+}
+
+.nodeStrip::-webkit-scrollbar {
+  height: 0;
+}

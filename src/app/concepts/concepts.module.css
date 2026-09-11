@@ -1,0 +1,71 @@
+@keyframes typeCursor {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  background: #c9f31d;
+  vertical-align: middle;
+  margin: 0 2px;
+  animation: typeCursor 0.9s step-end infinite;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotate(var(--rot, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--rot, 0deg));
+  }
+}
+
+.floatIn {
+  animation-name: floatIn;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes conceptFlicker {
+  0%,
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+  20% {
+    opacity: 0.7;
+    filter: brightness(1.4) saturate(1.5);
+  }
+  40% {
+    opacity: 1;
+    filter: none;
+  }
+  60% {
+    opacity: 0.75;
+    filter: brightness(0.75);
+  }
+  80% {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.card {
+  border-color: rgba(201, 243, 29, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.card:hover {
+  animation: conceptFlicker 0.5s steps(1, end) 1;
+  border-color: #c9f31d;
+}

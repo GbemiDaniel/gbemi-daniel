@@ -1,0 +1,18 @@
+@keyframes cameraZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045);
+  }
+}
+
+.zoomLayer {
+  animation: cameraZoom 14s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoomLayer {
+    animation: none;
+  }
+}

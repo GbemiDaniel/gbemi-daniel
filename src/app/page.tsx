@@ -5,11 +5,14 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
+import Reveal from "@/components/Reveal";
+import CameraFrame from "@/components/CameraFrame";
 import styles from "./home.module.css";
 
 const WORK_ITEMS = [
   {
     href: "/case-study",
+    external: false,
     featured: true,
     stagger: "",
     placeholder: "Drop project image",
@@ -19,36 +22,26 @@ const WORK_ITEMS = [
     year: "2026",
   },
   {
-    href: "/work",
+    href: "https://okoh-bernard-portfolio.vercel.app/",
+    external: true,
+    featured: false,
+    stagger: "mt-3.5 max-[700px]:mt-0",
+    placeholder: "Drop project image",
+    title: "Palli's Portfolio",
+    desc: "A terminal-styled identity platform for a security engineer, built around layered glow and immersive UI.",
+    stack: "Next.js / Tailwind",
+    year: "2026",
+  },
+  {
+    href: "https://chronovault-mvp.vercel.app",
+    external: true,
     featured: false,
     stagger: "mt-7 max-[700px]:mt-0",
     placeholder: "Drop project image",
-    title: "Aurora Brand Identity",
-    desc: "Full identity system for a solar-tech startup, from mark to motion.",
+    title: "ChronoVault",
+    desc: "A Web3 time capsule for sealing assets and memories until a future date unlocks them.",
     stack: "Next.js / Framer Motion",
-    year: "2025",
-  },
-  {
-    href: "/work",
-    featured: false,
-    stagger: "mt-14 max-[700px]:mt-0",
-    placeholder: "Drop project image",
-    title: "Studio Nine Website",
-    desc: "Marketing site and CMS for a photography collective.",
-    stack: "React / PostgreSQL",
-    year: "2025",
-  },
-];
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "Daniel didn't just make it look better — he rebuilt how the whole team thinks about spend data.",
-    attr: "Product Lead, Fintech Dashboard",
-  },
-  {
-    quote: "We handed him a brand with no visual language and got back one that felt inevitable.",
-    attr: "Founder, Aurora",
+    year: "2026",
   },
 ];
 
@@ -61,7 +54,51 @@ const STACK_PILLS = [
   "04 · Design Systems",
 ];
 
-const TOTAL_SECTIONS = 6;
+const CONTACT_SOCIALS = [
+  {
+    label: "GITHUB",
+    href: "https://github.com/GbemiDaniel",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+          stroke="#C9F31D"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    label: "X",
+    href: "https://x.com/adamsdaniel043",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+          fill="#C9F31D"
+        />
+      </svg>
+    ),
+  },
+  {
+    label: "LINKEDIN",
+    href: "https://www.linkedin.com/in/gbemi-daniel",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="9" width="4" height="12" fill="#C9F31D" />
+        <circle cx="4" cy="4" r="2" fill="#C9F31D" />
+        <path
+          d="M10 9h4v2.1c.9-1.4 2.4-2.4 4.3-2.4 3.7 0 4.7 2.4 4.7 5.6V21h-4v-6c0-1.4 0-3.2-2-3.2s-2.3 1.6-2.3 3.1V21h-4V9z"
+          fill="#C9F31D"
+        />
+      </svg>
+    ),
+  },
+];
+
+const TOTAL_SECTIONS = 5;
 
 const sectionLabel = "mb-4 font-mono text-xs tracking-[0.1em] text-ink/40";
 const sectionHeading = "m-0 mb-4 text-[clamp(26px,3.6vw,38px)] font-bold leading-[1.15]";
@@ -123,34 +160,37 @@ export default function Home() {
 
       <div id="main-content" className="min-w-0 flex-1">
         {/* HERO */}
-        <section data-section-index="1" className="relative overflow-hidden px-0 pt-10 pb-24">
+        <section data-section-index="1" className="relative overflow-hidden px-0 pt-10 pb-24 max-[700px]:pt-5">
           <div className="pointer-events-none absolute -top-[120px] -right-[10%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.16),transparent_70%)] blur-[50px]" />
           <div className="pointer-events-none absolute -bottom-[220px] -left-[10%] h-[340px] w-[120%] -rotate-[4deg] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(90,150,45,0.14),transparent_70%)] blur-[60px]" />
           <div className="relative mx-auto max-w-[1200px] px-8">
-            <div className="mb-10 font-mono text-xs leading-[1.7] text-ink/45">
+            <Reveal className="mb-10 font-mono text-xs leading-[1.7] text-ink/45">
               <div>&gt; frontend engineer</div>
               <div>+ react / next.js / typescript</div>
-            </div>
+            </Reveal>
 
             <div className="flex items-stretch gap-8">
               <div className="flex flex-1 flex-wrap items-stretch gap-10">
                 <div className="flex min-h-0 min-w-[260px] flex-1 basis-[280px] flex-col">
                   <div className="flex gap-4">
                     <div className="relative w-px shrink-0 bg-white/15 before:absolute before:-top-3.5 before:-left-1.5 before:text-xs before:text-ink/30 before:content-['+']" />
-                    <h1 className="m-0 text-[clamp(24px,3.4vw,40px)] leading-[1.15] font-semibold tracking-[-0.02em]">
-                      Obsessed with building interfaces that are{" "}
-                      <span className="text-accent">engineered</span> as carefully as
-                      they&apos;re designed.
-                    </h1>
+                    <Reveal y={18} duration={0.9}>
+                      <h1 className="m-0 text-[clamp(24px,3.4vw,40px)] leading-[1.15] font-semibold tracking-[-0.02em]">
+                        Great interfaces aren&apos;t designed. They&apos;re{" "}
+                        <span className="text-accent">engineered.</span>
+                      </h1>
+                    </Reveal>
                   </div>
-                  <p className="mt-6 ml-[17px] max-w-[420px] text-sm leading-relaxed text-ink/62">
-                    I build fast, accessible interfaces where the code holds up as well as
-                    the design — the kind of details a Figma file never shows you.
-                  </p>
+                  <Reveal y={16} delay={0.15}>
+                    <p className="mt-6 ml-[17px] max-w-[420px] text-sm leading-relaxed text-ink/62">
+                      I build fast, accessible products where the code holds up as well as the
+                      pixels — the part a Figma file never shows you.
+                    </p>
+                  </Reveal>
                   <div className="mt-9 ml-[17px] font-mono text-[10px] leading-relaxed tracking-[0.08em] whitespace-nowrap text-ink/30">
                     BUILDING DIGITAL EXPERIENCES /
                   </div>
-                  <div className="mt-auto ml-[17px] flex max-w-[420px] flex-wrap items-center gap-5 border-t border-white/8 pt-10">
+                  <div className="mt-auto ml-[17px] flex max-w-[420px] flex-wrap items-center gap-5 border-t border-white/8 pt-10 max-[700px]:hidden">
                     <Link href="/work" className="group flex items-center gap-3.5 text-inherit no-underline hover:opacity-80">
                       <span className={`${arrowCircleBase} h-10 w-10 text-[15px]`}>→</span>
                       <span className="font-mono text-[11px] tracking-[0.08em] text-ink">
@@ -168,19 +208,16 @@ export default function Home() {
                 </div>
 
                 <div className="relative min-w-[260px] flex-1 basis-[280px]">
-                  <span className="absolute -top-2.5 -left-2.5 h-[22px] w-[22px] border-t-2 border-l-2 border-accent" />
-                  <span className="absolute -top-2.5 -right-2.5 h-[22px] w-[22px] border-t-2 border-r-2 border-accent" />
-                  <span className="absolute -bottom-2.5 -left-2.5 h-[22px] w-[22px] border-b-2 border-l-2 border-accent" />
-                  <span className="absolute -bottom-2.5 -right-2.5 h-[22px] w-[22px] border-b-2 border-r-2 border-accent" />
-                  <ImageSlot
-                    alt="Portrait of Daniel"
-                    placeholder="Drop Daniel's photo"
-                    shape="rounded"
-                    radius={12}
-                    className="w-full"
-                    style={{ height: "clamp(300px,36vw,440px)" }}
-                    priority
-                  />
+                  <CameraFrame className="h-[clamp(300px,36vw,440px)] w-full max-[700px]:h-[clamp(200px,52vw,260px)]">
+                    <ImageSlot
+                      alt="Portrait of Daniel"
+                      placeholder="Drop Daniel's photo"
+                      shape="rounded"
+                      radius={12}
+                      className="h-full w-full"
+                      priority
+                    />
+                  </CameraFrame>
                   <div className="absolute top-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-[5px] font-mono text-[11px] leading-relaxed text-ink backdrop-blur-sm">
                     DEE.JPG
                     <br />
@@ -196,6 +233,22 @@ export default function Home() {
                     3024×4032
                   </div>
                 </div>
+
+                <div className="mt-8 hidden max-[700px]:flex max-w-[420px] flex-wrap items-center gap-5 border-t border-white/8 pt-10">
+                  <Link href="/work" className="group flex items-center gap-3.5 text-inherit no-underline hover:opacity-80">
+                    <span className={`${arrowCircleBase} h-10 w-10 text-[15px]`}>→</span>
+                    <span className="font-mono text-[11px] tracking-[0.08em] text-ink">
+                      VIEW MY WORK
+                    </span>
+                  </Link>
+                  <span className="h-px min-w-[40px] flex-1 bg-[repeating-linear-gradient(to_right,rgba(255,255,255,0.25)_0_4px,transparent_4px_8px)]" />
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.08em] text-ink/40">
+                    SCROLL{" "}
+                    <span className="inline-block [animation:scrollBob_1.6s_ease-in-out_infinite]">
+                      ↓
+                    </span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -206,7 +259,7 @@ export default function Home() {
           data-section-index="2"
           className="mx-auto max-w-[1200px] border-t border-accent/12 px-8 py-20 max-[700px]:px-5 max-[700px]:py-14"
         >
-          <div className="mb-12 flex flex-wrap items-start justify-between gap-6">
+          <Reveal className="mb-12 flex flex-wrap items-start justify-between gap-6">
             <div>
               <div className={sectionLabel}>
                 <span className="text-accent">01</span> — WORK
@@ -219,13 +272,14 @@ export default function Home() {
                 → VIEW ALL PROJECTS
               </Link>
             </div>
-          </div>
+          </Reveal>
 
           <div className="flex flex-wrap items-start gap-7">
             {WORK_ITEMS.map((item) => (
               <Link
                 key={item.title}
                 href={item.href}
+                {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={`block min-w-0 flex-1 basis-[280px] text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${item.stagger}`}
               >
                 <div className={chromeBar}>
@@ -233,7 +287,7 @@ export default function Home() {
                   <span className={chromeDot} />
                   <span className={chromeDot} />
                   {item.featured && (
-                    <span className="absolute -top-2.5 left-3.5 rounded bg-accent px-2 py-[3px] font-mono text-[10px] font-bold tracking-[0.05em] text-bg">
+                    <span className="absolute -top-2.5 right-3.5 rounded bg-accent px-2 py-[3px] font-mono text-[10px] font-bold tracking-[0.05em] text-bg">
                       FEATURED
                     </span>
                   )}
@@ -242,12 +296,16 @@ export default function Home() {
                   alt={item.title}
                   placeholder={item.placeholder}
                   shape="rect"
-                  className="h-[200px] w-full border-x border-accent/15"
+                  className="h-[200px] w-full border-x border-accent/15 max-[700px]:h-[130px]"
                 />
-                <div className="rounded-b-xl border border-t-0 border-accent/15 p-[18px]">
-                  <h3 className="m-0 mb-2 text-[17px] font-semibold">{item.title}</h3>
-                  <p className="m-0 mb-3.5 text-[13px] leading-[1.5] text-ink/55">{item.desc}</p>
-                  <div className="flex items-center justify-between gap-3 font-mono text-[11px] text-accent/70">
+                <div className="rounded-b-xl border border-t-0 border-accent/15 p-[18px] max-[700px]:p-3.5">
+                  <h3 className="m-0 mb-2 text-[17px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
+                    {item.title}
+                  </h3>
+                  <p className="m-0 mb-3.5 text-[13px] leading-[1.5] text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
+                    {item.desc}
+                  </p>
+                  <div className="flex items-center justify-between gap-3 font-mono text-[11px] text-accent/70 max-[700px]:text-[10px]">
                     <span>{item.stack}</span>
                     <span className="whitespace-nowrap text-ink/40">{item.year}</span>
                   </div>
@@ -257,32 +315,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
-        <section
-          data-section-index="3"
-          className="mx-auto max-w-[1200px] border-t border-accent/12 px-8 py-[72px]"
-        >
-          <div className={sectionLabel}>
-            <span className="text-accent">02</span> — WHAT CLIENTS SAY
-          </div>
-          <div className="flex flex-wrap gap-6">
-            {TESTIMONIALS.map((t) => (
-              <div key={t.attr} className="flex-1 basis-[320px] rounded-2xl border border-accent/15 p-8">
-                <div className="mb-4 font-grotesk text-[40px] leading-none text-accent">&ldquo;</div>
-                <p className="m-0 mb-5 text-base leading-relaxed text-ink/80">{t.quote}</p>
-                <div className="border-t border-white/8 pt-4 font-mono text-xs text-ink/45">
-                  {t.attr}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* EXPERTISE / STACK */}
-        <section data-section-index="4" className="overflow-hidden bg-band py-[72px]">
-          <div className="mx-auto mb-10 max-w-[1200px] px-8">
+        <section data-section-index="3" className="overflow-hidden bg-band py-[72px]">
+          <Reveal className="mx-auto mb-10 max-w-[1200px] px-8">
             <div className={sectionLabel}>
-              <span className="text-accent">03</span> — STACK
+              <span className="text-accent">02</span> — STACK
             </div>
             <h2 className={sectionHeading}>
               What I bring to <span className="text-accent">the build.</span>
@@ -290,7 +327,7 @@ export default function Home() {
             <span className="inline-flex items-center gap-2 text-[13px] text-ink/60">
               A few of the tools behind the work.
             </span>
-          </div>
+          </Reveal>
 
           <div
             className={`${styles.marqueeMask} relative overflow-hidden py-[26px]`}
@@ -307,7 +344,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mx-auto mt-7 flex max-w-[1200px] flex-wrap gap-3 px-8">
+          <div className="mx-auto mt-7 hidden max-w-[1200px] flex-wrap gap-3 px-8 min-[700px]:flex">
             {STACK_PILLS.map((pill) => (
               <span
                 key={pill}
@@ -320,10 +357,10 @@ export default function Home() {
         </section>
 
         {/* ABOUT TEASER */}
-        <section data-section-index="5" className="mx-auto max-w-[1200px] px-8 pt-[72px] pb-16">
-          <div className="mb-8">
+        <section data-section-index="4" className="mx-auto max-w-[1200px] px-8 pt-[72px] pb-16 max-[700px]:px-5 max-[700px]:pt-12 max-[700px]:pb-10">
+          <Reveal className="mb-8">
             <div className={sectionLabel}>
-              <span className="text-accent">04</span> — ABOUT
+              <span className="text-accent">03</span> — ABOUT
             </div>
             <h2 className={`${sectionHeading} max-w-[640px]`}>
               THERE&apos;S A PERSON BEHIND THE PIXELS —{" "}
@@ -332,7 +369,7 @@ export default function Home() {
             <Link href="/about" className={sectionLink}>
               → GET TO KNOW ME
             </Link>
-          </div>
+          </Reveal>
           <Link
             href="/about"
             className="block overflow-hidden rounded-xl border border-accent/15 text-inherit no-underline transition-[border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-accent/40"
@@ -351,7 +388,7 @@ export default function Home() {
                   className="h-[200px] w-full"
                 />
               </div>
-              <div className="flex min-w-[280px] flex-1 items-center border-l border-accent/15 px-9 py-8">
+              <div className="flex min-w-[280px] flex-1 items-center border-l border-accent/15 px-9 py-8 max-[700px]:border-t max-[700px]:border-l-0 max-[700px]:px-5 max-[700px]:py-6">
                 <p className="m-0 max-w-[480px] text-[15px] leading-relaxed text-ink/60">
                   The stack, the process, and how a designer ended up living in a code
                   editor — the full story is on the About page.
@@ -363,13 +400,13 @@ export default function Home() {
 
         {/* CONTACT CTA */}
         <section
-          data-section-index="6"
-          className="relative mx-auto max-w-[1200px] overflow-hidden px-8 pt-20 pb-24"
+          data-section-index="5"
+          className="relative mx-auto max-w-[1200px] overflow-hidden px-8 pt-20 pb-24 max-[700px]:px-5 max-[700px]:pt-14 max-[700px]:pb-16"
         >
           <div className="pointer-events-none absolute -top-[100px] -left-[10%] h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.14),transparent_70%)] blur-[50px]" />
-          <div className="relative mb-10">
+          <Reveal className="relative mb-10">
             <div className={sectionLabel}>
-              <span className="text-accent">05</span> — CONTACT
+              <span className="text-accent">04</span> — CONTACT
             </div>
             <h2 className={sectionHeading}>
               Got an idea worth <span className="text-accent">building?</span>
@@ -377,70 +414,35 @@ export default function Home() {
             <a href="mailto:gbemidaniel01@gmail.com" className={sectionLink}>
               → gbemidaniel01@gmail.com
             </a>
-          </div>
+          </Reveal>
           <div className="flex flex-wrap overflow-hidden rounded-[20px] border border-accent/15">
-            <div className="flex min-w-[280px] flex-1 items-center p-12">
+            <div className="flex min-w-[280px] flex-1 items-center p-12 max-[700px]:p-6">
               <Link href="/contact" className="group flex items-center gap-3.5 text-inherit no-underline hover:opacity-80">
-                <span className={`${arrowCircleBase} h-[52px] w-[52px] text-lg`}>→</span>
+                <span className={`${arrowCircleBase} h-[52px] w-[52px] text-lg max-[700px]:h-10 max-[700px]:w-10 max-[700px]:text-[15px]`}>→</span>
                 <span className="font-mono text-[13px] tracking-[0.08em] text-ink">
                   START A CONVERSATION
                 </span>
               </Link>
             </div>
-            <div className="flex w-[150px] flex-[0_0_150px] flex-col border-l border-accent/15">
-              <a
-                href="https://github.com/GbemiDaniel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-1 items-center justify-center overflow-hidden border-b border-accent/15 font-mono text-xs tracking-[0.1em] text-ink/50 no-underline transition-colors duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent/5 hover:text-accent"
-              >
-                GITHUB
-                <span className="absolute inset-0 flex scale-[0.6] items-center justify-center bg-bg opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:opacity-100">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                      stroke="#C9F31D"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </a>
-              <a
-                href="https://x.com/adamsdaniel043"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-1 items-center justify-center overflow-hidden border-b border-accent/15 font-mono text-xs tracking-[0.1em] text-ink/50 no-underline transition-colors duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent/5 hover:text-accent"
-              >
-                X
-                <span className="absolute inset-0 flex scale-[0.6] items-center justify-center bg-bg opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:opacity-100">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                      fill="#C9F31D"
-                    />
-                  </svg>
-                </span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/gbemi-daniel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-1 items-center justify-center overflow-hidden font-mono text-xs tracking-[0.1em] text-ink/50 no-underline transition-colors duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent/5 hover:text-accent"
-              >
-                LINKEDIN
-                <span className="absolute inset-0 flex scale-[0.6] items-center justify-center bg-bg opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:opacity-100">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <rect x="2" y="9" width="4" height="12" fill="#C9F31D" />
-                    <circle cx="4" cy="4" r="2" fill="#C9F31D" />
-                    <path
-                      d="M10 9h4v2.1c.9-1.4 2.4-2.4 4.3-2.4 3.7 0 4.7 2.4 4.7 5.6V21h-4v-6c0-1.4 0-3.2-2-3.2s-2.3 1.6-2.3 3.1V21h-4V9z"
-                      fill="#C9F31D"
-                    />
-                  </svg>
-                </span>
-              </a>
+            <div className="flex w-full flex-row border-t border-accent/15 min-[700px]:w-[150px] min-[700px]:flex-none min-[700px]:flex-col min-[700px]:border-t-0 min-[700px]:border-l">
+              {CONTACT_SOCIALS.map((s, i) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group relative flex flex-1 items-center justify-center overflow-hidden py-4 font-mono text-xs tracking-[0.1em] text-ink/50 no-underline transition-colors duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent/5 hover:text-accent ${
+                    i < CONTACT_SOCIALS.length - 1
+                      ? "border-r border-accent/15 min-[700px]:border-r-0 min-[700px]:border-b"
+                      : ""
+                  }`}
+                >
+                  {s.label}
+                  <span className="absolute inset-0 flex scale-[0.6] items-center justify-center bg-bg opacity-0 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:opacity-100">
+                    {s.icon}
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </section>

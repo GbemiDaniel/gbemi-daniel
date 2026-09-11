@@ -9,12 +9,7 @@
   --font-grotesk: var(--font-space-grotesk), sans-serif;
   --font-mono: var(--font-space-mono), monospace;
   --font-script: var(--font-dancing-script), cursive;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  --font-serif-italic: var(--font-instrument-serif), serif;
 }
 
 html {
@@ -81,11 +76,13 @@ img {
   }
 }
 
-@keyframes marqueeScroll {
-  from {
-    transform: translateX(0);
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
   }
-  to {
-    transform: translateX(-50%);
+  51%,
+  100% {
+    opacity: 0;
   }
 }

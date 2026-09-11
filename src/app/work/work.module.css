@@ -1,0 +1,61 @@
+/* Bits that don't reduce cleanly to Tailwind utilities. */
+
+.noScrollbar {
+  scrollbar-width: none;
+}
+
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes orbitSpinSm {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbitSpin {
+  animation: orbitSpinSm 3.2s linear infinite;
+}
+
+.stack0 {
+  margin-top: 0;
+}
+
+.stack1 {
+  margin-top: 28px;
+}
+
+.stack2 {
+  margin-top: 56px;
+}
+
+@media (max-width: 700px) {
+  .stack0,
+  .stack1,
+  .stack2 {
+    margin-top: 0 !important;
+  }
+}
+
+/* Curved-wall carousel: cards must sit vertically centered in the row, so
+   cancel the stagger margin (.stack1/.stack2) that projectCard() otherwise
+   applies for the plain-grid layout. */
+.wallCard > a,
+.wallCard > div {
+  margin-top: 0;
+}
+
+.fringe {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--fringe, 0);
+  box-shadow:
+    calc(var(--fringe-dir, 1) * 2px) 0 0 0 rgba(255, 90, 40, 0.55),
+    calc(var(--fringe-dir, 1) * -2px) 0 0 0 rgba(56, 200, 255, 0.55);
+}
+

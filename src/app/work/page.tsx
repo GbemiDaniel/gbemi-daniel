@@ -379,6 +379,14 @@ export default function Work() {
   const wrapperElRef = useRef<HTMLDivElement | null>(null);
   const tickingRef = useRef(false);
   const restorePendingRef = useRef(false);
+  // True while a goTo()-triggered smooth scroll is still animating. The
+  // scroll listener uses this to stay quiet during that window — otherwise
+  // it recomputes `active` from whatever mid-flight position the animated
+  // scroll happens to be at on each frame, repeatedly overriding the value
+  // goTo() already set and snapping the cards through several intermediate
+  // states instead of playing one transition. That fight was the jitter.
+  const programmaticScrollRef = useRef(false);
+  const programmaticScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const featuredRowRef = useRef<HTMLDivElement | null>(null);
   const conceptsRowRef = useRef<HTMLDivElement | null>(null);
 
@@ -441,6 +449,7 @@ export default function Work() {
   }, [isMobile]);
 
   const updateFromScroll = useCallback(() => {
+    if (programmaticScrollRef.current) return;
     const wrapperEl = wrapperElRef.current;
     if (!wrapperEl) return;
     const total = wrapperEl.offsetHeight - stageH;
@@ -468,6 +477,18 @@ export default function Work() {
       const total = wrapperEl.offsetHeight - stageH;
       const wrapperTop = wrapperEl.getBoundingClientRect().top + window.scrollY;
       const targetScroll = wrapperTop + (target / (COMBINED.length - 1)) * total;
+
+      if (!instant) {
+        // Silence the scroll listener for the duration of the animated
+        // scroll (~600ms covers native smooth-scroll on any browser we
+        // target) so it can't fight the setActive below. `scrollend` ends
+        // it the moment the browser actually finishes, when supported.
+        programmaticScrollRef.current = true;
+        clearTimeout(programmaticScrollTimeoutRef.current);
+        programmaticScrollTimeoutRef.current = setTimeout(() => {
+          programmaticScrollRef.current = false;
+        }, 600);
+      }
       window.scrollTo({ top: targetScroll, behavior: instant ? "auto" : "smooth" });
       setActive(target);
     },
@@ -499,6 +520,24 @@ export default function Work() {
     window.addEventListener("wheel", cancelRestore, { passive: true, once: true });
     window.addEventListener("touchstart", cancelRestore, { passive: true, once: true });
 
+    // The moment the browser actually finishes goTo()'s animated scroll,
+    // hand control back to the listener immediately rather than waiting out
+    // the 600ms fallback — `scrollend` just isn't old-Safari-safe, hence
+    // the timeout backstop in goTo() itself.
+    const onScrollEnd = () => {
+      programmaticScrollRef.current = false;
+    };
+    window.addEventListener("scrollend", onScrollEnd);
+
+    // Manual input always wins: if the user grabs the wheel or the screen
+    // mid-animation, drop the suppression right away instead of fighting
+    // their gesture for whatever's left of the 600ms window.
+    const releaseOnManualInput = () => {
+      programmaticScrollRef.current = false;
+    };
+    window.addEventListener("wheel", releaseOnManualInput, { passive: true });
+    window.addEventListener("touchstart", releaseOnManualInput, { passive: true });
+
     const attemptRestore = (idx: number, tries: number) => {
       if (!restorePendingRef.current || tries > 20) {
         restorePendingRef.current = false;
@@ -526,15 +565,36 @@ export default function Work() {
     return () => {
       window.removeEventListener("resize", checkSize);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scrollend", onScrollEnd);
+      window.removeEventListener("wheel", releaseOnManualInput);
+      window.removeEventListener("touchstart", releaseOnManualInput);
+      clearTimeout(programmaticScrollTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const cardH = isMobile ? 224 : isNarrow ? 232 : 280;
-  const cardW = isMobile ? 272 : isNarrow ? 300 : 380;
-  const gap = isMobile ? 46 : 64;
-  const step1 = cardH / 2 + gap;
-  const step2 = step1 + cardH * 0.62 + gap * 0.7;
+  // These render with objectFit="contain" (see projectCard/COMBINED render
+  // below) rather than cover — the screenshots' important content (a
+  // headline, an avatar) sits close enough to their own edges that no fixed
+  // crop percentage was ever going to be safe for all of them. Contain
+  // never cuts anything off, so CARD_ASPECT only controls how much
+  // letterboxing shows, not whether content survives — free to size the
+  // card for presence instead of shrinking it to minimize a crop.
+  const CARD_ASPECT = 1.9;
+  const cardW = isMobile ? 310 : isNarrow ? 320 : 480;
+  const cardH = Math.round(cardW / CARD_ASPECT);
+  // `gap` isn't a literal gap between cards — it's how far a neighboring
+  // card is allowed to peek out past the active card's edge, as a fraction
+  // of the neighbor's own (scaled-down) height. With real screenshots full
+  // of faces and text, the old cardH/2+gap formula let ~80% of each
+  // neighbor show through at 0.3 opacity — a genuine card, not a sliver —
+  // which read as two photos double-exposed rather than a receding stack.
+  // Abstract placeholder art hid that; real content didn't.
+  const NEIGHBOR_SCALE = 0.78;
+  const PEEK_FRACTION = 0.22;
+  const scaledCardH = cardH * NEIGHBOR_SCALE;
+  const step1 = (cardH - scaledCardH) / 2 + PEEK_FRACTION * scaledCardH;
+  const step2 = step1 * 2.1;
   const perItem = isMobile ? 220 : 320;
   const wrapperHeight = stageH + perItem * (COMBINED.length - 1);
 
@@ -576,6 +636,8 @@ export default function Work() {
             alt={p.title}
             placeholder="Drop project image"
             src={p.imgSrc}
+            objectFit="contain"
+            sizes="(max-width: 700px) 72vw, 320px"
             shape="rect"
             className="h-[200px] w-full max-[700px]:h-[120px]"
           />
@@ -705,8 +767,8 @@ export default function Work() {
                   z = 3;
                   pe = "auto";
                 } else if (abs === 1) {
-                  transform = `translateY(${offset * step1}px) scale(0.78) rotate(${offset * 4}deg)`;
-                  opacity = 0.3;
+                  transform = `translateY(${offset * step1}px) scale(${NEIGHBOR_SCALE}) rotate(${offset * 4}deg)`;
+                  opacity = 0.18;
                   z = 2;
                   pe = "auto";
                 } else if (abs === 2) {
@@ -761,6 +823,8 @@ export default function Work() {
                           alt={card.title}
                           placeholder="Drop project image"
                           src={card.imgSrc}
+                          objectFit="contain"
+                          sizes="(max-width: 700px) 310px, (max-width: 950px) 320px, 480px"
                           shape="rect"
                           className="h-full w-full"
                         />

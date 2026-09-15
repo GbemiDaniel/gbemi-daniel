@@ -86,3 +86,13 @@ img {
     opacity: 0;
   }
 }
+
+@keyframes expandHint {
+  0% {
+    box-shadow: 0 0 0 0 rgba(201, 243, 29, 0.45);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px rgba(201, 243, 29, 0);
+  }
+}

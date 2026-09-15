@@ -131,6 +131,8 @@ export default function ClientWork() {
                       alt={p.title}
                       placeholder="Drop project image"
                       src={p.imgSrc}
+                      objectFit="contain"
+                      sizes="(max-width: 700px) 90vw, 380px"
                       shape="rect"
                       className="h-[200px] w-full max-[700px]:h-[150px]"
                     />

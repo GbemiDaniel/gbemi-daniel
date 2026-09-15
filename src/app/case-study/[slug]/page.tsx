@@ -78,20 +78,26 @@ export default async function CaseStudyPage({
           </section>
         ) : (
           <>
-            <div className={`mx-auto max-w-[1000px] px-8 max-[700px]:px-5`}>
+            {/* The dots-bar and the screenshot below it share this one padded
+                wrapper (rather than each sizing independently) so the
+                "browser chrome" cap and the image it sits on always line up
+                at exactly the same width, on every screen size. */}
+            <div className="mx-auto max-w-[1000px] px-8 max-[700px]:px-5">
               <div className={chromeBar}>
                 <span className={chromeDot} />
                 <span className={chromeDot} />
                 <span className={chromeDot} />
               </div>
+              <ImageSlot
+                alt={`${cs.title} hero screenshot`}
+                placeholder="Drop hero screenshot"
+                src={cs.heroImage}
+                objectFit="contain"
+                sizes="(max-width: 1000px) 100vw, 1000px"
+                shape="rect"
+                className="block h-[480px] w-full rounded-b-xl border border-t-0 border-accent/15 max-[700px]:h-[220px]"
+              />
             </div>
-            <ImageSlot
-              alt={`${cs.title} hero screenshot`}
-              placeholder="Drop hero screenshot"
-              src={cs.heroImage}
-              shape="rect"
-              className="mx-auto block h-[480px] w-full max-w-[1000px] rounded-b-xl border border-t-0 border-accent/15 max-[700px]:h-[220px]"
-            />
 
             {/* SECTIONS */}
             <section className="mx-auto max-w-[1000px] px-8 py-18 max-[700px]:px-5 max-[700px]:py-10">

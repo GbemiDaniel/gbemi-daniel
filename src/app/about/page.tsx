@@ -130,6 +130,7 @@ export default function About() {
                 placeholder="Drop Daniel's photo"
                 src="/images/portrait-about.jpg"
                 objectPosition="center 20%"
+                sizes="(max-width: 700px) 90vw, 500px"
                 shape="rounded"
                 radius={24}
                 className="absolute inset-0 h-full w-full"

@@ -27,6 +27,7 @@ export default function ImageSlot({
   sizes = "100vw",
   priority,
   objectPosition = "center",
+  objectFit = "cover",
 }: {
   src?: string;
   alt: string;
@@ -41,6 +42,12 @@ export default function ImageSlot({
    * its container (e.g. a tall portrait inside a wide frame). Defaults to
    * centered, matching the previous hardcoded behavior. */
   objectPosition?: string;
+  /** "cover" (default) fills the box and crops the overflow — right for
+   * portraits, wrong for a website screenshot where the crop can cut off
+   * content near the edges. "contain" shows the whole image letterboxed
+   * instead; use it wherever a real screenshot's content matters more than
+   * the box being edge-to-edge. */
+  objectFit?: "cover" | "contain";
 }) {
   return (
     <div
@@ -49,6 +56,9 @@ export default function ImageSlot({
         position: "relative",
         overflow: "hidden",
         borderRadius: radiusFor(shape, radius),
+        // Only visible as letterboxing under objectFit="contain" — cover
+        // always fills the box, so this is a no-op there.
+        backgroundColor: "var(--color-band)",
         ...style,
       }}
     >
@@ -59,7 +69,7 @@ export default function ImageSlot({
           fill
           sizes={sizes}
           priority={priority}
-          style={{ objectFit: "cover", objectPosition }}
+          style={{ objectFit, objectPosition }}
         />
       ) : (
         <div className={styles.placeholder}>

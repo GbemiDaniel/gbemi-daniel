@@ -213,6 +213,7 @@ export default function Home() {
                       placeholder="Drop Daniel's photo"
                       src="/images/portrait-hero.jpg"
                       objectPosition="center 20%"
+                      sizes="(max-width: 700px) 90vw, 500px"
                       shape="rounded"
                       radius={12}
                       className="h-full w-full"
@@ -296,6 +297,8 @@ export default function Home() {
                   alt={item.title}
                   placeholder={item.placeholder}
                   src={item.imgSrc}
+                  objectFit="contain"
+                  sizes="(max-width: 700px) 90vw, 380px"
                   shape="rect"
                   className="h-[200px] w-full border-x border-accent/15 max-[700px]:h-[130px]"
                 />
@@ -387,6 +390,7 @@ export default function Home() {
                   placeholder="Drop Daniel's photo"
                   src="/images/portrait-about.jpg"
                   objectPosition="center 20%"
+                  sizes="(max-width: 700px) 90vw, 260px"
                   shape="rect"
                   className="h-[200px] w-full"
                 />

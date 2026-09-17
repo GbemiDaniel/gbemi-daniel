@@ -185,6 +185,16 @@ const RAW_PROJECTS: RawProject[] = [
   },
 ];
 
+const countByCategory = (category: string) =>
+  RAW_PROJECTS.filter((p) => p.category === category).length;
+
+const WORK_STATS = [
+  { value: RAW_PROJECTS.length, label: "Projects" },
+  { value: countByCategory("COLLAB"), label: "Collaborations" },
+  { value: countByCategory("TEAM PROJECT"), label: "Team project" },
+  { value: countByCategory("INDEPENDENT"), label: "Independent build" },
+];
+
 function keyActivate(fn: () => void) {
   return (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -621,12 +631,12 @@ export default function Work() {
       >
         <div className="relative flex items-center justify-between gap-1.5 bg-band px-3.5 py-2.5 max-[700px]:px-2.5 max-[700px]:py-2">
           <div className="flex items-center gap-1.5">
-            <span className="h-[7px] w-[7px] rounded-full bg-ink/20" />
-            <span className="h-[7px] w-[7px] rounded-full bg-ink/20" />
-            <span className="h-[7px] w-[7px] rounded-full bg-ink/20" />
+            <span className="h-1.75 w-1.75 rounded-full bg-ink/20" />
+            <span className="h-1.75 w-1.75 rounded-full bg-ink/20" />
+            <span className="h-1.75 w-1.75 rounded-full bg-ink/20" />
           </div>
           {p.featured && (
-            <span className="shrink-0 rounded bg-accent px-2 py-[3px] font-mono text-[10px] font-bold tracking-[0.05em] text-bg max-[700px]:px-1.5 max-[700px]:text-[9px]">
+            <span className="shrink-0 rounded bg-accent px-2 py-0.75 font-mono text-[10px] font-bold tracking-wider text-bg max-[700px]:px-1.5 max-[700px]:text-[9px]">
               FEATURED
             </span>
           )}
@@ -639,7 +649,7 @@ export default function Work() {
             objectFit="contain"
             sizes="(max-width: 700px) 72vw, 320px"
             shape="rect"
-            className="h-[200px] w-full max-[700px]:h-[120px]"
+            className="h-50 w-full max-[700px]:h-30"
           />
           <span className="pointer-events-none absolute top-3.5 right-3.5 font-mono text-[44px] leading-none font-bold text-ink/10 max-[700px]:top-2 max-[700px]:right-2 max-[700px]:text-[28px]">
             {p.num}
@@ -655,14 +665,14 @@ export default function Work() {
           <h3 className="m-0 mb-2 text-[19px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
             {p.title}
           </h3>
-          <p className="m-0 mb-3.5 text-[13px] leading-[1.5] text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
+          <p className="m-0 mb-3.5 text-[13px] leading-normal text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
             {p.description}
           </p>
           <div className="mb-3 flex flex-wrap gap-1.5 max-[700px]:mb-2">
             {p.tagList.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-ink/15 px-2 py-[3px] font-mono text-[10px] text-ink/55 max-[700px]:px-1.5 max-[700px]:text-[9px]"
+                className="rounded-full border border-ink/15 px-2 py-0.75 font-mono text-[10px] text-ink/55 max-[700px]:px-1.5 max-[700px]:text-[9px]"
               >
                 {tag}
               </span>
@@ -686,25 +696,44 @@ export default function Work() {
 
       <div id="main-content" className="min-w-0 flex-1">
         {/* HEADER */}
-        <section className="relative mx-auto max-w-[1200px] overflow-hidden px-8 pt-16 pb-10 max-[700px]:px-5 max-[700px]:pt-5 max-[700px]:pb-6">
-          <div className="pointer-events-none absolute -top-[100px] -right-[5%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.12),transparent_70%)] blur-[50px]" />
-          <div className="relative mb-4 text-[13px] tracking-[0.1em] text-ink/50 uppercase">
-            Selected Work
+        {/* Clip on the full-width section so the glow isn't cut off in a
+            hard edge where the 1200px content box ends. */}
+        <section className="overflow-hidden">
+          <div className="relative mx-auto max-w-300 px-8 pt-16 pb-10 max-[700px]:px-5 max-[700px]:pt-5 max-[700px]:pb-6">
+            <div className="pointer-events-none absolute -top-25 right-[-5%] h-105 w-105 rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.12),transparent_70%)] blur-[50px]" />
+            <div className="relative mb-4 text-[13px] tracking-widest text-ink/50 uppercase">
+              Selected Work
+            </div>
+            <h1 className="relative m-0 mb-3 text-[clamp(28px,4.2vw,44px)] leading-[1.15] font-bold">
+              A gallery of things I&apos;ve{" "}
+              <span className="text-accent">shipped, broken, and rebuilt.</span>
+            </h1>
+            <p className="relative m-0 max-w-140 text-[15px] text-ink/55">
+              Real projects for real people — each one built to fit who it&apos;s actually for, not
+              copied from the last one.
+            </p>
+
+            {/* Counted from the project list rather than typed in, so the
+                numbers can't drift as projects are added. */}
+            <div className="relative mt-8 flex flex-wrap items-center gap-x-10 gap-y-4 border-t border-accent/12 pt-6 max-[700px]:mt-6 max-[700px]:gap-x-6 max-[700px]:pt-5">
+              {WORK_STATS.map((stat) => (
+                <div key={stat.label} className="flex items-baseline gap-2.5">
+                  <span className="font-mono text-[22px] leading-none font-bold text-accent tabular-nums max-[700px]:text-lg">
+                    {String(stat.value).padStart(2, "0")}
+                  </span>
+                  <span className="font-mono text-[10px] tracking-[0.12em] text-ink/45 uppercase">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-          <h1 className="relative m-0 mb-3 text-[clamp(28px,4.2vw,44px)] leading-[1.15] font-bold">
-            A gallery of things I&apos;ve{" "}
-            <span className="text-accent">shipped, broken, and rebuilt.</span>
-          </h1>
-          <p className="relative m-0 max-w-[560px] text-[15px] text-ink/55">
-            Real projects for real people — each one built to fit who it&apos;s actually for, not
-            copied from the last one.
-          </p>
         </section>
 
         {/* PROJECT CHAIN */}
         <div
           ref={wrapperElRef}
-          className="relative mx-auto max-w-[1200px] px-8 pb-24"
+          className="relative mx-auto max-w-300 px-8 pb-24"
           style={{ height: wrapperHeight }}
         >
           <section
@@ -713,20 +742,20 @@ export default function Work() {
           >
             {!isMobile && (
               <>
-                <div className="absolute top-1/2 left-8 z-[5] flex max-w-[160px] -translate-y-1/2 items-baseline gap-3.5">
+                <div className="absolute top-1/2 left-8 z-5 flex max-w-40 -translate-y-1/2 items-baseline gap-3.5">
                   <span className="font-mono text-xs text-accent">
                     {String(active + 1).padStart(2, "0")}
                   </span>
                   <span className="text-lg leading-[1.3] font-semibold">{activeItem.title}</span>
                 </div>
-                <div className="absolute right-8 bottom-6 z-[5] text-right">
+                <div className="absolute right-8 bottom-6 z-5 text-right">
                   <div className="mb-0.5 text-[15px] font-semibold">{activeItem.category}</div>
                   <div className="font-mono text-[11px] text-ink/40">{activeItem.year}</div>
                 </div>
               </>
             )}
             {!isMobile && (
-              <div className="absolute top-0 right-8 z-[5] flex flex-col gap-1.5 text-right">
+              <div className="absolute top-0 right-8 z-5 flex flex-col gap-1.5 text-right">
                 {COMBINED.map((c, i) => (
                   <span
                     key={c.key}
@@ -811,7 +840,7 @@ export default function Work() {
                           <div className={`absolute inset-0 ${styles.orbitSpin}`}>
                             <span className="absolute top-0 left-1/2 h-2 w-2 -ml-1 rounded-full bg-accent shadow-[0_0_10px_3px_rgba(201,243,29,0.5)]" />
                           </div>
-                          <span className="absolute top-1/2 left-1/2 h-2.5 w-2.5 -m-[5px] rounded-full bg-ink/50" />
+                          <span className="absolute top-1/2 left-1/2 h-2.5 w-2.5 -m-1.25 rounded-full bg-ink/50" />
                         </div>
                         <span className="font-mono text-[11px] tracking-[0.08em] text-ink/50">
                           VISIT THE LAB →
@@ -829,7 +858,7 @@ export default function Work() {
                           className="h-full w-full"
                         />
                         {offset === 0 && (
-                          <span className="absolute top-3.5 left-3.5 flex items-center gap-1.5 rounded-full bg-[rgba(11,8,16,0.7)] px-3 py-1.5 font-mono text-[10px] tracking-[0.05em] text-ink backdrop-blur-sm">
+                          <span className="absolute top-3.5 left-3.5 flex items-center gap-1.5 rounded-full bg-[rgba(11,8,16,0.7)] px-3 py-1.5 font-mono text-[10px] tracking-wider text-ink backdrop-blur-sm">
                             ↗ VIEW
                           </span>
                         )}
@@ -841,7 +870,7 @@ export default function Work() {
             </div>
 
             {!isMobile && (
-              <div className="absolute bottom-6 left-8 z-[5] flex gap-2">
+              <div className="absolute bottom-6 left-8 z-5 flex gap-2">
                 <span
                   onClick={prev}
                   onKeyDown={keyActivate(prev)}
@@ -906,7 +935,7 @@ export default function Work() {
                     {COMBINED.map((c, i) => (
                       <span
                         key={c.key}
-                        className="h-[3px] flex-1 rounded-full transition-colors duration-300"
+                        className="h-0.75 flex-1 rounded-full transition-colors duration-300"
                         style={{ background: i === active ? "#C9F31D" : "rgba(242,239,233,0.15)" }}
                       />
                     ))}
@@ -918,9 +947,9 @@ export default function Work() {
         </div>
 
         {/* FEATURED & COLLABS */}
-        <section className="mx-auto max-w-[1200px] px-8 pt-6 pb-8">
+        <section className="mx-auto max-w-300 px-8 pt-6 pb-8">
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-3">
-            <div className="font-mono text-xs tracking-[0.1em] text-ink/40">
+            <div className="font-mono text-xs tracking-widest text-ink/40">
               <span className="text-accent">01</span> — FEATURED &amp; COLLABS
             </div>
           </div>
@@ -931,7 +960,7 @@ export default function Work() {
               style={{ scrollSnapType: "x mandatory", paddingInline: "14vw", scrollPaddingInline: "14vw" }}
             >
               {mainProjects.map((p, i) => projectCard(p, i))}
-              <div className="min-h-[340px] w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-[220px] max-[700px]:w-[72vw] max-[700px]:p-3.5">
+              <div className="min-h-85 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-55 max-[700px]:w-[72vw] max-[700px]:p-3.5">
                 <div className="flex h-full flex-col items-center justify-center gap-2.5">
                   <span className="font-mono text-[26px] text-accent/60">+</span>
                   <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
@@ -956,7 +985,7 @@ export default function Work() {
                   title: "More work",
                   subtitle: "In progress",
                   node: (
-                    <div className="min-h-[340px] w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
+                    <div className="min-h-85 w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
                       <div className="flex h-full flex-col items-center justify-center gap-2.5">
                         <span className="font-mono text-[26px] text-accent/60">+</span>
                         <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
@@ -974,9 +1003,9 @@ export default function Work() {
         </section>
 
         {/* CONCEPTS */}
-        <section className="mx-auto max-w-[1200px] px-8 pt-2 pb-8">
+        <section className="mx-auto max-w-300 px-8 pt-2 pb-8">
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-3">
-            <div className="font-mono text-xs tracking-[0.1em] text-ink/40">
+            <div className="font-mono text-xs tracking-widest text-ink/40">
               <span className="text-accent">02</span> — CONCEPTS
             </div>
           </div>
@@ -988,7 +1017,7 @@ export default function Work() {
             >
               {conceptProjects.map((p, i) => projectCard(p, i))}
               <div
-                className={`min-h-[340px] w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-[220px] max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack1}`}
+                className={`min-h-85 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-55 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack1}`}
               >
                 <div className="flex h-full flex-col items-center justify-center gap-2.5">
                   <span className="font-mono text-[26px] text-accent/60">+</span>
@@ -1000,7 +1029,7 @@ export default function Work() {
                 </div>
               </div>
               <div
-                className={`min-h-[340px] w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/15 p-5 text-center max-[700px]:min-h-[220px] max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack2}`}
+                className={`min-h-85 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/15 p-5 text-center max-[700px]:min-h-55 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack2}`}
               >
                 <div className="flex h-full flex-col items-center justify-center gap-2.5">
                   <span className="font-mono text-[26px] text-accent/40">?</span>
@@ -1026,7 +1055,7 @@ export default function Work() {
                   title: "More concepts",
                   subtitle: "Brewing",
                   node: (
-                    <div className="min-h-[340px] w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
+                    <div className="min-h-85 w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
                       <div className="flex h-full flex-col items-center justify-center gap-2.5">
                         <span className="font-mono text-[26px] text-accent/60">+</span>
                         <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
@@ -1043,7 +1072,7 @@ export default function Work() {
                   title: "Still sketching",
                   subtitle: "The next one",
                   node: (
-                    <div className="min-h-[340px] w-[320px] rounded-xl border border-dashed border-accent/15 p-5 text-center">
+                    <div className="min-h-85 w-[320px] rounded-xl border border-dashed border-accent/15 p-5 text-center">
                       <div className="flex h-full flex-col items-center justify-center gap-2.5">
                         <span className="font-mono text-[26px] text-accent/40">?</span>
                         <span className="font-mono text-[11px] tracking-[0.06em] text-ink/30">
@@ -1061,9 +1090,9 @@ export default function Work() {
         </section>
 
         {/* LAB TEASER */}
-        <section className="mx-auto max-w-[1200px] px-8 pt-2 pb-24">
+        <section className="mx-auto max-w-300 px-8 pt-2 pb-24">
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-3">
-            <div className="font-mono text-xs tracking-[0.1em] text-ink/40">
+            <div className="font-mono text-xs tracking-widest text-ink/40">
               <span className="text-accent">03</span> — LAB
             </div>
             <Link
@@ -1074,7 +1103,7 @@ export default function Work() {
             </Link>
           </div>
           <div className="flex flex-wrap items-center justify-between gap-8 rounded-2xl border border-accent/15 p-8 max-[700px]:flex-col-reverse max-[700px]:items-stretch max-[700px]:gap-5 max-[700px]:p-0">
-            <div className="max-w-[480px] max-[700px]:max-w-none max-[700px]:px-5 max-[700px]:pb-5">
+            <div className="max-w-120 max-[700px]:max-w-none max-[700px]:px-5 max-[700px]:pb-5">
               <h3 className="m-0 mb-2.5 text-[22px] font-bold max-[700px]:text-[18px]">
                 Not everything here is a project for a client.
               </h3>
@@ -1090,17 +1119,17 @@ export default function Work() {
               </Link>
             </div>
             <div className="flex gap-4 max-[700px]:gap-3 max-[700px]:rounded-t-2xl max-[700px]:border-b max-[700px]:border-accent/15 max-[700px]:bg-band max-[700px]:p-5">
-              <div className="flex h-[90px] w-[90px] items-center justify-center rounded-xl border border-accent/20 bg-band max-[700px]:h-[100px] max-[700px]:w-auto max-[700px]:flex-1 max-[700px]:bg-bg">
+              <div className="flex h-22.5 w-22.5 items-center justify-center rounded-xl border border-accent/20 bg-band max-[700px]:h-25 max-[700px]:w-auto max-[700px]:flex-1 max-[700px]:bg-bg">
                 <div className="relative h-11 w-11">
                   <div className={`absolute inset-0 ${styles.orbitSpin}`}>
-                    <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -ml-[3px] rounded-full bg-accent shadow-[0_0_8px_2px_rgba(201,243,29,0.5)]" />
+                    <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -ml-0.75 rounded-full bg-accent shadow-[0_0_8px_2px_rgba(201,243,29,0.5)]" />
                   </div>
                   <span className="absolute top-1/2 left-1/2 h-2 w-2 -m-1 rounded-full bg-ink/50" />
                 </div>
               </div>
-              <div className="flex h-[90px] w-[90px] items-center justify-center overflow-hidden rounded-xl border border-accent/20 bg-band max-[700px]:h-[100px] max-[700px]:w-auto max-[700px]:flex-1 max-[700px]:bg-bg">
+              <div className="flex h-22.5 w-22.5 items-center justify-center overflow-hidden rounded-xl border border-accent/20 bg-band max-[700px]:h-25 max-[700px]:w-auto max-[700px]:flex-1 max-[700px]:bg-bg">
                 <div
-                  className="h-[60px] w-[60px] bg-[radial-gradient(rgba(201,243,29,0.35)_1px,transparent_1.5px)]"
+                  className="h-15 w-15 bg-[radial-gradient(rgba(201,243,29,0.35)_1px,transparent_1.5px)]"
                   style={{ backgroundSize: "12px 12px" }}
                 />
               </div>
@@ -1113,7 +1142,7 @@ export default function Work() {
 
       <span
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed right-7 bottom-7 z-[60] flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 hover:[animation:arrowPulse_0.6s_cubic-bezier(0.34,1.56,0.64,1)_1]"
+        className="fixed right-7 bottom-7 z-60 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 hover:animate-[arrowPulse_0.6s_cubic-bezier(0.34,1.56,0.64,1)_1]"
         style={{ opacity: showTop ? 1 : 0, pointerEvents: showTop ? "auto" : "none" }}
       >
         ↑

@@ -160,9 +160,9 @@ export default function Home() {
       <div id="main-content" className="min-w-0 flex-1">
         {/* HERO */}
         <section data-section-index="1" className="relative overflow-hidden px-0 pt-10 pb-24 max-[700px]:pt-5">
-          <div className="pointer-events-none absolute -top-[120px] -right-[10%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.16),transparent_70%)] blur-[50px]" />
-          <div className="pointer-events-none absolute -bottom-[220px] -left-[10%] h-[340px] w-[120%] -rotate-[4deg] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(90,150,45,0.14),transparent_70%)] blur-[60px]" />
-          <div className="relative mx-auto max-w-[1200px] px-8">
+          <div className="pointer-events-none absolute -top-30 right-[-10%] h-130 w-130 rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.16),transparent_70%)] blur-[50px]" />
+          <div className="pointer-events-none absolute -bottom-55 left-[-10%] h-85 w-[120%] rotate-[-4deg] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(90,150,45,0.14),transparent_70%)] blur-[60px]" />
+          <div className="relative mx-auto max-w-300 px-8">
             <Reveal className="mb-10 font-mono text-xs leading-[1.7] text-ink/45">
               <div>&gt; frontend engineer</div>
               <div>+ react / next.js / typescript</div>
@@ -170,7 +170,7 @@ export default function Home() {
 
             <div className="flex items-stretch gap-8">
               <div className="flex flex-1 flex-wrap items-stretch gap-10">
-                <div className="flex min-h-0 min-w-[260px] flex-1 basis-[280px] flex-col">
+                <div className="flex min-h-0 min-w-65 flex-1 basis-70 flex-col">
                   <div className="flex gap-4">
                     <div className="relative w-px shrink-0 bg-white/15 before:absolute before:-top-3.5 before:-left-1.5 before:text-xs before:text-ink/30 before:content-['+']" />
                     <Reveal y={18} duration={0.9}>
@@ -181,32 +181,32 @@ export default function Home() {
                     </Reveal>
                   </div>
                   <Reveal y={16} delay={0.15}>
-                    <p className="mt-6 ml-[17px] max-w-[420px] text-sm leading-relaxed text-ink/62">
+                    <p className="mt-6 ml-4.25 max-w-105 text-sm leading-relaxed text-ink/62">
                       I build websites that actually fit the people and businesses they&apos;re
                       made for — not a template with the colors swapped.
                     </p>
                   </Reveal>
-                  <div className="mt-9 ml-[17px] font-mono text-[10px] leading-relaxed tracking-[0.08em] whitespace-nowrap text-ink/30">
+                  <div className="mt-9 ml-4.25 font-mono text-[10px] leading-relaxed tracking-[0.08em] whitespace-nowrap text-ink/30">
                     BUILDING DIGITAL EXPERIENCES /
                   </div>
-                  <div className="mt-auto ml-[17px] flex max-w-[420px] flex-wrap items-center gap-5 border-t border-white/8 pt-10 max-[700px]:hidden">
+                  <div className="mt-auto ml-4.25 flex max-w-105 flex-wrap items-center gap-5 border-t border-white/8 pt-10 max-[700px]:hidden">
                     <Link href="/work" className="group flex items-center gap-3.5 text-inherit no-underline hover:opacity-80">
                       <span className={`${arrowCircleBase} h-10 w-10 text-[15px]`}>→</span>
                       <span className="font-mono text-[11px] tracking-[0.08em] text-ink">
                         VIEW MY WORK
                       </span>
                     </Link>
-                    <span className="h-px min-w-[40px] flex-1 bg-[repeating-linear-gradient(to_right,rgba(255,255,255,0.25)_0_4px,transparent_4px_8px)]" />
+                    <span className="h-px min-w-10 flex-1 bg-[repeating-linear-gradient(to_right,rgba(255,255,255,0.25)_0_4px,transparent_4px_8px)]" />
                     <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.08em] text-ink/40">
                       SCROLL{" "}
-                      <span className="inline-block [animation:scrollBob_1.6s_ease-in-out_infinite]">
+                      <span className="inline-block animate-[scrollBob_1.6s_ease-in-out_infinite]">
                         ↓
                       </span>
                     </span>
                   </div>
                 </div>
 
-                <div className="relative min-w-[260px] flex-1 basis-[280px]">
+                <div className="relative min-w-65 flex-1 basis-70">
                   <CameraFrame className="h-[clamp(300px,36vw,440px)] w-full max-[700px]:h-[clamp(200px,52vw,260px)]">
                     <ImageSlot
                       alt="Portrait of Daniel"
@@ -220,33 +220,33 @@ export default function Home() {
                       priority
                     />
                   </CameraFrame>
-                  <div className="absolute top-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-[5px] font-mono text-[11px] leading-relaxed text-ink backdrop-blur-sm">
+                  <div className="absolute top-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] leading-relaxed text-ink backdrop-blur-sm">
                     DEE.JPG
                     <br />
                     <small className="text-[10px] text-ink/55">2026-08-24 17:42</small>
                   </div>
-                  <div className="absolute top-4 right-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-[5px] font-mono text-[11px] text-ink/70 backdrop-blur-sm">
+                  <div className="absolute top-4 right-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] text-ink/70 backdrop-blur-sm">
                     VIEW_001
                   </div>
-                  <div className="absolute bottom-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-[5px] font-mono text-[11px] text-ink/70 backdrop-blur-sm">
+                  <div className="absolute bottom-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] text-ink/70 backdrop-blur-sm">
                     LAGOS, NG
                   </div>
-                  <div className="absolute right-4 bottom-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-[5px] font-mono text-[11px] text-ink/70 backdrop-blur-sm">
+                  <div className="absolute right-4 bottom-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] text-ink/70 backdrop-blur-sm">
                     3024×4032
                   </div>
                 </div>
 
-                <div className="mt-8 hidden max-[700px]:flex max-w-[420px] flex-wrap items-center gap-5 border-t border-white/8 pt-10">
+                <div className="mt-8 hidden max-[700px]:flex max-w-105 flex-wrap items-center gap-5 border-t border-white/8 pt-10">
                   <Link href="/work" className="group flex items-center gap-3.5 text-inherit no-underline hover:opacity-80">
                     <span className={`${arrowCircleBase} h-10 w-10 text-[15px]`}>→</span>
                     <span className="font-mono text-[11px] tracking-[0.08em] text-ink">
                       VIEW MY WORK
                     </span>
                   </Link>
-                  <span className="h-px min-w-[40px] flex-1 bg-[repeating-linear-gradient(to_right,rgba(255,255,255,0.25)_0_4px,transparent_4px_8px)]" />
+                  <span className="h-px min-w-10 flex-1 bg-[repeating-linear-gradient(to_right,rgba(255,255,255,0.25)_0_4px,transparent_4px_8px)]" />
                   <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.08em] text-ink/40">
                     SCROLL{" "}
-                    <span className="inline-block [animation:scrollBob_1.6s_ease-in-out_infinite]">
+                    <span className="inline-block animate-[scrollBob_1.6s_ease-in-out_infinite]">
                       ↓
                     </span>
                   </span>
@@ -257,16 +257,16 @@ export default function Home() {
         </section>
 
         {/* WORK TEASER */}
-        <section
-          data-section-index="2"
-          className="mx-auto max-w-[1200px] border-t border-accent/12 px-8 py-20 max-[700px]:px-5 max-[700px]:py-14"
-        >
+        {/* Divider on the full-width section, content capped inside — so
+            the line runs to the nav and viewport edges like the footer's. */}
+        <section data-section-index="2" className="border-t border-accent/12">
+          <div className="mx-auto max-w-300 px-8 py-20 max-[700px]:px-5 max-[700px]:py-14">
           <Reveal className="mb-12 flex flex-wrap items-start justify-between gap-6">
             <div>
               <div className={sectionLabel}>
                 <span className="text-accent">01</span> — WORK
               </div>
-              <h2 className={`${sectionHeading} max-w-[520px]`}>
+              <h2 className={`${sectionHeading} max-w-130`}>
                 THINGS I&apos;VE BUILT &amp; BROKEN &amp;{" "}
                 <span className="text-accent">REBUILT.</span>
               </h2>
@@ -281,14 +281,14 @@ export default function Home() {
               <Link
                 key={item.title}
                 href={item.href}
-                className={`block min-w-0 flex-1 basis-[280px] text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${item.stagger}`}
+                className={`block min-w-0 flex-1 basis-70 text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${item.stagger}`}
               >
                 <div className={chromeBar}>
                   <span className={chromeDot} />
                   <span className={chromeDot} />
                   <span className={chromeDot} />
                   {item.featured && (
-                    <span className="absolute -top-2.5 right-3.5 rounded bg-accent px-2 py-[3px] font-mono text-[10px] font-bold tracking-[0.05em] text-bg">
+                    <span className="absolute -top-2.5 right-3.5 rounded bg-accent px-2 py-0.75 font-mono text-[10px] font-bold tracking-wider text-bg">
                       FEATURED
                     </span>
                   )}
@@ -300,13 +300,13 @@ export default function Home() {
                   objectFit="contain"
                   sizes="(max-width: 700px) 90vw, 380px"
                   shape="rect"
-                  className="h-[200px] w-full border-x border-accent/15 max-[700px]:h-[130px]"
+                  className="h-50 w-full border-x border-accent/15 max-[700px]:h-32.5"
                 />
-                <div className="rounded-b-xl border border-t-0 border-accent/15 p-[18px] max-[700px]:p-3.5">
+                <div className="rounded-b-xl border border-t-0 border-accent/15 p-4.5 max-[700px]:p-3.5">
                   <h3 className="m-0 mb-2 text-[17px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
                     {item.title}
                   </h3>
-                  <p className="m-0 mb-3.5 text-[13px] leading-[1.5] text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
+                  <p className="m-0 mb-3.5 text-[13px] leading-normal text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
                     {item.desc}
                   </p>
                   <div className="flex items-center justify-between gap-3 font-mono text-[11px] text-accent/70 max-[700px]:text-[10px]">
@@ -317,11 +317,12 @@ export default function Home() {
               </Link>
             ))}
           </div>
+          </div>
         </section>
 
         {/* EXPERTISE / STACK */}
-        <section data-section-index="3" className="overflow-hidden bg-band py-[72px]">
-          <Reveal className="mx-auto mb-10 max-w-[1200px] px-8">
+        <section data-section-index="3" className="overflow-hidden bg-band py-18">
+          <Reveal className="mx-auto mb-10 max-w-300 px-8">
             <div className={sectionLabel}>
               <span className="text-accent">02</span> — STACK
             </div>
@@ -334,7 +335,7 @@ export default function Home() {
           </Reveal>
 
           <div
-            className={`${styles.marqueeMask} relative overflow-hidden py-[26px]`}
+            className={`${styles.marqueeMask} relative overflow-hidden py-6.5`}
             onMouseEnter={() => setMarqueeHover(true)}
             onMouseLeave={() => setMarqueeHover(false)}
           >
@@ -348,11 +349,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mx-auto mt-7 hidden max-w-[1200px] flex-wrap gap-3 px-8 min-[700px]:flex">
+          <div className="mx-auto mt-7 hidden max-w-300 flex-wrap gap-3 px-8 min-[700px]:flex">
             {STACK_PILLS.map((pill) => (
               <span
                 key={pill}
-                className="rounded-full border border-accent/20 px-4 py-2 font-mono text-xs tracking-[0.05em] text-ink/60 transition-colors duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-accent hover:bg-accent hover:text-bg"
+                className="rounded-full border border-accent/20 px-4 py-2 font-mono text-xs tracking-wider text-ink/60 transition-colors duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-accent hover:bg-accent hover:text-bg"
               >
                 {pill}
               </span>
@@ -361,12 +362,12 @@ export default function Home() {
         </section>
 
         {/* ABOUT TEASER */}
-        <section data-section-index="4" className="mx-auto max-w-[1200px] px-8 pt-[72px] pb-16 max-[700px]:px-5 max-[700px]:pt-12 max-[700px]:pb-10">
+        <section data-section-index="4" className="mx-auto max-w-300 px-8 pt-18 pb-16 max-[700px]:px-5 max-[700px]:pt-12 max-[700px]:pb-10">
           <Reveal className="mb-8">
             <div className={sectionLabel}>
               <span className="text-accent">03</span> — ABOUT
             </div>
-            <h2 className={`${sectionHeading} max-w-[640px]`}>
+            <h2 className={`${sectionHeading} max-w-160`}>
               THERE&apos;S A PERSON BEHIND THE PIXELS —{" "}
               <span className="text-accent">AND A FEW OPINIONS.</span>
             </h2>
@@ -379,7 +380,7 @@ export default function Home() {
             className="block overflow-hidden rounded-xl border border-accent/15 text-inherit no-underline transition-[border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-accent/40"
           >
             <div className="flex flex-wrap">
-              <div className="w-[260px] flex-[0_0_260px] max-[700px]:w-full max-[700px]:flex-[1_1_100%]">
+              <div className="w-65 flex-[0_0_260px] max-[700px]:w-full max-[700px]:flex-[1_1_100%]">
                 <div className="flex items-center gap-1.5 border-b border-accent/15 bg-band px-3.5 py-2.5">
                   <span className={chromeDot} />
                   <span className={chromeDot} />
@@ -392,11 +393,11 @@ export default function Home() {
                   objectPosition="center 20%"
                   sizes="(max-width: 700px) 90vw, 260px"
                   shape="rect"
-                  className="h-[200px] w-full"
+                  className="h-50 w-full"
                 />
               </div>
-              <div className="flex min-w-[280px] flex-1 items-center border-l border-accent/15 px-9 py-8 max-[700px]:border-t max-[700px]:border-l-0 max-[700px]:px-5 max-[700px]:py-6">
-                <p className="m-0 max-w-[480px] text-[15px] leading-relaxed text-ink/60">
+              <div className="flex min-w-70 flex-1 items-center border-l border-accent/15 px-9 py-8 max-[700px]:border-t max-[700px]:border-l-0 max-[700px]:px-5 max-[700px]:py-6">
+                <p className="m-0 max-w-120 text-[15px] leading-relaxed text-ink/60">
                   The stack, the process, and how a designer ended up living in a code
                   editor — the full story is on the About page.
                 </p>
@@ -406,11 +407,12 @@ export default function Home() {
         </section>
 
         {/* CONTACT CTA */}
-        <section
-          data-section-index="5"
-          className="relative mx-auto max-w-[1200px] overflow-hidden px-8 pt-20 pb-24 max-[700px]:px-5 max-[700px]:pt-14 max-[700px]:pb-16"
-        >
-          <div className="pointer-events-none absolute -top-[100px] -left-[10%] h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.14),transparent_70%)] blur-[50px]" />
+        {/* Clipping on the full-width section, glow anchored to the capped
+            content box — so the glow fades out instead of ending in a hard
+            vertical edge where the 1200px box stops. */}
+        <section data-section-index="5" className="overflow-hidden">
+          <div className="relative mx-auto max-w-300 px-8 pt-20 pb-24 max-[700px]:px-5 max-[700px]:pt-14 max-[700px]:pb-16">
+          <div className="pointer-events-none absolute -top-25 left-[-10%] h-120 w-120 rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.14),transparent_70%)] blur-[50px]" />
           <Reveal className="relative mb-10">
             <div className={sectionLabel}>
               <span className="text-accent">04</span> — CONTACT
@@ -423,22 +425,22 @@ export default function Home() {
             </a>
           </Reveal>
           <div className="flex flex-wrap overflow-hidden rounded-[20px] border border-accent/15">
-            <div className="flex min-w-[280px] flex-1 items-center p-12 max-[700px]:p-6">
+            <div className="flex min-w-70 flex-1 items-center p-12 max-[700px]:p-6">
               <Link href="/contact" className="group flex items-center gap-3.5 text-inherit no-underline hover:opacity-80">
-                <span className={`${arrowCircleBase} h-[52px] w-[52px] text-lg max-[700px]:h-10 max-[700px]:w-10 max-[700px]:text-[15px]`}>→</span>
+                <span className={`${arrowCircleBase} h-13 w-13 text-lg max-[700px]:h-10 max-[700px]:w-10 max-[700px]:text-[15px]`}>→</span>
                 <span className="font-mono text-[13px] tracking-[0.08em] text-ink">
                   START A CONVERSATION
                 </span>
               </Link>
             </div>
-            <div className="flex w-full flex-row border-t border-accent/15 min-[700px]:w-[150px] min-[700px]:flex-none min-[700px]:flex-col min-[700px]:border-t-0 min-[700px]:border-l">
+            <div className="flex w-full flex-row border-t border-accent/15 min-[700px]:w-37.5 min-[700px]:flex-none min-[700px]:flex-col min-[700px]:border-t-0 min-[700px]:border-l">
               {CONTACT_SOCIALS.map((s, i) => (
                 <a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative flex flex-1 items-center justify-center overflow-hidden py-4 font-mono text-xs tracking-[0.1em] text-ink/50 no-underline transition-colors duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent/5 hover:text-accent ${
+                  className={`group relative flex flex-1 items-center justify-center overflow-hidden py-4 font-mono text-xs tracking-widest text-ink/50 no-underline transition-colors duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-accent/5 hover:text-accent ${
                     i < CONTACT_SOCIALS.length - 1
                       ? "border-r border-accent/15 min-[700px]:border-r-0 min-[700px]:border-b"
                       : ""
@@ -452,20 +454,21 @@ export default function Home() {
               ))}
             </div>
           </div>
+          </div>
         </section>
 
         <Footer />
       </div>
-      <div className="hidden w-[72px] shrink-0 min-[1025px]:block" />
+      <div className="hidden w-18 shrink-0 min-[1025px]:block" />
 
       <div className="fixed top-1/2 right-7 z-50 hidden -translate-y-1/2 flex-col items-end min-[1025px]:flex">
-        <div className="text-right font-mono text-[10px] leading-[1.7] tracking-[0.05em] text-ink/50">
+        <div className="text-right font-mono text-[10px] leading-[1.7] tracking-wider text-ink/50">
           {String(activeSection).padStart(2, "0")}
           <br />/<br />
           {String(TOTAL_SECTIONS).padStart(2, "0")}
         </div>
-        <div className="my-3.5 mx-[3px] h-[110px] w-px bg-white/15" />
-        <div className="text-right font-mono text-[9px] leading-[1.7] tracking-[0.1em] whitespace-nowrap text-ink/35">
+        <div className="my-3.5 mx-0.75 h-27.5 w-px bg-white/15" />
+        <div className="text-right font-mono text-[9px] leading-[1.7] tracking-widest whitespace-nowrap text-ink/35">
           CREATIVE
           <br />
           <strong className="font-bold text-ink">DEVELOPER</strong>
@@ -474,7 +477,7 @@ export default function Home() {
           <br />
           ENGINEER
         </div>
-        <span className="my-4 mx-[3px] h-1 w-1 rounded-full bg-accent" />
+        <span className="my-4 mx-0.75 h-1 w-1 rounded-full bg-accent" />
         <div className="font-mono text-[9px] tracking-[0.15em] whitespace-nowrap text-ink/35 [writing-mode:vertical-rl]">
           SCROLL TO EXPLORE
         </div>

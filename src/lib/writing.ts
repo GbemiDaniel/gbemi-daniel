@@ -44,6 +44,7 @@ export const ARTICLES: Record<string, Article> = {
     readTime: "7 min",
     externalUrl:
       "https://dev.to/devdee/ai-can-vibe-code-now-so-whats-the-actual-frontend-roadmap-1mdc",
+    coverImage: "/images/articles/frontend-roadmap/cover.png",
     paragraphs: [
       "AI can now scaffold a landing page in seconds. It can generate components, suggest layouts, and even wire up state management with a single prompt. So where does that leave us \u2014 the people who spent years learning to do this by hand?",
       "The short answer: in a better position than you might think. But only if you shift where you spend your attention.",
@@ -59,7 +60,7 @@ export const ARTICLES: Record<string, Article> = {
     date: "\u2014",
     readTime: "2 min",
     externalUrl: "https://lnkd.in/p/eGMBQMgE",
-    coverImage: "https://static.licdn.com/aero-v1/sc/h/c45fy346jw096z9pbphyyhdz7",
+    coverImage: "/images/articles/glassmorphism-performance/cover.jpg",
     paragraphs: [
       "Glassmorphism is one of the most seductive design patterns in modern UI.",
       "I\u2019ve been drawn to it since before I knew it had a name. That frosted, translucent container that borrows the page\u2019s color, holds its own depth, and somehow makes every layout feel like it belongs to a higher tier. It bends to fit almost anything: B2B SaaS dashboards, Web3 platforms, crypto apps, portfolios.",
@@ -77,8 +78,7 @@ export const ARTICLES: Record<string, Article> = {
     date: "Jun 2026",
     readTime: "2 min",
     externalUrl: "https://lnkd.in/p/eMz34tPJ",
-    coverImage:
-      "https://media.licdn.com/dms/image/v2/D4E22AQHIXWopx0dmcw/feedshare-shrink_800/B4EZ7wY8_HHsAc-/0/1782149534248?e=2147483647&v=beta&t=EkJGVXBfqTBy1pmg93vmuVajMjW-WIe7Y1MOf5KmGic",
+    coverImage: "/images/articles/ai-slop/cover.jpg",
     paragraphs: [
       "\u201CAI slop\u201D is becoming the easiest thing to spot and the easiest thing to criticize.",
       "Every day on X, Reddit, and countless design communities, the conversation keeps resurfacing: the em-dashes, the generic pill buttons, the soft gradients, the \u201Cvibe coded\u201D interfaces that somehow feel familiar before you\u2019ve even interacted with them.",

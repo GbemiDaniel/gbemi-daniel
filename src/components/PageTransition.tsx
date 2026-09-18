@@ -32,7 +32,18 @@ import { gsap, HOUSE_EASE } from "@/lib/motion";
  * this project's React build yet — and there's no visible gap between old
  * and new content during a client-side navigation, so the arriving fade
  * covers most of what a transition needs to feel intentional.
+ *
+ * Skips the very first mount (the initial page load) rather than every one:
+ * this component's effect can fire before that first server-rendered tree
+ * has finished hydrating. Animating the raw DOM at that point sets an
+ * inline style React doesn't know about, which then trips a hydration
+ * mismatch. It's also the semantically right call regardless — a page
+ * transition is for arriving *from* a previous page, which the first load
+ * never has. `hasMounted` lives at module scope so it persists across the
+ * remounts every later navigation causes, only ever true once per session.
  */
+let hasMounted = false;
+
 export default function PageTransition({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -40,6 +51,11 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     const wrapper = ref.current;
     if (!wrapper) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    if (!hasMounted) {
+      hasMounted = true;
+      return;
+    }
 
     const animate = (target: HTMLElement) => {
       gsap.fromTo(

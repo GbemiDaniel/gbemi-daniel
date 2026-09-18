@@ -3,6 +3,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
+import ScreenGallery from "@/components/ScreenGallery";
 import Reveal from "@/components/Reveal";
 import { CASE_STUDIES } from "@/lib/caseStudies";
 
@@ -83,20 +84,23 @@ export default async function CaseStudyPage({
                 "browser chrome" cap and the image it sits on always line up
                 at exactly the same width, on every screen size. */}
             <div className="mx-auto max-w-[1000px] px-8 max-[700px]:px-5">
-              <div className={chromeBar}>
-                <span className={chromeDot} />
-                <span className={chromeDot} />
-                <span className={chromeDot} />
-              </div>
-              <ImageSlot
-                alt={`${cs.title} hero screenshot`}
-                placeholder="Drop hero screenshot"
-                src={cs.heroImage}
-                objectFit="contain"
-                sizes="(max-width: 1000px) 100vw, 1000px"
-                shape="rect"
-                className="block h-[480px] w-full rounded-b-xl border border-t-0 border-accent/15 max-[700px]:h-[220px]"
-              />
+              {cs.gallery ? (
+                <ScreenGallery title={cs.title} gallery={cs.gallery} />
+              ) : (
+                <>
+                  <div className={chromeBar}>
+                    <span className={chromeDot} />
+                    <span className={chromeDot} />
+                    <span className={chromeDot} />
+                  </div>
+                  <ImageSlot
+                    alt={`${cs.title} hero screenshot`}
+                    placeholder="Drop hero screenshot"
+                    shape="rect"
+                    className="block h-[480px] w-full rounded-b-xl border border-t-0 border-accent/15 max-[700px]:h-[220px]"
+                  />
+                </>
+              )}
             </div>
 
             {/* SECTIONS */}
@@ -131,12 +135,17 @@ export default async function CaseStudyPage({
         {/* NEXT PROJECT */}
         <Link
           href="/work"
-          className="block bg-accent px-8 py-14 text-bg no-underline transition-colors hover:bg-ink max-[700px]:px-5 max-[700px]:py-9"
+          className="group block border-t border-accent/12 bg-band px-8 py-14 no-underline transition-colors duration-250 hover:bg-accent/5 max-[700px]:px-5 max-[700px]:py-9"
         >
           <div className="mx-auto flex max-w-[1000px] flex-wrap items-center justify-between gap-4">
-            <span className="text-sm font-bold">More work</span>
-            <span className="text-2xl font-semibold max-[700px]:text-[18px]">
-              Back to all projects →
+            <span className="font-mono text-xs tracking-[0.08em] text-accent">MORE WORK</span>
+            <span className="flex items-center gap-3.5">
+              <span className="text-2xl font-semibold text-ink max-[700px]:text-[18px]">
+                Back to all projects
+              </span>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-lg text-bg transition-[transform,box-shadow] duration-300 [@media(hover:hover)]:group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1] max-[700px]:h-9 max-[700px]:w-9 max-[700px]:text-sm">
+                →
+              </span>
             </span>
           </div>
         </Link>

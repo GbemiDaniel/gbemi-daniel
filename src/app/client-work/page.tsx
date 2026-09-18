@@ -5,11 +5,9 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
+import Reveal from "@/components/Reveal";
 import styles from "./client-work.module.css";
 
-// Handshakers joins this grid once details are ready — the layout already
-// wraps via `auto-fit`, so a 4th entry drops in as a 4-up grid with no
-// structural change needed.
 const PROJECTS = [
   {
     key: "security-engineer-portfolio-cw",
@@ -21,8 +19,7 @@ const PROJECTS = [
     year: "2026",
     href: "/case-study/security-engineer-portfolio",
     imgSrc: "/images/projects/security-engineer-portfolio/desktop.png",
-    featured: true,
-    delay: "0.24s",
+    featured: false,
   },
   {
     key: "dice-portfolio-cw",
@@ -35,7 +32,6 @@ const PROJECTS = [
     href: "/case-study/dice-portfolio",
     imgSrc: "/images/projects/dice-portfolio/desktop.png",
     featured: false,
-    delay: "0.32s",
   },
   {
     key: "skillzbloom-cw",
@@ -48,7 +44,30 @@ const PROJECTS = [
     href: "/case-study/skillzbloom",
     imgSrc: "/images/projects/skillzbloom/desktop.png",
     featured: false,
-    delay: "0.4s",
+  },
+  {
+    key: "chronovault-cw",
+    num: "04",
+    title: "ChronoVault",
+    description: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
+    category: "COLLAB",
+    tagList: ["React", "Framer Motion"],
+    year: "2026",
+    href: "/case-study/chronovault",
+    imgSrc: "/images/projects/chronovault/chronovault.png",
+    featured: false,
+  },
+  {
+    key: "thrifty-cw",
+    num: "05",
+    title: "Thrifty",
+    description: "An online clothing store frontend — I built out a collaborator's design into a real, working shopping experience.",
+    category: "COLLAB",
+    tagList: ["React", "Next.js"],
+    year: "2026",
+    href: "/case-study/thrifty",
+    imgSrc: "/images/projects/thrifty/desktop.png",
+    featured: false,
   },
 ];
 
@@ -70,7 +89,7 @@ export default function ClientWork() {
               className={`${styles.curtainRise} inline-block font-mono text-xs tracking-[0.1em] text-ink/40`}
               style={{ animationDuration: "0.7s" }}
             >
-              <span className="text-accent">01</span> — CLIENT WORK &amp; COLLABS
+              <span className="text-accent">01</span> — COLLABORATIONS
             </div>
           </div>
           <div className="overflow-hidden">
@@ -86,17 +105,17 @@ export default function ClientWork() {
               className={`${styles.curtainRise} m-0 max-w-[560px] text-[15px] text-ink/55`}
               style={{ animationDuration: "0.8s", animationDelay: "0.16s" }}
             >
-              The engagements where the work had to survive contact with a real team, a real
-              budget, and a real launch date.
+              Not solo work. Every one of these meant teaming up with someone who knows their
+              own craft.
             </p>
           </div>
         </section>
 
         {/* GRID */}
         <section className="mx-auto max-w-[1200px] px-8 pt-2 pb-24 max-[700px]:px-5 max-[700px]:pb-16">
-          <div
-            className="grid gap-7 max-[700px]:gap-5"
-            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))" }}
+          <Reveal
+            stagger={0.08}
+            className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-7 max-[700px]:gap-5"
           >
             {PROJECTS.map((p) => {
               const on = hovered === p.key;
@@ -106,10 +125,8 @@ export default function ClientWork() {
                   href={p.href}
                   onMouseEnter={() => setHovered(p.key)}
                   onMouseLeave={() => setHovered(null)}
-                  className={`${styles.curtainRise} relative block overflow-hidden rounded-xl text-inherit no-underline transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[7px]`}
+                  className="relative block overflow-hidden rounded-xl text-inherit no-underline transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[7px]"
                   style={{
-                    animationDuration: "0.7s",
-                    animationDelay: p.delay,
                     border: `1px solid ${on ? "rgba(201,243,29,0.4)" : "rgba(201,243,29,0.15)"}`,
                     boxShadow: on ? "0 28px 50px -16px rgba(0,0,0,0.6)" : "0 0 0 rgba(0,0,0,0)",
                   }}
@@ -177,18 +194,7 @@ export default function ClientWork() {
                 </Link>
               );
             })}
-            <div
-              className={`${styles.curtainRise} flex min-h-[340px] flex-col items-center justify-center gap-2.5 rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-[180px]`}
-              style={{ animationDuration: "0.7s", animationDelay: "0.5s" }}
-            >
-              <span className="font-mono text-[26px] text-accent/60">+</span>
-              <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
-                More client work
-                <br />
-                in progress
-              </span>
-            </div>
-          </div>
+          </Reveal>
         </section>
 
         <Footer />

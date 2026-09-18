@@ -78,6 +78,7 @@ const COMBINED: CombinedItem[] = [
     category: "Independent",
     year: "—",
     href: "/work",
+    imgSrc: "/images/projects/handshakers/desktop.png",
   },
   {
     key: "chronovault",
@@ -85,6 +86,7 @@ const COMBINED: CombinedItem[] = [
     category: "Collab",
     year: "2026",
     href: "/case-study/chronovault",
+    imgSrc: "/images/projects/chronovault/chronovault.png",
   },
   {
     key: "thrifty",
@@ -148,31 +150,36 @@ const RAW_PROJECTS: RawProject[] = [
     key: "handshakers-g",
     num: "04",
     title: "Handshakers",
-    description: "Details coming soon — my newest build.",
+    description: "A time-tracking workspace for teams sharing one account. Everyone logs their own hours, and it works out exactly what each person is owed.",
     category: "INDEPENDENT",
     tagList: [],
     year: "—",
     href: "/work",
-    imgSrc: "",
+    imgSrc: "/images/projects/handshakers/desktop.png",
     featured: false,
     group: "main",
   },
+  // ChronoVault and Thrifty are real collaborations (both have a
+  // collaborator and a shipped build), not exploratory concepts — they
+  // belong in Featured & Collabs like everything else real right now.
+  // Nothing genuinely concept-stage exists yet, so that section stays an
+  // honest placeholder until it does.
   {
     key: "chronovault-g",
-    num: "01",
+    num: "05",
     title: "ChronoVault",
     description: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
     category: "COLLAB",
     tagList: ["React", "Framer Motion"],
     year: "2026",
     href: "/case-study/chronovault",
-    imgSrc: "",
+    imgSrc: "/images/projects/chronovault/chronovault.png",
     featured: false,
-    group: "concept",
+    group: "main",
   },
   {
     key: "thrifty-g",
-    num: "02",
+    num: "06",
     title: "Thrifty",
     description: "An online clothing store frontend — I built out a collaborator's design into a real, working shopping experience.",
     category: "COLLAB",
@@ -181,7 +188,7 @@ const RAW_PROJECTS: RawProject[] = [
     href: "/case-study/thrifty",
     imgSrc: "/images/projects/thrifty/desktop.png",
     featured: false,
-    group: "concept",
+    group: "main",
   },
 ];
 
@@ -662,10 +669,15 @@ export default function Work() {
               →
             </span>
           </div>
-          <h3 className="m-0 mb-2 text-[19px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
+          {/* Both title and description get a fixed footprint (truncate /
+              line-clamp + a matching explicit height) regardless of how long
+              the actual text is — otherwise a longer name or blurb makes
+              that one card taller than its neighbors, which is what was
+              throwing off the wall's alignment. */}
+          <h3 className="m-0 mb-2 truncate text-[19px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
             {p.title}
           </h3>
-          <p className="m-0 mb-3.5 text-[13px] leading-normal text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
+          <p className="m-0 mb-3.5 line-clamp-3 h-15.5 text-[13px] leading-[1.55] text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:h-8.5 max-[700px]:text-[11.5px] max-[700px]:leading-[1.5]">
             {p.description}
           </p>
           <div className="mb-3 flex flex-wrap gap-1.5 max-[700px]:mb-2">
@@ -705,8 +717,8 @@ export default function Work() {
               Selected Work
             </div>
             <h1 className="relative m-0 mb-3 text-[clamp(28px,4.2vw,44px)] leading-[1.15] font-bold">
-              A gallery of things I&apos;ve{" "}
-              <span className="text-accent">shipped, broken, and rebuilt.</span>
+              Some of this is mine.{" "}
+              <span className="text-accent">The rest, I built for people I worked with.</span>
             </h1>
             <p className="relative m-0 max-w-140 text-[15px] text-ink/55">
               Real projects for real people — each one built to fit who it&apos;s actually for, not
@@ -952,6 +964,12 @@ export default function Work() {
             <div className="font-mono text-xs tracking-widest text-ink/40">
               <span className="text-accent">01</span> — FEATURED &amp; COLLABS
             </div>
+            <Link
+              href="/client-work"
+              className="font-mono text-[11px] tracking-[0.08em] text-accent no-underline hover:underline"
+            >
+              VIEW ALL →
+            </Link>
           </div>
           {isMobile ? (
             <div
@@ -960,44 +978,15 @@ export default function Work() {
               style={{ scrollSnapType: "x mandatory", paddingInline: "14vw", scrollPaddingInline: "14vw" }}
             >
               {mainProjects.map((p, i) => projectCard(p, i))}
-              <div className="min-h-85 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-55 max-[700px]:w-[72vw] max-[700px]:p-3.5">
-                <div className="flex h-full flex-col items-center justify-center gap-2.5">
-                  <span className="font-mono text-[26px] text-accent/60">+</span>
-                  <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
-                    More client work
-                    <br />
-                    in progress
-                  </span>
-                </div>
-              </div>
             </div>
           ) : (
             <CurvedWallRow
-              cards={[
-                ...mainProjects.map((p, i) => ({
-                  key: p.key,
-                  node: projectCard(p, i),
-                  title: p.title,
-                  subtitle: p.category,
-                })),
-                {
-                  key: "featured-more",
-                  title: "More work",
-                  subtitle: "In progress",
-                  node: (
-                    <div className="min-h-85 w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
-                      <div className="flex h-full flex-col items-center justify-center gap-2.5">
-                        <span className="font-mono text-[26px] text-accent/60">+</span>
-                        <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
-                          More client work
-                          <br />
-                          in progress
-                        </span>
-                      </div>
-                    </div>
-                  ),
-                },
-              ]}
+              cards={mainProjects.map((p, i) => ({
+                key: p.key,
+                node: projectCard(p, i),
+                title: p.title,
+                subtitle: p.category,
+              }))}
             />
           )}
         </section>
@@ -1017,7 +1006,7 @@ export default function Work() {
             >
               {conceptProjects.map((p, i) => projectCard(p, i))}
               <div
-                className={`min-h-85 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-55 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack1}`}
+                className={`min-h-50 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-35 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack1}`}
               >
                 <div className="flex h-full flex-col items-center justify-center gap-2.5">
                   <span className="font-mono text-[26px] text-accent/60">+</span>
@@ -1029,7 +1018,7 @@ export default function Work() {
                 </div>
               </div>
               <div
-                className={`min-h-85 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/15 p-5 text-center max-[700px]:min-h-55 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack2}`}
+                className={`min-h-50 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/15 p-5 text-center max-[700px]:min-h-35 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack2}`}
               >
                 <div className="flex h-full flex-col items-center justify-center gap-2.5">
                   <span className="font-mono text-[26px] text-accent/40">?</span>
@@ -1055,7 +1044,7 @@ export default function Work() {
                   title: "More concepts",
                   subtitle: "Brewing",
                   node: (
-                    <div className="min-h-85 w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
+                    <div className="min-h-50 w-[320px] rounded-xl border border-dashed border-accent/25 p-5 text-center">
                       <div className="flex h-full flex-col items-center justify-center gap-2.5">
                         <span className="font-mono text-[26px] text-accent/60">+</span>
                         <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
@@ -1072,7 +1061,7 @@ export default function Work() {
                   title: "Still sketching",
                   subtitle: "The next one",
                   node: (
-                    <div className="min-h-85 w-[320px] rounded-xl border border-dashed border-accent/15 p-5 text-center">
+                    <div className="min-h-50 w-[320px] rounded-xl border border-dashed border-accent/15 p-5 text-center">
                       <div className="flex h-full flex-col items-center justify-center gap-2.5">
                         <span className="font-mono text-[26px] text-accent/40">?</span>
                         <span className="font-mono text-[11px] tracking-[0.06em] text-ink/30">
@@ -1118,8 +1107,8 @@ export default function Work() {
                 Visit the Lab →
               </Link>
             </div>
-            <div className="flex gap-4 max-[700px]:gap-3 max-[700px]:rounded-t-2xl max-[700px]:border-b max-[700px]:border-accent/15 max-[700px]:bg-band max-[700px]:p-5">
-              <div className="flex h-22.5 w-22.5 items-center justify-center rounded-xl border border-accent/20 bg-band max-[700px]:h-25 max-[700px]:w-auto max-[700px]:flex-1 max-[700px]:bg-bg">
+            <div className="flex gap-4 max-[700px]:justify-center max-[700px]:gap-3 max-[700px]:rounded-t-2xl max-[700px]:border-b max-[700px]:border-accent/15 max-[700px]:bg-band max-[700px]:p-5">
+              <div className="flex h-22.5 w-22.5 shrink-0 items-center justify-center rounded-xl border border-accent/20 bg-band max-[700px]:bg-bg">
                 <div className="relative h-11 w-11">
                   <div className={`absolute inset-0 ${styles.orbitSpin}`}>
                     <span className="absolute top-0 left-1/2 h-1.5 w-1.5 -ml-0.75 rounded-full bg-accent shadow-[0_0_8px_2px_rgba(201,243,29,0.5)]" />
@@ -1127,7 +1116,7 @@ export default function Work() {
                   <span className="absolute top-1/2 left-1/2 h-2 w-2 -m-1 rounded-full bg-ink/50" />
                 </div>
               </div>
-              <div className="flex h-22.5 w-22.5 items-center justify-center overflow-hidden rounded-xl border border-accent/20 bg-band max-[700px]:h-25 max-[700px]:w-auto max-[700px]:flex-1 max-[700px]:bg-bg">
+              <div className="flex h-22.5 w-22.5 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-accent/20 bg-band max-[700px]:bg-bg">
                 <div
                   className="h-15 w-15 bg-[radial-gradient(rgba(201,243,29,0.35)_1px,transparent_1.5px)]"
                   style={{ backgroundSize: "12px 12px" }}
@@ -1142,7 +1131,7 @@ export default function Work() {
 
       <span
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed right-7 bottom-7 z-60 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 hover:animate-[arrowPulse_0.6s_cubic-bezier(0.34,1.56,0.64,1)_1]"
+        className="fixed right-7 bottom-7 z-60 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 [@media(hover:hover)]:hover:animate-[arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]"
         style={{ opacity: showTop ? 1 : 0, pointerEvents: showTop ? "auto" : "none" }}
       >
         ↑

@@ -1,12 +1,13 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import Reveal from "@/components/Reveal";
 import CameraFrame from "@/components/CameraFrame";
+import ScrollRail from "@/components/ScrollRail";
 import styles from "./home.module.css";
 
 const WORK_ITEMS = [
@@ -26,6 +27,7 @@ const WORK_ITEMS = [
     featured: false,
     stagger: "mt-3.5 max-[700px]:mt-0",
     placeholder: "Drop project image",
+    imgSrc: "/images/projects/chronovault/chronovault.png",
     title: "ChronoVault",
     desc: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
     stack: "React / Tailwind / Framer Motion",
@@ -97,8 +99,6 @@ const CONTACT_SOCIALS = [
   },
 ];
 
-const TOTAL_SECTIONS = 5;
-
 const sectionLabel = "mb-4 font-mono text-xs tracking-[0.1em] text-ink/40";
 const sectionHeading = "m-0 mb-4 text-[clamp(26px,3.6vw,38px)] font-bold leading-[1.15]";
 const sectionLink =
@@ -107,7 +107,7 @@ const chromeDot = "h-[7px] w-[7px] rounded-full bg-ink/20";
 const chromeBar =
   "relative flex items-center gap-1.5 rounded-t-xl border border-b-0 border-accent/15 bg-band px-3.5 py-2.5";
 const arrowCircleBase =
-  "flex shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-[transform,box-shadow] duration-300 group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.34,1.56,0.64,1)_1]";
+  "flex shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-[transform,box-shadow] duration-300 [@media(hover:hover)]:group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]";
 
 function MarqueeGroup() {
   return (
@@ -125,41 +125,17 @@ function MarqueeGroup() {
 }
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState(1);
   const [marqueeHover, setMarqueeHover] = useState(false);
-  const tickingRef = useRef(false);
-
-  useEffect(() => {
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-section-index]")
-    );
-
-    const onScroll = () => {
-      if (tickingRef.current) return;
-      tickingRef.current = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY + window.innerHeight * 0.3;
-        let active = 1;
-        for (const el of sections) {
-          if (el.offsetTop <= y) active = Number(el.getAttribute("data-section-index"));
-        }
-        setActiveSection(active);
-        tickingRef.current = false;
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
     <div className="flex min-h-screen bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
       <Nav />
 
       <div id="main-content" className="min-w-0 flex-1">
-        {/* HERO */}
-        <section data-section-index="1" className="relative overflow-hidden px-0 pt-10 pb-24 max-[700px]:pt-5">
+        {/* HERO — intentionally untagged: it's the intro, not one of the
+            numbered sections (matches the "01 — WORK" etc. labels below,
+            which don't count the hero either). */}
+        <section className="relative overflow-hidden px-0 pt-10 pb-24 max-[700px]:pt-5">
           <div className="pointer-events-none absolute -top-30 right-[-10%] h-130 w-130 rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.16),transparent_70%)] blur-[50px]" />
           <div className="pointer-events-none absolute -bottom-55 left-[-10%] h-85 w-[120%] rotate-[-4deg] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(90,150,45,0.14),transparent_70%)] blur-[60px]" />
           <div className="relative mx-auto max-w-300 px-8">
@@ -259,17 +235,23 @@ export default function Home() {
         {/* WORK TEASER */}
         {/* Divider on the full-width section, content capped inside — so
             the line runs to the nav and viewport edges like the footer's. */}
-        <section data-section-index="2" className="border-t border-accent/12">
+        <section data-section-index="1" className="border-t border-accent/12">
           <div className="mx-auto max-w-300 px-8 py-20 max-[700px]:px-5 max-[700px]:py-14">
           <Reveal className="mb-12 flex flex-wrap items-start justify-between gap-6">
             <div>
               <div className={sectionLabel}>
                 <span className="text-accent">01</span> — WORK
               </div>
-              <h2 className={`${sectionHeading} max-w-130`}>
-                THINGS I&apos;VE BUILT &amp; BROKEN &amp;{" "}
-                <span className="text-accent">REBUILT.</span>
+              {/* Same split as About: short bold primary line, calmer
+                  supporting line underneath, sentence case. The "who it's
+                  for" clause keeps its accent tint on the supporting line
+                  instead of losing the color emphasis entirely. */}
+              <h2 className="m-0 mb-2 max-w-130 text-[clamp(24px,3.2vw,34px)] leading-[1.25] font-bold">
+                A few things I&apos;ve built myself.
               </h2>
+              <p className="m-0 mb-4 max-w-110 text-[13px] leading-relaxed text-accent/80">
+                For professionals and people with an idea.
+              </p>
               <Link href="/work" className={sectionLink}>
                 → VIEW ALL PROJECTS
               </Link>
@@ -321,7 +303,7 @@ export default function Home() {
         </section>
 
         {/* EXPERTISE / STACK */}
-        <section data-section-index="3" className="overflow-hidden bg-band py-18">
+        <section data-section-index="2" className="overflow-hidden bg-band py-18">
           <Reveal className="mx-auto mb-10 max-w-300 px-8">
             <div className={sectionLabel}>
               <span className="text-accent">02</span> — STACK
@@ -362,15 +344,23 @@ export default function Home() {
         </section>
 
         {/* ABOUT TEASER */}
-        <section data-section-index="4" className="mx-auto max-w-300 px-8 pt-18 pb-16 max-[700px]:px-5 max-[700px]:pt-12 max-[700px]:pb-10">
+        <section data-section-index="3" className="mx-auto max-w-300 px-8 pt-18 pb-16 max-[700px]:px-5 max-[700px]:pt-12 max-[700px]:pb-10">
           <Reveal className="mb-8">
             <div className={sectionLabel}>
               <span className="text-accent">03</span> — ABOUT
             </div>
-            <h2 className={`${sectionHeading} max-w-160`}>
-              THERE&apos;S A PERSON BEHIND THE PIXELS —{" "}
-              <span className="text-accent">AND A FEW OPINIONS.</span>
+            {/* Same words as approved, split into a short primary line (still
+                bold, still ends on accent) and a calmer supporting line
+                underneath — the pattern the Stack section already uses.
+                Sentence case instead of full caps too: caps read fine short,
+                but slow reading down once a heading runs this long. */}
+            <h2 className="m-0 mb-2 max-w-140 text-[clamp(24px,3.2vw,34px)] leading-[1.25] font-bold">
+              The person behind the{" "}
+              <span className="text-accent">idea, the code, the products, and the service.</span>
             </h2>
+            <p className="m-0 mb-4 max-w-120 text-[13px] leading-relaxed text-ink/60">
+              And why I&apos;m the best fit to bring yours to life.
+            </p>
             <Link href="/about" className={sectionLink}>
               → GET TO KNOW ME
             </Link>
@@ -398,8 +388,8 @@ export default function Home() {
               </div>
               <div className="flex min-w-70 flex-1 items-center border-l border-accent/15 px-9 py-8 max-[700px]:border-t max-[700px]:border-l-0 max-[700px]:px-5 max-[700px]:py-6">
                 <p className="m-0 max-w-120 text-[15px] leading-relaxed text-ink/60">
-                  The stack, the process, and how a designer ended up living in a code
-                  editor — the full story is on the About page.
+                  How I work, and why every build starts with who it&apos;s for. More on the
+                  About page.
                 </p>
               </div>
             </div>
@@ -410,7 +400,7 @@ export default function Home() {
         {/* Clipping on the full-width section, glow anchored to the capped
             content box — so the glow fades out instead of ending in a hard
             vertical edge where the 1200px box stops. */}
-        <section data-section-index="5" className="overflow-hidden">
+        <section data-section-index="4" className="overflow-hidden">
           <div className="relative mx-auto max-w-300 px-8 pt-20 pb-24 max-[700px]:px-5 max-[700px]:pt-14 max-[700px]:pb-16">
           <div className="pointer-events-none absolute -top-25 left-[-10%] h-120 w-120 rounded-full bg-[radial-gradient(circle,rgba(140,210,60,0.14),transparent_70%)] blur-[50px]" />
           <Reveal className="relative mb-10">
@@ -461,27 +451,7 @@ export default function Home() {
       </div>
       <div className="hidden w-18 shrink-0 min-[1025px]:block" />
 
-      <div className="fixed top-1/2 right-7 z-50 hidden -translate-y-1/2 flex-col items-end min-[1025px]:flex">
-        <div className="text-right font-mono text-[10px] leading-[1.7] tracking-wider text-ink/50">
-          {String(activeSection).padStart(2, "0")}
-          <br />/<br />
-          {String(TOTAL_SECTIONS).padStart(2, "0")}
-        </div>
-        <div className="my-3.5 mx-0.75 h-27.5 w-px bg-white/15" />
-        <div className="text-right font-mono text-[9px] leading-[1.7] tracking-widest whitespace-nowrap text-ink/35">
-          CREATIVE
-          <br />
-          <strong className="font-bold text-ink">DEVELOPER</strong>
-          <br />/<br />
-          FRONTEND
-          <br />
-          ENGINEER
-        </div>
-        <span className="my-4 mx-0.75 h-1 w-1 rounded-full bg-accent" />
-        <div className="font-mono text-[9px] tracking-[0.15em] whitespace-nowrap text-ink/35 [writing-mode:vertical-rl]">
-          SCROLL TO EXPLORE
-        </div>
-      </div>
+      <ScrollRail />
     </div>
   );
 }

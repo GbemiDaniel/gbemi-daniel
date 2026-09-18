@@ -3,6 +3,18 @@ export type CaseStudySection = {
   body: string;
 };
 
+export type Screen = {
+  src: string;
+  /** Page name shown in the switcher, e.g. "Home", "Shop", "Dashboard". */
+  label: string;
+};
+
+export type Gallery = {
+  desktop: Screen[];
+  /** Optional — the device toggle only appears when this has screens. */
+  mobile?: Screen[];
+};
+
 export type CaseStudy = {
   slug: string;
   title: string;
@@ -10,7 +22,11 @@ export type CaseStudy = {
   stack: string[];
   year: string;
   liveUrl?: string;
-  heroImage?: string;
+  /**
+   * Screens per device. Add a page by appending to a list — the page
+   * switcher appears automatically once a device has more than one.
+   */
+  gallery?: Gallery;
   sections: CaseStudySection[];
 };
 
@@ -22,7 +38,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     stack: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2026",
     liveUrl: "https://okoh-bernard-portfolio.vercel.app/",
-    heroImage: "/images/projects/security-engineer-portfolio/desktop.png",
+    gallery: {
+      desktop: [{ src: "/images/projects/security-engineer-portfolio/desktop.png", label: "Home" }],
+      mobile: [{ src: "/images/projects/security-engineer-portfolio/mobile.png", label: "Home" }],
+    },
     sections: [
       {
         heading: "The Brief",
@@ -49,7 +68,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     stack: ["React", "Tailwind CSS", "Responsive UI Systems"],
     year: "2026",
     liveUrl: "https://dice-portfolio.vercel.app/",
-    heroImage: "/images/projects/dice-portfolio/desktop.png",
+    gallery: {
+      desktop: [{ src: "/images/projects/dice-portfolio/desktop.png", label: "Home" }],
+      mobile: [{ src: "/images/projects/dice-portfolio/mobile.png", label: "Home" }],
+    },
     sections: [
       {
         heading: "The Brief",
@@ -76,7 +98,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     stack: ["TypeScript", "Tailwind CSS", "Clerk Auth"],
     year: "2025",
     liveUrl: "https://skillz-bloom-jade.vercel.app/skills",
-    heroImage: "/images/projects/skillzbloom/desktop.png",
+    gallery: {
+      desktop: [{ src: "/images/projects/skillzbloom/desktop.png", label: "Home" }],
+      mobile: [{ src: "/images/projects/skillzbloom/mobile.png", label: "Home" }],
+    },
     sections: [
       {
         heading: "The Brief",
@@ -103,6 +128,13 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     stack: ["React", "Tailwind CSS", "Framer Motion"],
     year: "2026",
     liveUrl: "https://chronovault-mvp.vercel.app",
+    gallery: {
+      desktop: [
+        { src: "/images/projects/chronovault/chronovault.png", label: "Home" },
+        { src: "/images/projects/chronovault/dashboard.png", label: "Dashboard" },
+        { src: "/images/projects/chronovault/create-capsule.png", label: "Create Capsule" },
+      ],
+    },
     sections: [
       {
         heading: "The Brief",
@@ -128,7 +160,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     category: "Collab",
     stack: ["React", "Next.js", "Tailwind CSS"],
     year: "2026",
-    heroImage: "/images/projects/thrifty/desktop.png",
+    gallery: {
+      desktop: [{ src: "/images/projects/thrifty/desktop.png", label: "Home" }],
+      mobile: [{ src: "/images/projects/thrifty/mobile.png", label: "Home" }],
+    },
     sections: [
       {
         heading: "The Brief",

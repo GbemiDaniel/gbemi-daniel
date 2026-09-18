@@ -46,6 +46,51 @@ img {
   }
 }
 
+/* ── Scrollbar ──────────────────────────────────────────────────────────
+   A thin floating pill on the band colour, with the same accent/12 hairline
+   the sidebar uses as its edge. It stays quiet at rest and picks up the lime
+   accent on hover and while dragging.
+
+   Chrome/Edge 121+ ignore every ::-webkit-scrollbar rule once the standard
+   scrollbar-color/width properties are set, so the standard pair is scoped to
+   browsers without the WebKit pseudo-elements (Firefox). WebKit browsers
+   keep the richer version: rounded thumb, inset padding, hover state. */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-band);
+  box-shadow: inset 1px 0 0 rgba(201, 243, 29, 0.12);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(242, 239, 233, 0.16);
+  border: 3px solid transparent;
+  border-radius: 9999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(201, 243, 29, 0.7);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--color-accent);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-band);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(242, 239, 233, 0.22) var(--color-band);
+  }
+}
+
 @keyframes scrollBob {
   0%,
   100% {
@@ -60,19 +105,12 @@ img {
 
 @keyframes arrowPulse {
   0% {
-    transform: scale(1) rotate(0deg);
-    box-shadow: 0 0 0 0 rgba(201, 243, 29, 0.6);
-  }
-  40% {
-    transform: scale(1.15) rotate(10deg);
-    box-shadow: 0 0 0 10px rgba(201, 243, 29, 0);
-  }
-  70% {
-    transform: scale(1.05) rotate(-5deg);
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 243, 29, 0.5);
   }
   100% {
-    transform: scale(1.1) rotate(0deg);
-    box-shadow: 0 0 0 0 rgba(201, 243, 29, 0);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 8px rgba(201, 243, 29, 0);
   }
 }
 

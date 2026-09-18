@@ -45,8 +45,8 @@ export default function JargonTranslator() {
           {PAIRS.map((p, i) => (
             <span
               key={p.jargon}
-              className={`h-[3px] rounded-full transition-all duration-500 ${
-                i === index ? "w-5 bg-accent" : "w-2 bg-ink/15"
+              className={`h-[3px] w-5 origin-left rounded-full transition-[transform,background-color] duration-500 ${
+                i === index ? "scale-x-100 bg-accent" : "scale-x-[0.4] bg-ink/15"
               }`}
             />
           ))}

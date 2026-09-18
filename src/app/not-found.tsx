@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className="flex min-h-screen bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
       <Nav />
 
-      <div className="flex flex-1 items-center justify-center px-8 py-16">
+      <div id="main-content" className="flex flex-1 items-center justify-center px-8 py-16">
         <div className="max-w-[480px] text-center">
           <div className="mb-5 font-mono text-[13px] text-accent/60">
             $ cd /this-page

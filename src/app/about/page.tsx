@@ -39,7 +39,7 @@ function Section({
   );
 }
 const arrowCircleBase =
-  "flex shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-[transform,box-shadow] duration-300 group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.34,1.56,0.64,1)_1]";
+  "flex shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-[transform,box-shadow] duration-300 [@media(hover:hover)]:group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]";
 const inlineLink =
   "text-ink underline decoration-accent/50 underline-offset-[5px] transition-colors hover:text-accent";
 
@@ -296,8 +296,12 @@ export default function About() {
             <div className={sectionLabel}>
               <span className="text-accent">03</span> — CURRENTLY
             </div>
-            <p className="m-0 max-w-230 text-[clamp(22px,2.8vw,34px)] leading-[1.35] font-semibold">
-              Building my own ideas and collaborating with people across fields — from{" "}
+            <h2 className="m-0 mb-0! max-w-230 text-[clamp(30px,4.2vw,44px)] leading-[1.2] font-bold">
+              Building my own ideas{" "}
+              <span className="text-accent">and collaborating with people across fields.</span>
+            </h2>
+            <p className="m-0 mt-5 max-w-230 text-base leading-[1.7] text-ink/62 max-[700px]:text-[15px]">
+              From{" "}
               <Link href="/case-study/security-engineer-portfolio" className={inlineLink}>
                 security
               </Link>{" "}
@@ -429,7 +433,7 @@ export default function About() {
 
       <span
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed right-7 bottom-7 z-60 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 hover:animate-[arrowPulse_0.6s_cubic-bezier(0.34,1.56,0.64,1)_1]"
+        className="fixed right-7 bottom-7 z-60 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 [@media(hover:hover)]:hover:animate-[arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]"
         style={{ opacity: showTop ? 1 : 0, pointerEvents: showTop ? "auto" : "none" }}
       >
         ↑

@@ -1,13 +1,5 @@
 /* Bits that don't reduce cleanly to Tailwind utilities. */
 
-.noScrollbar {
-  scrollbar-width: none;
-}
-
-.noScrollbar::-webkit-scrollbar {
-  display: none;
-}
-
 @keyframes revealUp {
   from {
     opacity: 0;
@@ -21,4 +13,21 @@
 
 .reveal {
   animation: revealUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Same orbit as the Lab teaser and loading screen. */
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbitSpin {
+  animation: orbit 3.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitSpin {
+    animation: none;
+  }
 }

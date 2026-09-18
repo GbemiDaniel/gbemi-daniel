@@ -5,18 +5,22 @@ import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import styles from "./concepts.module.css";
 
-const PROJECTS = [
-  {
-    key: "nightline-c",
-    title: "Nightline — Concept",
-    description: "An exploration in real-time transit UI, built with no client and no deadline.",
-    category: "CONCEPT",
-    tagList: ["React", "Mapbox"],
-    year: "2024",
-    href: "/work",
-    rot: "-1.2deg",
-  },
-];
+type ConceptProject = {
+  key: string;
+  title: string;
+  description: string;
+  category: string;
+  tagList: string[];
+  year: string;
+  href: string;
+  rot: string;
+};
+
+// Everything real right now is a collaboration, over on /work — nothing
+// concept-stage exists yet. Left empty rather than removed: the grid below
+// already renders a clean, honest state with zero items, and adding a real
+// one later is just pushing an object here.
+const PROJECTS: ConceptProject[] = [];
 
 export default function Concepts() {
   return (
@@ -38,7 +42,8 @@ export default function Concepts() {
             <span className={styles.cursor} />— <span className="text-accent">no client, no deadline.</span>
           </h1>
           <p className="m-0 max-w-[560px] text-[15px] text-ink/55">
-            Unfinished by design — some of these never needed to ship to prove the point.
+            Nothing here yet. When something doesn&apos;t need anyone&apos;s blessing to exist,
+            it&apos;ll show up here first.
           </p>
         </section>
 

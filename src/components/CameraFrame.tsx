@@ -1,13 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, HOUSE_EASE } from "@/lib/motion";
 import styles from "./CameraFrame.module.css";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const CORNERS = [
   { pos: "top-[-10px] left-[-10px]", border: "border-t-2 border-l-2", from: { x: -16, y: -16 } },
@@ -48,9 +43,9 @@ export default function CameraFrame({
             opacity: 1,
             x: 0,
             y: 0,
-            duration: 0.9,
+            duration: 0.6,
             delay: 0.1 + i * 0.06,
-            ease: "back.out(1.8)",
+            ease: HOUSE_EASE,
             scrollTrigger: { trigger: el, start: "top 85%", once: true },
           }
         );

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SigilD from "@/components/SigilD";
 import styles from "./loading.module.css";
 
 /**
@@ -8,10 +8,16 @@ import styles from "./loading.module.css";
  * it needs to paint instantly, before the target route's own JS is even
  * available, so real progress can't be known — the bar is honestly
  * indeterminate rather than a fake, timed fill.
+ *
+ * `fixed inset-0` rather than `min-h-screen` in normal flow: this screen
+ * never renders the fixed mobile nav bar, but still sits inside <body>,
+ * which gets `padding-top: 60px` globally to clear that bar. In flow, that
+ * padding pushed this screen's centered content down with nothing to
+ * offset. Fixed positioning centers against the real viewport instead.
  */
 export default function Loading() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
+    <div className="fixed inset-0 flex items-center justify-center bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
       <div className="relative min-w-[280px] px-[52px] py-11">
         <span className="absolute top-0 left-0 h-[22px] w-[22px] border-t-2 border-l-2 border-accent" />
         <span className="absolute top-0 right-0 h-[22px] w-[22px] border-t-2 border-r-2 border-accent" />
@@ -23,14 +29,7 @@ export default function Loading() {
           <span className="font-serif-italic text-[15px] font-normal text-ink/85 italic">
             bemi
           </span>
-          <Image
-            src="/images/sigil-d-lime.png"
-            alt="D"
-            width={32}
-            height={32}
-            className="ml-1.5 h-6 w-auto"
-            priority
-          />
+          <SigilD className="ml-1.5 h-6 w-auto" />
           <span className="font-serif-italic text-[15px] font-normal text-ink/85 italic">
             aniel
           </span>

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import gsap from "gsap";
+import { gsap, HOUSE_EASE } from "@/lib/motion";
+import SigilD from "./SigilD";
 import SocialIcon from "./SocialIcon";
 
 type NavChild = { href: string; label: string; match: (p: string) => boolean };
@@ -32,9 +32,10 @@ const NAV_LINKS: NavLink[] = [
         label: "Overview",
         match: (p) => p === "/work" || p.startsWith("/case-study"),
       },
-      // "Clients" rather than "Client Work" — the full title wraps to two
-      // lines in the 140px rail, which is what made the tree look cramped.
-      { href: "/client-work", label: "Clients", match: (p) => p.startsWith("/client-work") },
+      // "Collabs" rather than "Client Work" — short enough for the 140px
+      // rail (the full title wraps to two lines there), and it matches the
+      // COLLAB tag every project on that page already carries.
+      { href: "/client-work", label: "Collabs", match: (p) => p.startsWith("/client-work") },
       { href: "/concepts", label: "Concepts", match: (p) => p.startsWith("/concepts") },
       { href: "/lab", label: "Lab", match: (p) => p.startsWith("/lab") },
     ],
@@ -134,7 +135,7 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
     }
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+      const tl = gsap.timeline({ defaults: { ease: HOUSE_EASE } });
       tl.fromTo(
         root.querySelector("[data-mark='g']"),
         { opacity: 0, y: 4 },
@@ -190,15 +191,7 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
         />
       </span>
       <span className="flex items-baseline gap-1">
-        <Image
-          data-mark="sigil"
-          src="/images/sigil-d-lime.png"
-          alt="D"
-          width={40}
-          height={40}
-          style={{ height: sigilSize, width: "auto" }}
-          priority
-        />
+        <SigilD data-mark="sigil" style={{ height: sigilSize, width: "auto" }} />
         <WritingLetters
           text="aniel"
           dataWord="aniel"

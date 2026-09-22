@@ -64,6 +64,7 @@ export default function ArticleClient({ article }: { article: Article }) {
             src={article.coverImage}
             shape="rounded"
             radius={16}
+            sizes="(max-width: 700px) calc(100vw - 40px), 696px"
             className="h-[340px] w-full max-[700px]:h-[180px]"
           />
         </section>

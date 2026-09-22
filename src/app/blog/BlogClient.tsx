@@ -83,6 +83,7 @@ export default function BlogClient({
               src={featured.coverImage}
               shape="rounded"
               radius={16}
+              sizes="(max-width: 700px) calc(100vw - 40px), 548px"
               className="h-[340px] w-full max-[700px]:h-[180px]"
             />
             <div>

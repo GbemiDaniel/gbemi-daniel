@@ -8,40 +8,41 @@ import ImageSlot from "@/components/ImageSlot";
 import Reveal from "@/components/Reveal";
 import CameraFrame from "@/components/CameraFrame";
 import ScrollRail from "@/components/ScrollRail";
+import ProjectCard, { type ProjectCardData } from "@/components/ProjectCard";
 import styles from "./home.module.css";
 
-const WORK_ITEMS = [
+const WORK_ITEMS: (ProjectCardData & { stagger: string })[] = [
   {
+    key: "security-engineer-portfolio",
     href: "/case-study/security-engineer-portfolio",
-    featured: true,
+    featured: false,
     stagger: "",
-    placeholder: "Drop project image",
     imgSrc: "/images/projects/security-engineer-portfolio/desktop.png",
     title: "Security Engineer Portfolio",
-    desc: "Built a personal website for a security engineer — designed to feel serious, sharp, and trustworthy, the way his work is.",
-    stack: "React / Tailwind / Framer Motion",
+    description: "Built a personal website for a security engineer — designed to feel serious, sharp, and trustworthy, the way his work is.",
+    tagList: ["React", "Tailwind", "Framer Motion"],
     year: "2026",
   },
   {
+    key: "chronovault",
     href: "/case-study/chronovault",
     featured: false,
     stagger: "mt-3.5 max-[700px]:mt-0",
-    placeholder: "Drop project image",
     imgSrc: "/images/projects/chronovault/chronovault.png",
     title: "ChronoVault",
-    desc: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
-    stack: "React / Tailwind / Framer Motion",
+    description: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
+    tagList: ["React", "Tailwind", "Framer Motion"],
     year: "2026",
   },
   {
+    key: "skillzbloom",
     href: "/case-study/skillzbloom",
     featured: false,
     stagger: "mt-7 max-[700px]:mt-0",
-    placeholder: "Drop project image",
     imgSrc: "/images/projects/skillzbloom/desktop.png",
     title: "SkillzBloom",
-    desc: "Helped build a platform that helps students track their learning. I built the entire Skills section — where users see what they've learned, what they're working on, and their progress — plus a reusable design system used across the app.",
-    stack: "TypeScript / Tailwind / Clerk Auth",
+    description: "Helped build a platform that helps students track their learning. I built the entire Skills section — where users see what they've learned, what they're working on, and their progress — plus a reusable design system used across the app.",
+    tagList: ["TypeScript", "Tailwind", "Clerk Auth"],
     year: "2025",
   },
 ];
@@ -104,8 +105,6 @@ const sectionHeading = "m-0 mb-4 text-[clamp(26px,3.6vw,38px)] font-bold leading
 const sectionLink =
   "inline-flex items-center gap-2 text-[13px] text-ink/60 no-underline hover:text-accent";
 const chromeDot = "h-[7px] w-[7px] rounded-full bg-ink/20";
-const chromeBar =
-  "relative flex items-center gap-1.5 rounded-t-xl border border-b-0 border-accent/15 bg-band px-3.5 py-2.5";
 const arrowCircleBase =
   "flex shrink-0 items-center justify-center rounded-full bg-accent text-bg transition-[transform,box-shadow] duration-300 [@media(hover:hover)]:group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]";
 
@@ -126,6 +125,7 @@ function MarqueeGroup() {
 
 export default function Home() {
   const [marqueeHover, setMarqueeHover] = useState(false);
+  const [hoveredWork, setHoveredWork] = useState<string | null>(null);
 
   return (
     <div className="flex min-h-screen bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
@@ -259,44 +259,16 @@ export default function Home() {
           </Reveal>
 
           <div className="flex flex-wrap items-start gap-7">
-            {WORK_ITEMS.map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className={`block min-w-0 flex-1 basis-70 text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${item.stagger}`}
-              >
-                <div className={chromeBar}>
-                  <span className={chromeDot} />
-                  <span className={chromeDot} />
-                  <span className={chromeDot} />
-                  {item.featured && (
-                    <span className="absolute -top-2.5 right-3.5 rounded bg-accent px-2 py-0.75 font-mono text-[10px] font-bold tracking-wider text-bg">
-                      FEATURED
-                    </span>
-                  )}
-                </div>
-                <ImageSlot
-                  alt={item.title}
-                  placeholder={item.placeholder}
-                  src={item.imgSrc}
-                  objectFit="contain"
-                  sizes="(max-width: 700px) 90vw, 380px"
-                  shape="rect"
-                  className="h-50 w-full border-x border-accent/15 max-[700px]:h-32.5"
-                />
-                <div className="rounded-b-xl border border-t-0 border-accent/15 p-4.5 max-[700px]:p-3.5">
-                  <h3 className="m-0 mb-2 text-[17px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
-                    {item.title}
-                  </h3>
-                  <p className="m-0 mb-3.5 text-[13px] leading-normal text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:text-[11.5px]">
-                    {item.desc}
-                  </p>
-                  <div className="flex items-center justify-between gap-3 font-mono text-[11px] text-accent/70 max-[700px]:text-[10px]">
-                    <span>{item.stack}</span>
-                    <span className="whitespace-nowrap text-ink/40">{item.year}</span>
-                  </div>
-                </div>
-              </Link>
+            {WORK_ITEMS.map((item, i) => (
+              <ProjectCard
+                key={item.key}
+                project={item}
+                hovered={hoveredWork === item.key}
+                onHoverStart={() => setHoveredWork(item.key)}
+                onHoverEnd={() => setHoveredWork(null)}
+                className={`min-w-0 flex-1 basis-70 ${item.stagger}`}
+                priority={i === 0}
+              />
             ))}
           </div>
           </div>

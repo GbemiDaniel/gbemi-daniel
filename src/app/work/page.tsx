@@ -21,6 +21,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
+import ProjectCard from "@/components/ProjectCard";
 import styles from "./work.module.css";
 
 type CombinedItem = {
@@ -35,7 +36,6 @@ type CombinedItem = {
 
 type RawProject = {
   key: string;
-  num: string;
   title: string;
   description: string;
   category: string;
@@ -77,7 +77,7 @@ const COMBINED: CombinedItem[] = [
     title: "Handshakers",
     category: "Independent",
     year: "—",
-    href: "/work",
+    href: "/case-study/handshakers",
     imgSrc: "/images/projects/handshakers/desktop.png",
   },
   {
@@ -109,7 +109,6 @@ const COMBINED: CombinedItem[] = [
 const RAW_PROJECTS: RawProject[] = [
   {
     key: "security-engineer-portfolio-g",
-    num: "01",
     title: "Security Engineer Portfolio",
     description: "Built a personal website for a security engineer — designed to feel serious, sharp, and trustworthy, the way his work is.",
     category: "COLLAB",
@@ -122,7 +121,6 @@ const RAW_PROJECTS: RawProject[] = [
   },
   {
     key: "dice-portfolio-g",
-    num: "02",
     title: "Dice Portfolio",
     description: "Worked with a brand and product designer to turn his design into a real, working website — then added extra touches beyond what was originally asked for.",
     category: "COLLAB",
@@ -135,7 +133,6 @@ const RAW_PROJECTS: RawProject[] = [
   },
   {
     key: "skillzbloom-g",
-    num: "03",
     title: "SkillzBloom",
     description: "Helped build a platform that helps students track their learning. I built the entire Skills section plus a reusable design system used across the app.",
     category: "TEAM PROJECT",
@@ -148,13 +145,12 @@ const RAW_PROJECTS: RawProject[] = [
   },
   {
     key: "handshakers-g",
-    num: "04",
     title: "Handshakers",
     description: "A time-tracking workspace for teams sharing one account. Everyone logs their own hours, and it works out exactly what each person is owed.",
     category: "INDEPENDENT",
     tagList: [],
     year: "—",
-    href: "/work",
+    href: "/case-study/handshakers",
     imgSrc: "/images/projects/handshakers/desktop.png",
     featured: false,
     group: "main",
@@ -166,7 +162,6 @@ const RAW_PROJECTS: RawProject[] = [
   // honest placeholder until it does.
   {
     key: "chronovault-g",
-    num: "05",
     title: "ChronoVault",
     description: "A digital time-capsule idea that lets people lock away files or messages until a future date. I built the interface from a collaborator's design, bringing the whole idea to life on screen.",
     category: "COLLAB",
@@ -179,7 +174,6 @@ const RAW_PROJECTS: RawProject[] = [
   },
   {
     key: "thrifty-g",
-    num: "06",
     title: "Thrifty",
     description: "An online clothing store frontend — I built out a collaborator's design into a real, working shopping experience.",
     category: "COLLAB",
@@ -407,33 +401,87 @@ export default function Work() {
   const featuredRowRef = useRef<HTMLDivElement | null>(null);
   const conceptsRowRef = useRef<HTMLDivElement | null>(null);
 
+  // Mobile-carousel affordance: an edge fade (hidden once there's nothing
+  // left to scroll toward on that side) plus a dot per card that tracks
+  // which one's centered — so a first-time visitor can tell the row swipes
+  // without having to touch it first.
+  const [featuredDot, setFeaturedDot] = useState(0);
+  const [conceptsDot, setConceptsDot] = useState(0);
+  const [featuredEdges, setFeaturedEdges] = useState({ start: true, end: false });
+  const [conceptsEdges, setConceptsEdges] = useState({ start: true, end: false });
+
   const stageH = isMobile ? 600 : isNarrow ? 660 : 760;
 
   useEffect(() => {
     if (!isMobile) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const rows = [featuredRowRef.current, conceptsRowRef.current].filter(
-      (el): el is HTMLDivElement => el !== null
-    );
+    type EdgeState = { start: boolean; end: boolean };
+    type TrackedRow = {
+      el: HTMLDivElement;
+      setDot: (i: number) => void;
+      setEdges: (e: EdgeState) => void;
+      lastDot: number;
+      lastEdges: EdgeState;
+    };
+    const rows: TrackedRow[] = [];
+    if (featuredRowRef.current) {
+      rows.push({
+        el: featuredRowRef.current,
+        setDot: setFeaturedDot,
+        setEdges: setFeaturedEdges,
+        lastDot: 0,
+        lastEdges: { start: true, end: false },
+      });
+    }
+    if (conceptsRowRef.current) {
+      rows.push({
+        el: conceptsRowRef.current,
+        setDot: setConceptsDot,
+        setEdges: setConceptsEdges,
+        lastDot: 0,
+        lastEdges: { start: true, end: false },
+      });
+    }
     if (rows.length === 0) return;
 
     // Continuously scale/fade each card by its own distance from the row's
     // horizontal center — direct DOM writes each frame, no React state, so
     // it tracks scroll position exactly (not just at two fixed trigger
-    // points) and stays cheap.
+    // points) and stays cheap. The closest-card index and edge-of-scroll
+    // state ride along in the same pass (cards are already being measured
+    // here), but only reach React when they actually change.
+    const EDGE_SLACK = 8;
     let raf = 0;
-    const applyRow = (row: HTMLDivElement) => {
-      const rect = row.getBoundingClientRect();
+    const applyRow = (row: TrackedRow) => {
+      const { el } = row;
+      const rect = el.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const half = rect.width / 2 || 1;
-      Array.from(row.children).forEach((child) => {
-        const el = child as HTMLElement;
-        const r = el.getBoundingClientRect();
-        const normalized = Math.min(1, Math.abs(r.left + r.width / 2 - centerX) / half);
-        el.style.transform = `scale(${1 - normalized * 0.12})`;
-        el.style.opacity = String(1 - normalized * 0.45);
+      let closest = 0;
+      let closestDist = Infinity;
+      Array.from(el.children).forEach((child, i) => {
+        const c = child as HTMLElement;
+        const r = c.getBoundingClientRect();
+        const dist = Math.abs(r.left + r.width / 2 - centerX);
+        const normalized = Math.min(1, dist / half);
+        c.style.transform = `scale(${1 - normalized * 0.12})`;
+        c.style.opacity = String(1 - normalized * 0.45);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = i;
+        }
       });
+      if (closest !== row.lastDot) {
+        row.lastDot = closest;
+        row.setDot(closest);
+      }
+      const atStart = el.scrollLeft <= EDGE_SLACK;
+      const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - EDGE_SLACK;
+      if (atStart !== row.lastEdges.start || atEnd !== row.lastEdges.end) {
+        row.lastEdges = { start: atStart, end: atEnd };
+        row.setEdges(row.lastEdges);
+      }
     };
     const tick = () => {
       rows.forEach(applyRow);
@@ -457,7 +505,7 @@ export default function Work() {
       },
       { threshold: 0.4 }
     );
-    rows.forEach((row) => io.observe(row));
+    rows.forEach((row) => io.observe(row.el));
 
     return () => {
       cancelAnimationFrame(raf);
@@ -622,85 +670,31 @@ export default function Work() {
   const conceptProjects = RAW_PROJECTS.filter((p) => p.group === "concept");
   const activeItem = COMBINED[active];
 
-  const projectCard = (p: RawProject, i: number) => {
-    const on = hovered === p.key;
-    return (
-      <Link
-        key={p.key}
-        href={p.href}
-        onMouseEnter={() => setHovered(p.key)}
-        onMouseLeave={() => setHovered(null)}
-        className={`group relative block w-[min(320px,80vw)] flex-none shrink-0 snap-center overflow-hidden rounded-xl text-inherit no-underline transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 max-[700px]:w-[72vw] ${stackClassFor(i)}`}
-        style={{
-          border: `1px solid ${on ? "rgba(201,243,29,0.4)" : "rgba(201,243,29,0.15)"}`,
-          boxShadow: on ? "0 20px 40px -14px rgba(0,0,0,0.55)" : "0 0 0 rgba(0,0,0,0)",
-        }}
-      >
-        <div className="relative flex items-center justify-between gap-1.5 bg-band px-3.5 py-2.5 max-[700px]:px-2.5 max-[700px]:py-2">
-          <div className="flex items-center gap-1.5">
-            <span className="h-1.75 w-1.75 rounded-full bg-ink/20" />
-            <span className="h-1.75 w-1.75 rounded-full bg-ink/20" />
-            <span className="h-1.75 w-1.75 rounded-full bg-ink/20" />
-          </div>
-          {p.featured && (
-            <span className="shrink-0 rounded bg-accent px-2 py-0.75 font-mono text-[10px] font-bold tracking-wider text-bg max-[700px]:px-1.5 max-[700px]:text-[9px]">
-              FEATURED
-            </span>
-          )}
-        </div>
-        <div className="relative overflow-hidden">
-          <ImageSlot
-            alt={p.title}
-            placeholder="Drop project image"
-            src={p.imgSrc}
-            objectFit="contain"
-            sizes="(max-width: 700px) 72vw, 320px"
-            shape="rect"
-            className="h-50 w-full max-[700px]:h-30"
-          />
-          <span className="pointer-events-none absolute top-3.5 right-3.5 font-mono text-[44px] leading-none font-bold text-ink/10 max-[700px]:top-2 max-[700px]:right-2 max-[700px]:text-[28px]">
-            {p.num}
-          </span>
-        </div>
-        <div className="p-5 max-[700px]:p-3.5">
-          <div className="mb-2 flex items-center gap-2 font-mono text-[11px] text-accent max-[700px]:mb-1.5 max-[700px]:text-[10px]">
-            <span>{p.category}</span>
-            <span className="transition-opacity duration-300" style={{ opacity: on ? 1 : 0 }}>
-              →
-            </span>
-          </div>
-          {/* Both title and description get a fixed footprint (truncate /
-              line-clamp + a matching explicit height) regardless of how long
-              the actual text is — otherwise a longer name or blurb makes
-              that one card taller than its neighbors, which is what was
-              throwing off the wall's alignment. */}
-          <h3 className="m-0 mb-2 truncate text-[19px] font-semibold max-[700px]:mb-1 max-[700px]:text-[15px]">
-            {p.title}
-          </h3>
-          <p className="m-0 mb-3.5 line-clamp-3 h-15.5 text-[13px] leading-[1.55] text-ink/55 max-[700px]:mb-2 max-[700px]:line-clamp-2 max-[700px]:h-8.5 max-[700px]:text-[11.5px] max-[700px]:leading-[1.5]">
-            {p.description}
-          </p>
-          <div className="mb-3 flex flex-wrap gap-1.5 max-[700px]:mb-2">
-            {p.tagList.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-ink/15 px-2 py-0.75 font-mono text-[10px] text-ink/55 max-[700px]:px-1.5 max-[700px]:text-[9px]"
-              >
-                {tag}
-              </span>
-            ))}
-            <span className="ml-auto self-center font-mono text-[10px] text-ink/35 max-[700px]:text-[9px]">
-              {p.year}
-            </span>
-          </div>
-          <div
-            className="h-px bg-accent transition-[width] duration-400 ease-in-out"
-            style={{ width: on ? "48px" : "0px" }}
-          />
-        </div>
-      </Link>
-    );
-  };
+  // Position dots for a mobile carousel row — shows count + which card is
+  // centered, so the row reads as swipeable at a glance instead of relying
+  // on someone noticing the one-time scroll nudge.
+  const carouselDots = (count: number, activeIndex: number) => (
+    <div className="mt-3 flex justify-center gap-1.5">
+      {Array.from({ length: count }, (_, i) => (
+        <span
+          key={i}
+          className="h-1.5 rounded-full bg-accent transition-[width,opacity] duration-300"
+          style={{ width: i === activeIndex ? 16 : 6, opacity: i === activeIndex ? 1 : 0.25 }}
+        />
+      ))}
+    </div>
+  );
+
+  const projectCard = (p: RawProject, i: number) => (
+    <ProjectCard
+      key={p.key}
+      project={p}
+      hovered={hovered === p.key}
+      onHoverStart={() => setHovered(p.key)}
+      onHoverEnd={() => setHovered(null)}
+      className={`w-[min(320px,80vw)] flex-none shrink-0 snap-center max-[700px]:w-[80vw] ${stackClassFor(i)}`}
+    />
+  );
 
   return (
     <div className="flex min-h-screen bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
@@ -867,6 +861,7 @@ export default function Work() {
                           objectFit="contain"
                           sizes="(max-width: 700px) 310px, (max-width: 950px) 320px, 480px"
                           shape="rect"
+                          priority={offset === 0}
                           className="h-full w-full"
                         />
                         {offset === 0 && (
@@ -972,13 +967,32 @@ export default function Work() {
             </Link>
           </div>
           {isMobile ? (
-            <div
-              ref={featuredRowRef}
-              className={`-mx-8 flex items-start gap-4 overflow-x-auto pb-2 ${styles.noScrollbar}`}
-              style={{ scrollSnapType: "x mandatory", paddingInline: "14vw", scrollPaddingInline: "14vw" }}
-            >
-              {mainProjects.map((p, i) => projectCard(p, i))}
-            </div>
+            <>
+              <div className="relative -mx-8">
+                <div
+                  ref={featuredRowRef}
+                  className={`flex items-start gap-4 overflow-x-auto pb-2 ${styles.noScrollbar}`}
+                  style={{
+                    scrollSnapType: "x mandatory",
+                    paddingInline: "14vw",
+                    scrollPaddingInline: "14vw",
+                  }}
+                >
+                  {mainProjects.map((p, i) => projectCard(p, i))}
+                </div>
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-bg to-transparent transition-opacity duration-300"
+                  style={{ opacity: featuredEdges.start ? 0 : 1 }}
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-bg to-transparent transition-opacity duration-300"
+                  style={{ opacity: featuredEdges.end ? 0 : 1 }}
+                />
+              </div>
+              {carouselDots(mainProjects.length, featuredDot)}
+            </>
           ) : (
             <CurvedWallRow
               cards={mainProjects.map((p, i) => ({
@@ -999,37 +1013,56 @@ export default function Work() {
             </div>
           </div>
           {isMobile ? (
-            <div
-              ref={conceptsRowRef}
-              className={`-mx-8 flex items-start gap-4 overflow-x-auto pb-2 ${styles.noScrollbar}`}
-              style={{ scrollSnapType: "x mandatory", paddingInline: "14vw", scrollPaddingInline: "14vw" }}
-            >
-              {conceptProjects.map((p, i) => projectCard(p, i))}
-              <div
-                className={`min-h-50 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-35 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack1}`}
-              >
-                <div className="flex h-full flex-col items-center justify-center gap-2.5">
-                  <span className="font-mono text-[26px] text-accent/60">+</span>
-                  <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
-                    More concepts
-                    <br />
-                    brewing
-                  </span>
+            <>
+              <div className="relative -mx-8">
+                <div
+                  ref={conceptsRowRef}
+                  className={`flex items-start gap-4 overflow-x-auto pb-2 ${styles.noScrollbar}`}
+                  style={{
+                    scrollSnapType: "x mandatory",
+                    paddingInline: "14vw",
+                    scrollPaddingInline: "14vw",
+                  }}
+                >
+                  {conceptProjects.map((p, i) => projectCard(p, i))}
+                  <div
+                    className={`min-h-50 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/25 p-5 text-center max-[700px]:min-h-35 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack1}`}
+                  >
+                    <div className="flex h-full flex-col items-center justify-center gap-2.5">
+                      <span className="font-mono text-[26px] text-accent/60">+</span>
+                      <span className="font-mono text-[11px] tracking-[0.06em] text-ink/40">
+                        More concepts
+                        <br />
+                        brewing
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className={`min-h-50 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/15 p-5 text-center max-[700px]:min-h-35 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack2}`}
+                  >
+                    <div className="flex h-full flex-col items-center justify-center gap-2.5">
+                      <span className="font-mono text-[26px] text-accent/40">?</span>
+                      <span className="font-mono text-[11px] tracking-[0.06em] text-ink/30">
+                        Still sketching
+                        <br />
+                        the next one
+                      </span>
+                    </div>
+                  </div>
                 </div>
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-bg to-transparent transition-opacity duration-300"
+                  style={{ opacity: conceptsEdges.start ? 0 : 1 }}
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-bg to-transparent transition-opacity duration-300"
+                  style={{ opacity: conceptsEdges.end ? 0 : 1 }}
+                />
               </div>
-              <div
-                className={`min-h-50 w-[min(320px,80vw)] flex-none shrink-0 snap-center rounded-xl border border-dashed border-accent/15 p-5 text-center max-[700px]:min-h-35 max-[700px]:w-[72vw] max-[700px]:p-3.5 ${styles.stack2}`}
-              >
-                <div className="flex h-full flex-col items-center justify-center gap-2.5">
-                  <span className="font-mono text-[26px] text-accent/40">?</span>
-                  <span className="font-mono text-[11px] tracking-[0.06em] text-ink/30">
-                    Still sketching
-                    <br />
-                    the next one
-                  </span>
-                </div>
-              </div>
-            </div>
+              {carouselDots(conceptProjects.length + 2, conceptsDot)}
+            </>
           ) : (
             <CurvedWallRow
               cards={[

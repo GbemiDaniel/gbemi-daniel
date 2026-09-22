@@ -31,12 +31,33 @@ const instrumentSerif = Instrument_Serif({
   display: "optional",
 });
 
+const SITE_NAME = "Gbemi Daniel";
+const SITE_DESCRIPTION =
+  "Frontend engineer building interfaces that are engineered as carefully as they're designed.";
+
 export const metadata: Metadata = {
-  title: "Gbemi Daniel — Frontend Engineer",
-  description:
-    "Frontend engineer building interfaces that are engineered as carefully as they're designed.",
+  metadataBase: new URL("https://gbemidaniel.vercel.app"),
+  title: {
+    default: "Gbemi Daniel — Frontend Engineer",
+    template: "%s | Gbemi Daniel",
+  },
+  description: SITE_DESCRIPTION,
   icons: {
     icon: "/images/sigil-d-lime.png",
+  },
+  openGraph: {
+    title: "Gbemi Daniel — Frontend Engineer",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gbemi Daniel — Frontend Engineer",
+    description: SITE_DESCRIPTION,
+    creator: "@adamsdaniel043",
   },
 };
 

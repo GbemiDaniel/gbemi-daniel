@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { ARTICLES, type Article } from "./writing";
 import { getDevtoArticle } from "./devto";
 
@@ -15,14 +16,22 @@ async function enrich(article: Article): Promise<Article> {
   };
 }
 
+/**
+ * Both wrapped in React's `cache` so a page and its `generateMetadata` (which
+ * both need the same enriched data) share one call instead of hitting the
+ * Dev.to API twice per request.
+ */
+
 /** All articles, with any Dev.to entries overlaid with their live data. */
-export async function getEnrichedArticles(): Promise<Record<string, Article>> {
+export const getEnrichedArticles = cache(async (): Promise<Record<string, Article>> => {
   const enriched = await Promise.all(Object.values(ARTICLES).map(enrich));
   return Object.fromEntries(enriched.map((a) => [a.slug, a]));
-}
+});
 
-export async function getEnrichedArticle(slug: string): Promise<Article | undefined> {
-  const article = ARTICLES[slug];
-  if (!article) return undefined;
-  return enrich(article);
-}
+export const getEnrichedArticle = cache(
+  async (slug: string): Promise<Article | undefined> => {
+    const article = ARTICLES[slug];
+    if (!article) return undefined;
+    return enrich(article);
+  }
+);

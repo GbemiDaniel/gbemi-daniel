@@ -187,8 +187,32 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     slug: "handshakers",
     title: "Handshakers",
     category: "Independent",
-    stack: [],
-    year: "—",
-    sections: [],
+    stack: ["Next.js", "Supabase", "Tailwind CSS"],
+    year: "2026",
+    liveUrl: "https://handshakers.vercel.app",
+    gallery: {
+      desktop: [
+        { src: "/images/projects/handshakers/desktop.png", label: "Home" },
+        { src: "/images/projects/handshakers/workspace.png", label: "Workspace" },
+      ],
+    },
+    sections: [
+      {
+        heading: "The Brief",
+        body: "Handshakers started from a specific, real problem: teams that share a single account on a platform — a common setup for contractor pools — have no fair way to split what that account earns. Whoever logs the most convincingly wins, not whoever actually worked the hours. I wanted a tool that made the split honest by construction, not by trust.",
+      },
+      {
+        heading: "Thinking & Approach",
+        body: "The payout math itself is simple — each person's share of the total logged time, applied against whatever the platform actually reported paying out, so a shortfall adjusts everyone down proportionally instead of landing on one person. The harder problem was making the underlying log impossible to game. Every entry is a relay: a new log's start time locks to the previous one's stop time, so there's no way to log a gap that inflates your hours or a range that overlaps someone else's.",
+      },
+      {
+        heading: "Custom Components",
+        body: "Two people sharing one clock meant collisions were the real engineering problem, not the UI. A live presence channel broadcasts when someone's actively typing a stop time, so teammates see the field lock in real time instead of racing to submit first — and because a UI lock alone isn't enough, every submission also runs a pre-flight check against the database's actual latest entry before writing, aborting with a timeline-collision warning if someone snuck a log in first.",
+      },
+      {
+        heading: "Outcome",
+        body: "A shared account that used to run on trust now runs on a timeline nobody can quietly bend.",
+      },
+    ],
   },
 };

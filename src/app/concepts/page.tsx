@@ -1,9 +1,26 @@
 import type { CSSProperties } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import styles from "./concepts.module.css";
+
+const TITLE = "Concepts";
+const DESCRIPTION =
+  "What if — no client, no deadline. Self-directed ideas built with nothing to prove but the idea itself.";
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: { title: TITLE, description: DESCRIPTION, images: ["/opengraph-image"] },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
+};
 
 type ConceptProject = {
   key: string;

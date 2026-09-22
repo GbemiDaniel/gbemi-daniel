@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Nav from "@/components/Nav";
@@ -10,6 +11,37 @@ import { CASE_STUDIES } from "@/lib/caseStudies";
 const chromeDot = "h-[7px] w-[7px] rounded-full bg-ink/20";
 const chromeBar =
   "relative flex items-center gap-1.5 rounded-t-xl border border-b-0 border-accent/15 bg-band px-3.5 py-2.5";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const cs = CASE_STUDIES[slug];
+  if (!cs) return {};
+
+  const category = cs.category.toLowerCase();
+  const article = /^[aeiou]/.test(category) ? "An" : "A";
+  const description = cs.sections[0]?.body ?? `${article} ${category} project built by Gbemi Daniel.`;
+  const image = cs.gallery?.desktop[0]?.src;
+
+  return {
+    title: cs.title,
+    description,
+    openGraph: {
+      title: cs.title,
+      description,
+      images: image ? [image] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: cs.title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
 
 export default async function CaseStudyPage({
   params,

@@ -117,7 +117,7 @@ export default async function CaseStudyPage({
                 at exactly the same width, on every screen size. */}
             <div className="mx-auto max-w-[1000px] px-8 max-[700px]:px-5">
               {cs.gallery ? (
-                <ScreenGallery title={cs.title} gallery={cs.gallery} />
+                <ScreenGallery title={cs.title} gallery={cs.gallery} priority />
               ) : (
                 <>
                   <div className={chromeBar}>
@@ -161,6 +161,20 @@ export default async function CaseStudyPage({
                 ))}
               </div>
             </section>
+
+            {cs.features && (
+              <section className="mx-auto max-w-250 px-8 pb-18 max-[700px]:px-5 max-[700px]:pb-10">
+                <Reveal y={16}>
+                  <div className="mb-5 font-mono text-xs tracking-widest text-ink/40 max-[700px]:mb-3.5">
+                    <span className="text-accent">
+                      {String(cs.sections.length + 1).padStart(2, "0")}
+                    </span>{" "}
+                    — FEATURES UP CLOSE
+                  </div>
+                  <ScreenGallery title={`${cs.title} features`} gallery={cs.features} />
+                </Reveal>
+              </section>
+            )}
           </>
         )}
 

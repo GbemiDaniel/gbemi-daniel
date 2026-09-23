@@ -27,6 +27,8 @@ export type CaseStudy = {
    * switcher appears automatically once a device has more than one.
    */
   gallery?: Gallery;
+  /** Close-ups of specific features, shown as their own gallery after the write-up. */
+  features?: Gallery;
   sections: CaseStudySection[];
 };
 
@@ -39,7 +41,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     year: "2026",
     liveUrl: "https://okoh-bernard-portfolio.vercel.app/",
     gallery: {
-      desktop: [{ src: "/images/projects/security-engineer-portfolio/desktop.png", label: "Home" }],
+      desktop: [
+        { src: "/images/projects/security-engineer-portfolio/desktop.png", label: "Home" },
+        { src: "/images/projects/security-engineer-portfolio/loader.png", label: "Loader" },
+      ],
       mobile: [{ src: "/images/projects/security-engineer-portfolio/mobile.png", label: "Home" }],
     },
     sections: [
@@ -70,7 +75,10 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     liveUrl: "https://dice-portfolio.vercel.app/",
     gallery: {
       desktop: [{ src: "/images/projects/dice-portfolio/desktop.png", label: "Home" }],
-      mobile: [{ src: "/images/projects/dice-portfolio/mobile.png", label: "Home" }],
+      mobile: [
+        { src: "/images/projects/dice-portfolio/mobile.png", label: "Home" },
+        { src: "/images/projects/dice-portfolio/mobile-loader.png", label: "Loader" },
+      ],
     },
     sections: [
       {
@@ -133,6 +141,26 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         { src: "/images/projects/chronovault/chronovault.png", label: "Home" },
         { src: "/images/projects/chronovault/dashboard.png", label: "Dashboard" },
         { src: "/images/projects/chronovault/create-capsule.png", label: "Create Capsule" },
+        { src: "/images/projects/chronovault/capsule-locked-success.png", label: "Capsule Locked" },
+      ],
+      mobile: [
+        { src: "/images/projects/chronovault/mobile-chronovault.png", label: "Home" },
+        { src: "/images/projects/chronovault/mobile-dashboard.png", label: "Dashboard" },
+        { src: "/images/projects/chronovault/mobile-create-capsule.png", label: "Create Capsule" },
+        { src: "/images/projects/chronovault/mobile-capsule-locked-success.png", label: "Capsule Locked" },
+      ],
+    },
+    features: {
+      desktop: [
+        { src: "/images/projects/chronovault/features/activity-ledger.png", label: "Activity Ledger" },
+        { src: "/images/projects/chronovault/features/dashboard-with-filtered-locked-capsules.png", label: "Capsule Filters" },
+        { src: "/images/projects/chronovault/features/notifications.png", label: "Notifications" },
+      ],
+      mobile: [
+        { src: "/images/projects/chronovault/features/mobile-activity-ledger.png", label: "Activity Ledger" },
+        { src: "/images/projects/chronovault/features/mobile-dashbaord-with-filtered-time-capsules.png", label: "Capsule Filters" },
+        { src: "/images/projects/chronovault/features/mobile-notification.png", label: "Notifications" },
+        { src: "/images/projects/chronovault/features/mobile-connect-wallet.png", label: "Connect Wallet" },
       ],
     },
     sections: [
@@ -193,7 +221,29 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     gallery: {
       desktop: [
         { src: "/images/projects/handshakers/desktop.png", label: "Home" },
+        { src: "/images/projects/handshakers/dashboard.png", label: "Dashboard" },
         { src: "/images/projects/handshakers/workspace.png", label: "Workspace" },
+        { src: "/images/projects/handshakers/auth.png", label: "Sign In" },
+      ],
+      mobile: [
+        { src: "/images/projects/handshakers/mobile.png", label: "Home" },
+        { src: "/images/projects/handshakers/mobile-dashboard.png", label: "Dashboard" },
+        { src: "/images/projects/handshakers/mobile-workspace.png", label: "Workspace" },
+      ],
+    },
+    features: {
+      desktop: [
+        { src: "/images/projects/handshakers/features/relay-timeline.png", label: "Relay Timeline" },
+        { src: "/images/projects/handshakers/features/timeline.png", label: "Team Timeline" },
+        { src: "/images/projects/handshakers/features/task-aggregator.png", label: "Task Aggregator" },
+        { src: "/images/projects/handshakers/features/payout-calculator.png", label: "Payout Calculator" },
+      ],
+      mobile: [
+        { src: "/images/projects/handshakers/features/mobile-relay-timeline-feature.png", label: "Relay Timeline" },
+        { src: "/images/projects/handshakers/features/mobile-timeline.png", label: "Team Timeline" },
+        { src: "/images/projects/handshakers/features/mobile-task-aggregator.png", label: "Task Aggregator" },
+        { src: "/images/projects/handshakers/features/mobile-payout-calculator.png", label: "Payout Calculator" },
+        { src: "/images/projects/handshakers/features/mobile-payout-report.png", label: "Payout Report" },
       ],
     },
     sections: [

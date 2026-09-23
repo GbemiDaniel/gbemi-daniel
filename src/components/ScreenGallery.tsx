@@ -81,7 +81,16 @@ function ScreenStack({
   );
 }
 
-export default function ScreenGallery({ title, gallery }: { title: string; gallery: Gallery }) {
+export default function ScreenGallery({
+  title,
+  gallery,
+  priority = false,
+}: {
+  title: string;
+  gallery: Gallery;
+  /** Eager-load the first desktop screen — only for a gallery above the fold. */
+  priority?: boolean;
+}) {
   const mobileScreens = gallery.mobile ?? [];
   const hasMobile = mobileScreens.length > 0;
 
@@ -189,7 +198,7 @@ export default function ScreenGallery({ title, gallery }: { title: string; galle
             title={title}
             device="desktop"
             sizes="(max-width: 1000px) 100vw, 1000px"
-            priority
+            priority={priority}
           />
         </div>
 

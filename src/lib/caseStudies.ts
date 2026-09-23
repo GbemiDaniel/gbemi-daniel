@@ -223,7 +223,6 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         { src: "/images/projects/handshakers/desktop.png", label: "Home" },
         { src: "/images/projects/handshakers/dashboard.png", label: "Dashboard" },
         { src: "/images/projects/handshakers/workspace.png", label: "Workspace" },
-        { src: "/images/projects/handshakers/auth.png", label: "Sign In" },
       ],
       mobile: [
         { src: "/images/projects/handshakers/mobile.png", label: "Home" },
@@ -237,12 +236,14 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         { src: "/images/projects/handshakers/features/timeline.png", label: "Team Timeline" },
         { src: "/images/projects/handshakers/features/task-aggregator.png", label: "Task Aggregator" },
         { src: "/images/projects/handshakers/features/payout-calculator.png", label: "Payout Calculator" },
+        { src: "/images/projects/handshakers/features/auth.png", label: "Sign In" },
       ],
       mobile: [
         { src: "/images/projects/handshakers/features/mobile-relay-timeline-feature.png", label: "Relay Timeline" },
         { src: "/images/projects/handshakers/features/mobile-timeline.png", label: "Team Timeline" },
         { src: "/images/projects/handshakers/features/mobile-task-aggregator.png", label: "Task Aggregator" },
         { src: "/images/projects/handshakers/features/mobile-payout-calculator.png", label: "Payout Calculator" },
+        { src: "/images/projects/handshakers/features/mobile-auth.png", label: "Sign In" },
         { src: "/images/projects/handshakers/features/mobile-payout-report.png", label: "Payout Report" },
       ],
     },

@@ -1,12 +1,8 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ProjectCard from "@/components/ProjectCard";
-import Reveal from "@/components/Reveal";
 import styles from "./client-work.module.css";
+import ClientWorkGrid from "./ClientWorkGrid";
 
 const PROJECTS = [
   {
@@ -67,8 +63,6 @@ const PROJECTS = [
 ];
 
 export default function ClientWork() {
-  const [hovered, setHovered] = useState<string | null>(null);
-
   return (
     <div className="flex min-h-screen bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
       <Nav />
@@ -108,20 +102,7 @@ export default function ClientWork() {
 
         {/* GRID */}
         <section className="mx-auto max-w-[1200px] px-8 pt-2 pb-24 max-[700px]:px-5 max-[700px]:pb-16">
-          <Reveal
-            stagger={0.08}
-            className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-7 max-[700px]:gap-5"
-          >
-            {PROJECTS.map((p) => (
-              <ProjectCard
-                key={p.key}
-                project={p}
-                hovered={hovered === p.key}
-                onHoverStart={() => setHovered(p.key)}
-                onHoverEnd={() => setHovered(null)}
-              />
-            ))}
-          </Reveal>
+          <ClientWorkGrid projects={PROJECTS} />
         </section>
 
         <Footer />

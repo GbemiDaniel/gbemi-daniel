@@ -1,12 +1,11 @@
-"use client";
-
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import Reveal from "@/components/Reveal";
 import JargonTranslator from "@/components/about/JargonTranslator";
+import ScrollTopButton from "@/components/ScrollTopButton";
 import styles from "./about.module.css";
 
 // Same section vocabulary as the Home page, so About reads as part of the
@@ -140,14 +139,6 @@ function OrbitMark() {
 }
 
 export default function About() {
-  const [showTop, setShowTop] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 600);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <div className="flex min-h-screen bg-[radial-gradient(1400px_900px_at_15%_-10%,#1c1522_0%,#120e17_55%)] font-grotesk text-ink">
       <Nav />
@@ -431,13 +422,7 @@ export default function About() {
         <Footer />
       </div>
 
-      <span
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed right-7 bottom-7 z-60 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-accent text-base text-bg shadow-[0_8px_20px_-6px_rgba(0,0,0,0.5)] transition-opacity duration-250 [@media(hover:hover)]:hover:animate-[arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]"
-        style={{ opacity: showTop ? 1 : 0, pointerEvents: showTop ? "auto" : "none" }}
-      >
-        ↑
-      </span>
+      <ScrollTopButton />
     </div>
   );
 }

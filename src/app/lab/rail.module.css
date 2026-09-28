@@ -1,0 +1,335 @@
+/* RAIL (Lab): the floating sidebar-nav design, frozen as its own stylesheet.
+   It started as the site nav's CSS, shared by import; the live nav has since
+   become a top bar, so the demo keeps its own copy and nav changes can no
+   longer break it. */
+
+/* ── Floating desktop nav ───────────────────────────────────────────────
+   The panel rests as a slim rail and pops out over the page (never pushing
+   it). Its content is laid out once at the full expanded width and simply
+   clipped by the panel's own width, so the only thing that changes per frame
+   is one isolated fixed box — no child reflow.
+
+   All interaction feedback is typographic: labels are a masked letter roll
+   from Space Mono caps to the Instrument Serif italic of the wordmark. */
+
+.panel {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --rail: 68px;
+  --open: 232px;
+
+  width: var(--rail);
+  contain: layout paint style;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(201, 243, 29, 0.12);
+  background: rgba(11, 8, 16, 0.78);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 239, 233, 0.05),
+    0 10px 30px -18px rgba(0, 0, 0, 0.6);
+  transition:
+    width 320ms var(--ease),
+    box-shadow 320ms var(--ease),
+    border-color 320ms var(--ease);
+}
+
+.panel[data-expanded] {
+  width: var(--open);
+  border-color: rgba(201, 243, 29, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 239, 233, 0.06),
+    0 30px 70px -24px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(0, 0, 0, 0.25);
+  transition-duration: 520ms;
+}
+
+/* Content is always laid out at the open width; the panel clips it. */
+.inner {
+  width: var(--open);
+}
+
+/* Brand: collapsed shows only the G / sigil monogram. \`filter: opacity()\`
+   rather than \`opacity\`, because the brand's GSAP intro owns the inline
+   opacity of these same elements. */
+.panel [data-word],
+.panel [data-mark="dee"] {
+  display: inline-block;
+  transition:
+    filter 260ms var(--ease),
+    transform 420ms var(--ease);
+}
+.panel:not([data-expanded]) [data-word],
+.panel:not([data-expanded]) [data-mark="dee"] {
+  filter: opacity(0);
+  transform: translateX(-6px);
+  transition-duration: 160ms;
+}
+.panel[data-expanded] [data-word],
+.panel[data-expanded] [data-mark="dee"] {
+  transition-delay: 90ms;
+}
+
+/* ── Rows ─────────────────────────────────────────────────────────────── */
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-block: 7px;
+  color: rgba(242, 239, 233, 0.55);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: color 300ms var(--ease);
+}
+
+.link:hover,
+.link:focus-visible,
+.link[data-active] {
+  color: var(--color-ink);
+}
+
+/* Focus through type: hovering one row quietly steps the others back. */
+.list:has(.link:hover) .link:not(:hover) {
+  color: rgba(242, 239, 233, 0.28);
+}
+
+.num {
+  width: 24px;
+  flex-shrink: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(242, 239, 233, 0.3);
+  transition: color 300ms var(--ease);
+}
+.link:hover .num,
+.link:focus-visible .num {
+  color: rgba(242, 239, 233, 0.75);
+}
+.link[data-active] .num {
+  color: var(--color-accent);
+}
+
+/* The one hairline of accent: a tick that draws out from the numeral. */
+.tick {
+  width: 18px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 4px;
+}
+.tick::before {
+  content: "";
+  width: 9px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms var(--ease);
+}
+.link:hover .tick::before,
+.link:focus-visible .tick::before {
+  transform: scaleX(1);
+}
+.link[data-active] .tick::before {
+  transform: scaleX(1);
+  background: var(--color-accent);
+}
+
+/* Sub rows hang off the tree line; their tick is the branch into the label. */
+.sub {
+  padding-block: 4px;
+}
+.sub .tick {
+  width: 30px;
+  padding-left: 0;
+}
+.sub .tick::before {
+  width: 14px;
+}
+
+/* ── The letter roll ──────────────────────────────────────────────────── */
+
+.roll {
+  position: relative;
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  /* Room for the italic overhang so it isn't shaved by the mask. */
+  padding-right: 0.3em;
+  overflow: clip;
+  white-space: pre;
+}
+
+.mono,
+.serif {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.serif {
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.serif {
+  font-family: var(--font-serif-italic);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.005em;
+}
+.sub .mono {
+  font-size: 11px;
+}
+.sub .serif {
+  font-size: 16px;
+}
+
+.mono > span,
+.serif > span {
+  display: inline-block;
+  /* Each glyph box is the full mask height, so a roll travels exactly one
+     mask and nothing peeks through mid-flight. */
+  line-height: 24px;
+  will-change: transform;
+  transition: transform 520ms var(--ease);
+  transition-delay: calc(var(--i) * 16ms);
+}
+
+/* Rest (panel open): mono visible, serif waiting below the mask. */
+.mono > span {
+  transform: translateY(0);
+}
+.serif > span {
+  transform: translateY(105%);
+}
+
+/* Hover / focus / current page: mono rolls out the top, serif rises in. */
+.link:hover .mono > span,
+.link:focus-visible .mono > span,
+.link[data-active] .mono > span {
+  transform: translateY(-105%);
+}
+.link:hover .serif > span,
+.link:focus-visible .serif > span,
+.link[data-active] .serif > span {
+  transform: translateY(0);
+}
+
+/* Collapsed: every label sinks below its mask… */
+.panel:not([data-expanded]) .mono > span,
+.panel:not([data-expanded]) .serif > span {
+  transform: translateY(105%);
+  transition-duration: 220ms;
+  transition-delay: 0ms;
+}
+
+/* …and rises back row by row as the panel opens. */
+.panel[data-phase="opening"] .mono > span,
+.panel[data-phase="opening"] .serif > span {
+  transition-duration: 640ms;
+  transition-delay: calc(110ms + var(--row) * 50ms + var(--i) * 18ms);
+}
+
+.chevron {
+  margin-left: 2px;
+  opacity: 0.5;
+  transition:
+    transform 360ms var(--ease),
+    opacity 300ms var(--ease);
+}
+.chevron[data-open] {
+  transform: rotate(180deg);
+}
+.link:hover .chevron {
+  opacity: 0.9;
+}
+
+/* ── Rail-only / open-only extras ─────────────────────────────────────── */
+
+.openOnly,
+.railOnly {
+  transition:
+    opacity 300ms var(--ease),
+    transform 480ms var(--ease),
+    visibility 0s linear 0s;
+}
+.panel:not([data-expanded]) .openOnly,
+.panel[data-expanded] .railOnly {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 160ms var(--ease),
+    transform 160ms var(--ease),
+    visibility 0s linear 160ms;
+}
+.panel:not([data-expanded]) .openOnly {
+  transform: translateX(-8px);
+}
+.panel[data-phase="opening"] .openOnly {
+  transition-delay: 260ms, 260ms, 0s;
+}
+
+.vertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-serif-italic);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: rgba(242, 239, 233, 0.45);
+  white-space: nowrap;
+}
+.vertical::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 18px;
+  margin-top: 10px;
+  background: rgba(201, 243, 29, 0.5);
+}
+
+.toggle {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: rgba(242, 239, 233, 0.45);
+  cursor: pointer;
+  outline: none;
+  transition: color 250ms var(--ease);
+}
+.toggle:hover,
+.toggle:focus-visible {
+  color: var(--color-accent);
+}
+.toggle:focus-visible {
+  box-shadow: 0 0 0 1px rgba(201, 243, 29, 0.5);
+}
+.toggle svg {
+  transition: transform 480ms var(--ease);
+}
+.panel[data-expanded] .toggle svg {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel *,
+  .panel *::before {
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+}

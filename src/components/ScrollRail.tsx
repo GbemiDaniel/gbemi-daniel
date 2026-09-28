@@ -50,8 +50,11 @@ export default function ScrollRail() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Only from 1340px, where it clears the centred 1200px content column.
+  // Narrower, it would sit on the content; reserving a gutter for it instead
+  // pushes the whole page off the grid the top bar aligns to.
   return (
-    <div className="fixed top-1/2 right-7 z-50 hidden -translate-y-1/2 flex-col items-end min-[1025px]:flex">
+    <div className="fixed top-1/2 right-7 z-50 hidden -translate-y-1/2 flex-col items-end min-[1340px]:flex">
       {total > 0 && (
         <>
           <div

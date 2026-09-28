@@ -1,11 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type KeyboardEvent,
+} from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gsap, HOUSE_EASE } from "@/lib/motion";
 import SigilD from "./SigilD";
 import SocialIcon from "./SocialIcon";
+import styles from "./nav.module.css";
 
 type NavChild = { href: string; label: string; match: (p: string) => boolean };
 type NavLink = {
@@ -13,6 +20,8 @@ type NavLink = {
   label: string;
   match: (p: string) => boolean;
   children?: NavChild[];
+  /** Roll into the Instrument Serif italic of the writing pages on hover. */
+  serif?: boolean;
 };
 
 const NAV_LINKS: NavLink[] = [
@@ -44,30 +53,20 @@ const NAV_LINKS: NavLink[] = [
   {
     href: "/blog",
     label: "WRITING",
+    serif: true,
     match: (p) => p.startsWith("/blog") || p.startsWith("/article"),
   },
 ];
 
+/**
+ * Desktop space the floating top bar takes: 16px inset + 60px bar + 8px air.
+ * Mirrored by `#main-content`'s padding-top and html's scroll-padding-top in
+ * globals.css — change them together.
+ */
+export const NAV_CLEARANCE = 84;
+
 const skipLinkClass =
   "fixed left-[-9999px] top-0 z-[300] rounded-br-lg bg-accent px-[18px] py-2.5 font-grotesk text-[13px] font-bold text-bg focus:left-0";
-
-const navTileBase =
-  "w-[calc(100%+24px)] rounded-l-lg border border-transparent border-r-0 border-b-[1.5px] py-2.5 pr-5 pl-3 font-mono text-xs tracking-[0.08em] text-ink/55 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-accent/15 hover:border-b-accent hover:bg-accent/5 hover:text-accent";
-
-const navTileClass = `block ${navTileBase}`;
-
-// A section with subpages is a single disclosure button across the whole
-// tile — its landing page is reachable as the first child ("Overview"), so
-// the row never has to split into a link plus a tiny chevron target.
-const navTileToggleClass = `flex cursor-pointer items-center gap-1.5 text-left outline-none focus-visible:border-accent/15 focus-visible:border-b-accent focus-visible:text-accent ${navTileBase}`;
-
-const navTileActiveClass = "border-accent/15 border-b-accent bg-accent/5 text-accent";
-
-// Subpages use the same pill as the main tiles, just indented and at 11px.
-// ml-4 shifts the pill in; the width gives back 16px of the 24px bleed so its
-// right edge still lands on the sidebar border, flush with the parent tile.
-const navSubTileClass =
-  "ml-4 block w-[calc(100%+8px)] rounded-l-lg border border-transparent border-r-0 border-b-[1.5px] py-2 pr-3 pl-3 font-mono text-[11px] tracking-[0.08em] whitespace-nowrap text-ink/55 uppercase transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-accent/15 hover:border-b-accent hover:bg-accent/5 hover:text-accent";
 
 // Every page mounts its own <Nav/>, so component state alone would snap the
 // tree shut on each navigation. This outlives those remounts but not a full
@@ -121,9 +120,9 @@ function WritingLetters({
 }
 
 function BrandMark({ isMobile }: { isMobile: boolean }) {
-  const gSize = isMobile ? "24px" : "38px";
-  const nameSize = isMobile ? "13px" : "17px";
-  const sigilSize = isMobile ? "20px" : "30px";
+  const gSize = isMobile ? "24px" : "32px";
+  const nameSize = isMobile ? "13px" : "16px";
+  const sigilSize = isMobile ? "20px" : "25px";
   const rootRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
@@ -159,11 +158,6 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
           { opacity: 1, y: 0, duration: 0.22, stagger: 0.035 },
           "-=0.15"
         );
-
-      const dee = root.querySelector("[data-mark='dee']");
-      if (dee) {
-        tl.fromTo(dee, { opacity: 0 }, { opacity: 1, duration: 0.3 }, "-=0.05");
-      }
     }, rootRef);
 
     return () => ctx.revert();
@@ -173,7 +167,7 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
     <Link
       ref={rootRef}
       href="/"
-      className={isMobile ? "flex items-baseline gap-1.5 no-underline" : "flex flex-col gap-1 no-underline"}
+      className={`flex shrink-0 items-baseline no-underline ${isMobile ? "gap-1.5" : "gap-2"}`}
     >
       <span className="flex items-baseline gap-px">
         <span
@@ -199,94 +193,237 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
           style={{ fontSize: nameSize }}
         />
       </span>
-      {!isMobile && (
-        <span data-mark="dee" className="mt-1 font-mono text-[10px] tracking-[0.1em] text-accent/55">
-          dee
-        </span>
-      )}
     </Link>
   );
 }
 
-function NavChildren({
-  items,
-  pathname,
-  onNavigate,
-}: {
-  items: NavChild[];
-  pathname: string;
-  onNavigate?: () => void;
-}) {
+const titleCase = (s: string) => s.charAt(0) + s.slice(1).toLowerCase();
+
+function Letters({ text, className }: { text: string; className: string }) {
   return (
-    <div className="mt-2 mb-1 flex flex-col gap-1.5">
-      {items.map((child) => (
-        <Link
-          key={child.href}
-          href={child.href}
-          onClick={onNavigate}
-          className={`${navSubTileClass} ${child.match(pathname) ? navTileActiveClass : ""}`}
-        >
-          {child.label}
-        </Link>
+    <span className={className}>
+      {text.split("").map((ch, i) => (
+        <span key={i} style={{ "--i": i } as CSSProperties}>
+          {ch}
+        </span>
       ))}
+    </span>
+  );
+}
+
+/**
+ * A label that rolls letter by letter into a second copy of itself: the same
+ * Space Mono caps by default, or the Instrument Serif italic of the writing
+ * pages with `serif`. Both copies are decorative; the sr-only text carries
+ * the accessible name.
+ */
+function RollLabel({ label, serif = false }: { label: string; serif?: boolean }) {
+  const name = /[a-z]/.test(label) ? label : titleCase(label);
+  const caps = label.toUpperCase();
+  return (
+    <>
+      <span aria-hidden className={styles.roll} data-face={serif ? "serif" : "mono"}>
+        <Letters text={caps} className={styles.mono} />
+        <Letters text={serif ? name : caps} className={styles.back} />
+      </span>
+      <span className="sr-only">{name}</span>
+    </>
+  );
+}
+
+/** True once content starts passing under the bar (drives its frosted state). */
+function useScrolled() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 8);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    frame = requestAnimationFrame(update);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  return scrolled;
+}
+
+function WorkMenu({ link, pathname }: { link: NavLink; pathname: string }) {
+  const [open, setOpen] = useState(false);
+  const [entering, setEntering] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const openTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const active = link.match(pathname);
+  const id = `nav-sub-${link.label.toLowerCase()}`;
+
+  const setMenu = (next: boolean) => {
+    clearTimeout(openTimer.current);
+    clearTimeout(closeTimer.current);
+    setOpen(next);
+    if (next && !open) setEntering(true);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const t = setTimeout(() => setEntering(false), 700);
+    const onDown = (e: globalThis.PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      clearTimeout(t);
+      document.removeEventListener("pointerdown", onDown);
+    };
+  }, [open]);
+
+  useEffect(
+    () => () => {
+      clearTimeout(openTimer.current);
+      clearTimeout(closeTimer.current);
+    },
+    []
+  );
+
+  return (
+    <div
+      ref={rootRef}
+      className="relative"
+      // Hover intent both ways: a cursor passing over doesn't flash it open,
+      // and a slightly wide diagonal toward the menu doesn't snap it shut.
+      onPointerEnter={(e) => {
+        if (e.pointerType !== "mouse") return;
+        clearTimeout(closeTimer.current);
+        openTimer.current = setTimeout(() => setMenu(true), 90);
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType !== "mouse") return;
+        clearTimeout(openTimer.current);
+        closeTimer.current = setTimeout(() => setOpen(false), 240);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && open) {
+          setMenu(false);
+          rootRef.current?.querySelector("button")?.focus();
+        }
+      }}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setMenu(false);
+      }}
+    >
+      {/* The landing page is the first item ("Overview"), so the trigger is
+          one disclosure button rather than a link plus a tiny chevron. */}
+      <button
+        type="button"
+        onClick={() => setMenu(!open)}
+        aria-expanded={open}
+        aria-controls={id}
+        data-active={active || undefined}
+        className={styles.link}
+      >
+        <RollLabel label={link.label} />
+        <span aria-hidden className={styles.chevron} data-open={open || undefined}>
+          <ChevronIcon open={false} />
+        </span>
+      </button>
+
+      <div
+        id={id}
+        inert={!open}
+        className={styles.menu}
+        data-open={open || undefined}
+        data-entering={entering || undefined}
+      >
+        <div className={styles.tree}>
+          {link.children!.map((child, i) => {
+            const childActive = child.match(pathname);
+            return (
+              <Link
+                key={child.href}
+                href={child.href}
+                aria-current={childActive ? "page" : undefined}
+                data-active={childActive || undefined}
+                className={`${styles.link} ${styles.sub}`}
+                style={{ "--row": i } as CSSProperties}
+              >
+                <span aria-hidden className={styles.tick} />
+                <RollLabel label={child.label} />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
 
-function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
-  // Collapsed until the user opens a section — not auto-shown just because
-  // you're inside it — then stays open as they move between its subpages.
-  const [expanded, toggleExpanded] = useOpenSections();
+function DesktopNav({ pathname }: { pathname: string }) {
+  const floating = useScrolled();
 
   return (
-    <div className="flex w-full flex-col gap-2.5">
-      {NAV_LINKS.map((link) => {
-        const active = link.match(pathname);
+    <nav
+      aria-label="Primary"
+      className={`${styles.bar} fixed inset-x-0 top-4 z-[90] hidden px-4 font-grotesk min-[700px]:block`}
+      data-floating={floating || undefined}
+    >
+      {/* 1168 wide with 16px padding puts the brand and Résumé exactly on the
+          text edges of the pages' 1200px / px-8 content column — and at
+          narrower widths, 16px inset + 16px padding lands on the same 32px. */}
+      <div
+        className={`${styles.surface} mx-auto flex h-[60px] max-w-[1168px] items-center gap-6 px-4 min-[1100px]:gap-10`}
+      >
+        <BrandMark isMobile={false} />
 
-        if (!link.children) {
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={onNavigate}
-              className={`${navTileClass} ${active ? navTileActiveClass : ""}`}
-            >
-              {link.label}
-            </Link>
-          );
-        }
+        <div className={`${styles.list} ml-auto flex items-center gap-5`}>
+          {NAV_LINKS.map((link) => {
+            if (link.children) {
+              return <WorkMenu key={link.href} link={link} pathname={pathname} />;
+            }
+            const active = link.match(pathname);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                data-active={active || undefined}
+                className={styles.link}
+              >
+                <RollLabel label={link.label} serif={link.serif} />
+              </Link>
+            );
+          })}
+        </div>
 
-        const isOpen = expanded.has(link.href);
-        return (
-          <div key={link.href} className="flex w-full flex-col">
-            <button
-              type="button"
-              onClick={() => toggleExpanded(link.href)}
-              aria-expanded={isOpen}
-              aria-controls={`nav-sub-${link.label.toLowerCase()}`}
-              className={`${navTileToggleClass} ${active ? navTileActiveClass : ""}`}
-            >
-              {link.label}
-              <span className="opacity-60">
-                <ChevronIcon open={isOpen} />
-              </span>
-            </button>
-            {/* `inert` while collapsed keeps the hidden links out of the tab
-                order — otherwise keyboard users tab into invisible items. */}
-            <div
-              id={`nav-sub-${link.label.toLowerCase()}`}
-              inert={!isOpen}
-              className="grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
-            >
-              <div className="overflow-hidden">
-                <NavChildren items={link.children} pathname={pathname} onNavigate={onNavigate} />
-              </div>
-            </div>
+        {/* Socials drop out below 1100px (they're in the footer too) so the
+            links never collide with the brand on small laptops/tablets. */}
+        <span aria-hidden className="hidden h-5 w-px bg-accent/15 min-[1100px]:block" />
+
+        <div className="flex items-center gap-5">
+          <div className="hidden gap-2 min-[1100px]:flex">
+            <SocialIcon network="github" size={24} />
+            <SocialIcon network="x" size={24} />
+            <SocialIcon network="linkedin" size={24} />
           </div>
-        );
-      })}
-    </div>
+          <a
+            href="/resume.pdf"
+            download
+            className={styles.link}
+          >
+            <RollLabel label="Résumé" />
+            <span aria-hidden className="ml-1 font-mono text-[11px] text-accent/80">
+              ↓
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
   );
 }
 
@@ -518,37 +655,8 @@ export default function Nav() {
         )}
       </div>
 
-      {/* Desktop: sticky sidebar. Same CSS-only visibility approach. Brand
-          stays pinned at top and Footer at bottom; the links sit in a
-          flex-1 middle band and are vertically centered within it, so
-          they re-center as a block (not just jump) when a section
-          expands — the flex-1 band's own size is fixed by the brand/footer
-          on either side, so only its centered contents grow/shrink. */}
-      <nav
-        aria-label="Primary"
-        className="sticky top-0 box-border hidden h-screen w-[140px] shrink-0 flex-col items-start self-start border-r border-accent/12 p-6 font-grotesk min-[700px]:flex"
-      >
-        <BrandMark isMobile={false} />
-        {/* No `overflow` here, deliberately. Setting overflow-y makes the
-            spec compute overflow-x to `auto` as well, and the tiles bleed
-            24px past this band by design (`calc(100% + 24px)`) — that became
-            horizontal scroll overflow and clipped the first character off
-            every label. Spacing below is sized so the expanded tree fits
-            without scrolling (~495px against a ~680px viewport), and
-            `safe center` degrades to top-alignment rather than clipping if
-            a very short window ever did run out of room.
-
-            w-full matters too: the nav is `items-start`, so without it this
-            band shrink-wraps and the bleed resolves against an indefinite
-            width. */}
-        <div
-          className="flex w-full flex-1 flex-col"
-          style={{ justifyContent: "safe center" }}
-        >
-          <NavLinks pathname={pathname} />
-        </div>
-        <FooterGroup />
-      </nav>
+      {/* Desktop: floating top bar. Same CSS-only visibility approach. */}
+      <DesktopNav pathname={pathname} />
     </>
   );
 }

@@ -421,8 +421,6 @@ export default function Home() {
 
         <Footer />
       </div>
-      <div className="hidden w-18 shrink-0 min-[1025px]:block" />
-
       <ScrollRail />
     </div>
   );

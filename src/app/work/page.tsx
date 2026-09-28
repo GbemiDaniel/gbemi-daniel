@@ -18,7 +18,7 @@ import {
   type ReactNode,
 } from "react";
 import Link from "next/link";
-import Nav from "@/components/Nav";
+import Nav, { NAV_CLEARANCE } from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import ProjectCard from "@/components/ProjectCard";
@@ -384,6 +384,7 @@ export default function Work() {
   const [active, setActive] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isNarrow, setIsNarrow] = useState(false);
+  const [viewportH, setViewportH] = useState(900);
   const [hovered, setHovered] = useState<string | null>(null);
   const [showTop, setShowTop] = useState(false);
 
@@ -410,7 +411,13 @@ export default function Work() {
   const [featuredEdges, setFeaturedEdges] = useState({ start: true, end: false });
   const [conceptsEdges, setConceptsEdges] = useState({ start: true, end: false });
 
-  const stageH = isMobile ? 600 : isNarrow ? 660 : 760;
+  // On desktop the stage pins just below the floating top bar (16px inset +
+  // 60px bar + 8px air) instead of at 0, and gives up height on short
+  // viewports so the pinned stage still fits on screen whole.
+  const pinTop = isMobile ? 0 : NAV_CLEARANCE;
+  const stageH = isMobile
+    ? 600
+    : Math.max(560, Math.min(isNarrow ? 660 : 760, viewportH - pinTop));
 
   useEffect(() => {
     if (!isMobile) return;
@@ -520,14 +527,14 @@ export default function Work() {
     const total = wrapperEl.offsetHeight - stageH;
     if (total <= 0) return;
     const rect = wrapperEl.getBoundingClientRect();
-    let progress = -rect.top / total;
+    let progress = (pinTop - rect.top) / total;
     progress = Math.max(0, Math.min(1, progress));
     const idx = Math.round(progress * (COMBINED.length - 1));
     const top = window.scrollY > 600;
     setActive((prev) => (prev !== idx ? idx : prev));
     setShowTop((prev) => (prev !== top ? top : prev));
     if (idx !== active) sessionStorage.setItem("work-active-index", String(idx));
-  }, [active, stageH]);
+  }, [active, stageH, pinTop]);
 
   const goTo = useCallback(
     (i: number, instant?: boolean) => {
@@ -541,7 +548,7 @@ export default function Work() {
       }
       const total = wrapperEl.offsetHeight - stageH;
       const wrapperTop = wrapperEl.getBoundingClientRect().top + window.scrollY;
-      const targetScroll = wrapperTop + (target / (COMBINED.length - 1)) * total;
+      const targetScroll = wrapperTop - pinTop + (target / (COMBINED.length - 1)) * total;
 
       if (!instant) {
         // Silence the scroll listener for the duration of the animated
@@ -557,7 +564,7 @@ export default function Work() {
       window.scrollTo({ top: targetScroll, behavior: instant ? "auto" : "smooth" });
       setActive(target);
     },
-    [stageH]
+    [stageH, pinTop]
   );
 
   useEffect(() => {
@@ -565,6 +572,7 @@ export default function Work() {
       const w = window.innerWidth;
       setIsMobile(w < 700);
       setIsNarrow(w < 950);
+      setViewportH(window.innerHeight);
     };
     checkSize();
     window.addEventListener("resize", checkSize);
@@ -743,8 +751,8 @@ export default function Work() {
           style={{ height: wrapperHeight }}
         >
           <section
-            className={`sticky top-0 overflow-hidden ${isMobile ? "flex flex-col" : ""}`}
-            style={{ height: stageH }}
+            className={`sticky overflow-hidden ${isMobile ? "flex flex-col" : ""}`}
+            style={{ height: stageH, top: pinTop }}
           >
             {!isMobile && (
               <>

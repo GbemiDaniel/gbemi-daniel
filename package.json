@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lab:snippets": "node scripts/sync-lab-snippets.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",

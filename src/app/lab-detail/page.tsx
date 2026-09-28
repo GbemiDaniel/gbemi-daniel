@@ -185,7 +185,7 @@ export default function LabDetail() {
 
       <div id="main-content" className="min-w-0 flex-1">
         {/* HEADER */}
-        <section className="mx-auto max-w-[1400px] px-6 pt-8 pb-6 max-[700px]:px-5 max-[700px]:pt-5">
+        <section className="mx-auto max-w-300 px-8 pt-8 pb-6 max-[700px]:px-5 max-[700px]:pt-5">
           <Link href="/lab" className="text-[13px] text-ink/50 no-underline hover:text-accent">
             ← Lab
           </Link>
@@ -235,7 +235,7 @@ export default function LabDetail() {
         )}
 
         {/* WORKSHOP */}
-        <section className="mx-auto flex max-w-[1400px] flex-wrap items-stretch gap-5 px-6 pb-24">
+        <section className="mx-auto flex max-w-300 flex-wrap items-stretch gap-5 px-8 pb-24 max-[700px]:px-6">
           {/* LEFT: PROCESS CANVAS */}
           {showProcess && (
             <div className="flex min-w-[280px] flex-1 basis-[340px] flex-col overflow-hidden rounded-2xl border border-accent/12 bg-band">

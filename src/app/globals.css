@@ -46,9 +46,24 @@ img {
   }
 }
 
+/* Desktop: clearance for the floating top bar (16px inset + 60px bar + a
+   little air) — NAV_CLEARANCE in Nav.tsx. Padding sits on #main-content
+   rather than body, so each page's own background gradient still runs up
+   behind the bar; scroll-padding keeps in-page anchors and the skip link
+   from landing underneath it. */
+@media (min-width: 700px) {
+  html {
+    scroll-padding-top: 84px;
+  }
+
+  #main-content {
+    padding-top: 84px;
+  }
+}
+
 /* ── Scrollbar ──────────────────────────────────────────────────────────
    A thin floating pill on the band colour, with the same accent/12 hairline
-   the sidebar uses as its edge. It stays quiet at rest and picks up the lime
+   the nav uses on its edge. It stays quiet at rest and picks up the lime
    accent on hover and while dragging.
 
    Chrome/Edge 121+ ignore every ::-webkit-scrollbar rule once the standard

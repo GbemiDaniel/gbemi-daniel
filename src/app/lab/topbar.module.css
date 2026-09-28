@@ -1,0 +1,288 @@
+/* TOPBAR (Lab): the site's floating top nav, frozen as its own stylesheet.
+   A copy of src/components/nav.module.css rather than an import of it, so
+   later nav changes can't silently break the demo (which is what happened
+   to RAIL). Two demo-only additions: [data-demo-hover] mirrors :hover so
+   the card thumbnail can play hovers without a cursor, and .bar is
+   positioned by the demo's stage instead of the viewport.
+
+   A detached bar that stays put through the whole scroll, settling from
+   flat into a frosted capsule once content passes under it. All
+   interaction feedback is typographic: labels are a masked letter roll
+   (see "The letter roll" below), with no pills or colour fills. */
+
+.bar {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.surface {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    background-color 420ms var(--ease),
+    border-color 420ms var(--ease),
+    box-shadow 420ms var(--ease);
+}
+/* Flat on the page at the very top; a floating frosted capsule once the
+   content starts passing underneath it. */
+.bar[data-floating] .surface {
+  border-color: rgba(201, 243, 29, 0.12);
+  background: rgba(11, 8, 16, 0.74);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 239, 233, 0.05),
+    0 24px 60px -28px rgba(0, 0, 0, 0.75);
+}
+
+/* ── Rows ─────────────────────────────────────────────────────────────── */
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-block: 8px;
+  color: rgba(242, 239, 233, 0.55);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: color 300ms var(--ease);
+}
+
+.link:hover,
+.link[data-demo-hover],
+.link:focus-visible,
+.link[data-active] {
+  color: var(--color-ink);
+}
+
+/* Focus through type: hovering one item quietly steps the others back. */
+.list:has(.link:hover) .link:not(:hover),
+.list:has(.link[data-demo-hover]) .link:not([data-demo-hover]) {
+  color: rgba(242, 239, 233, 0.28);
+}
+
+/* The one hairline of accent: the branch off the Work dropdown's tree line,
+   drawn in on hover and lit for the current page. */
+.tick {
+  width: 16px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+.tick::before {
+  content: "";
+  width: 9px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    transform 420ms var(--ease),
+    opacity 300ms var(--ease);
+}
+.link:hover .tick::before,
+.link[data-demo-hover] .tick::before,
+.link:focus-visible .tick::before {
+  transform: scaleX(1);
+}
+.link[data-active] .tick::before {
+  transform: scaleX(1);
+  background: var(--color-accent);
+}
+
+/* ── The letter roll ──────────────────────────────────────────────────────
+   Two stacked copies of the label inside a mask. On hover the front copy
+   rolls out the top letter by letter as the back copy rises in. For most
+   links the back copy is the same Space Mono caps, so the motion never
+   changes the font or the width. Only Writing (data-face="serif") rolls
+   into the Instrument Serif italic of the writing pages. */
+
+.roll {
+  position: relative;
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  overflow: clip;
+  white-space: pre;
+}
+
+.mono,
+.back {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+/* Centred over the front copy: a narrower serif word sits evenly inside the
+   mono word's box instead of leaving a lopsided gap after it. */
+.back {
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+}
+
+.mono,
+.roll[data-face="mono"] .back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.roll[data-face="serif"] .back {
+  font-family: var(--font-serif-italic);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.005em;
+}
+.sub .mono,
+.sub .roll[data-face="mono"] .back {
+  font-size: 11px;
+}
+
+.mono > span,
+.back > span {
+  display: inline-block;
+  /* Each glyph box is the full mask height, so a roll travels exactly one
+     mask and nothing peeks through mid-flight. */
+  line-height: 24px;
+  will-change: transform;
+  transition: transform 520ms var(--ease);
+  transition-delay: calc(var(--i) * 16ms);
+}
+
+/* Rest: front visible, back waiting below the mask. */
+.mono > span {
+  transform: translateY(0);
+}
+.back > span {
+  transform: translateY(105%);
+}
+
+/* Hover / focus: front rolls out the top, back rises in. The serif face
+   also rests rolled on its own (Writing) pages. */
+.link:hover .mono > span,
+.link[data-demo-hover] .mono > span,
+.link:focus-visible .mono > span,
+.link[data-active] .roll[data-face="serif"] .mono > span {
+  transform: translateY(-105%);
+}
+.link:hover .back > span,
+.link[data-demo-hover] .back > span,
+.link:focus-visible .back > span,
+.link[data-active] .roll[data-face="serif"] .back > span {
+  transform: translateY(0);
+}
+
+/* Resting in the serif (on the Writing pages), the box sizes to the serif
+   word rather than the wider mono caps hidden above the mask, so the gaps
+   either side of it match the rest of the row. */
+.link[data-active] .roll[data-face="serif"] .mono {
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+.link[data-active] .roll[data-face="serif"] .back {
+  position: relative;
+  inset: auto;
+}
+
+/* Pulled in against the label: the icon's own 3px inner padding plus the
+   last letter's tracking otherwise left ~8px before it, so the chevron read
+   as a separate item floating between WORK and ABOUT. */
+.chevron {
+  margin-left: -2px;
+  opacity: 0.5;
+  transition:
+    transform 360ms var(--ease),
+    opacity 300ms var(--ease);
+}
+.chevron[data-open] {
+  transform: rotate(180deg);
+}
+.link:hover .chevron,
+.link[data-demo-hover] .chevron {
+  opacity: 0.9;
+}
+
+/* ── Work dropdown ────────────────────────────────────────────────────── */
+
+.menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: -18px;
+  min-width: 200px;
+  padding: 14px 22px 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(201, 243, 29, 0.14);
+  background: rgba(11, 8, 16, 0.86);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 239, 233, 0.05),
+    0 30px 70px -24px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transform-origin: top left;
+  transition:
+    opacity 200ms var(--ease),
+    transform 260ms var(--ease),
+    visibility 0s linear 260ms;
+}
+/* Bridges the gap to the trigger so the pointer can cross it. */
+.menu::before {
+  content: "";
+  position: absolute;
+  inset: -16px 0 auto;
+  height: 16px;
+}
+.menu[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 260ms var(--ease),
+    transform 520ms var(--ease),
+    visibility 0s linear 0s;
+}
+
+.tree {
+  display: flex;
+  flex-direction: column;
+  margin-left: 4px;
+  border-left: 1px solid rgba(242, 239, 233, 0.1);
+}
+
+/* Sub rows hang off the tree line; their tick is the branch into the label. */
+.sub {
+  padding-block: 4px;
+}
+.sub .tick {
+  width: 26px;
+  justify-content: flex-start;
+}
+.sub .tick::before {
+  width: 14px;
+  transform: scaleX(0);
+}
+
+/* Items stagger up out of the mask as the menu opens. */
+.menu:not([data-open]) .mono > span,
+.menu:not([data-open]) .back > span {
+  transform: translateY(105%);
+  transition-duration: 160ms;
+  transition-delay: 0ms;
+}
+.menu[data-entering] .mono > span,
+.menu[data-entering] .back > span {
+  transition-duration: 560ms;
+  transition-delay: calc(60ms + var(--row) * 45ms + var(--i) * 14ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .bar *,
+  .bar *::before {
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+}

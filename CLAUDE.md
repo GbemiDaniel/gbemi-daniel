@@ -25,6 +25,13 @@ Lab lives entirely in two files:
 
 That's the whole change. The grid, modal, and keyboard handling already exist and don't need touching. Only build a full `/lab-detail`-style breakdown page if the piece genuinely needs a deeper walkthrough (see the existing `nodeSets.ts` pattern) — most entries don't.
 
+Optional card fields, for pieces that earn them (see DRAG-TO-REVEAL and RAIL):
+- `detailHref` — adds "Open full breakdown →" in the modal, pointing at a `/lab-detail/<slug>` page.
+- `devPrompt` / `codeSnippet` — the two copy buttons. Prompts live in `src/app/lab/specs.ts`. `*_CODE` strings there are generated verbatim from the real source by `npm run lab:snippets` (run it after editing a piece's source; `-- --check` fails on drift), so never hand-edit them.
+- `desktopOnly` — hides the card below 700px, for hover-driven pieces with nothing to feel on touch.
+
+A piece with real logic (more than a few lines) gets its own module next to `previews.tsx` (`dragReveal.ts`, `rail.tsx`) so the preview, its breakdown page and its `*_CODE` snippet all share one source.
+
 ## Adding a Concepts entry
 
 - `src/app/concepts/page.tsx` holds the `PROJECTS` array (currently empty on purpose — see the comment above it). Add one object: `{ key, title, description, category, tagList, year, href, rot }`.

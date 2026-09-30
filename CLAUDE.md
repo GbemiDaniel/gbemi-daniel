@@ -28,7 +28,7 @@ That's the whole change. The grid, modal, and keyboard handling already exist an
 Optional card fields, for pieces that earn them (see DRAG-TO-REVEAL and RAIL):
 - `detailHref` — adds "Open full breakdown →" in the modal, pointing at a `/lab-detail/<slug>` page.
 - `devPrompt` / `codeSnippet` — the two copy buttons. Prompts live in `src/app/lab/specs.ts`. `*_CODE` strings there are generated verbatim from the real source by `npm run lab:snippets` (run it after editing a piece's source; `-- --check` fails on drift), so never hand-edit them.
-- `desktopOnly` — hides the card below 700px, for hover-driven pieces with nothing to feel on touch.
+- `desktopOnly` — for hover-driven pieces with nothing to feel on touch. The card still shows on mobile, tagged "Desktop"; only the modal's live demo swaps for a short notice below 700px, so mobile visitors still know the piece exists and can read the write-up/code instead of never seeing it.
 
 A piece with real logic (more than a few lines) gets its own module next to `previews.tsx` (`dragReveal.ts`, `rail.tsx`) so the preview, its breakdown page and its `*_CODE` snippet all share one source.
 

@@ -50,7 +50,9 @@ type Card = {
   devPrompt?: string;
   codeSnippet?: string;
   detailHref?: string;
-  /** Hover/pointer pieces that mean nothing on a phone: hidden below 700px. */
+  /** Hover/pointer pieces that mean nothing on a phone. The card still shows
+   *  on mobile (tagged "Desktop") so visitors know it exists; only the
+   *  modal's live demo swaps for a short notice below 700px. */
   desktopOnly?: boolean;
 };
 
@@ -226,8 +228,8 @@ export default function Lab() {
                   onMouseLeave={() => setHovered(null)}
                   tabIndex={0}
                   role="button"
-                  aria-label={`Open ${card.codename} lab file`}
-                  className={`cursor-pointer overflow-hidden rounded-2xl bg-band outline-none transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[3px] focus-visible:border-accent ${card.desktopOnly ? "max-[700px]:hidden" : ""}`}
+                  aria-label={`Open ${card.codename} lab file${card.desktopOnly ? " — best on a larger screen" : ""}`}
+                  className="cursor-pointer overflow-hidden rounded-2xl bg-band outline-none transition-[border-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[3px] focus-visible:border-accent"
                   style={{
                     border: `1px solid ${on ? "rgba(201,243,29,0.5)" : "rgba(201,243,29,0.12)"}`,
                     boxShadow: on ? "0 16px 36px -12px rgba(201,243,29,0.18)" : "0 0 0 rgba(0,0,0,0)",
@@ -239,13 +241,20 @@ export default function Lab() {
                     <card.Preview size="sm" />
                   </div>
                   <div className="p-5 max-[700px]:p-4">
-                    <div className="mb-2 flex items-center justify-between max-[700px]:mb-1.5">
+                    <div className="mb-2 flex items-center justify-between gap-2 max-[700px]:mb-1.5">
                       <span className="text-base font-bold max-[700px]:text-[14px]">
                         {card.codename}
                       </span>
-                      <span className="rounded-full border border-accent/30 px-2.5 py-[3px] font-mono text-[10px] tracking-[0.05em] text-accent">
-                        {card.tag}
-                      </span>
+                      <div className="flex shrink-0 items-center gap-1.5">
+                        <span className="rounded-full border border-accent/30 px-2.5 py-[3px] font-mono text-[10px] tracking-[0.05em] text-accent">
+                          {card.tag}
+                        </span>
+                        {card.desktopOnly && (
+                          <span className="rounded-full border border-ink/15 px-2.5 py-[3px] font-mono text-[10px] tracking-[0.05em] text-ink/45">
+                            Desktop
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <p className="m-0 text-[13px] leading-[1.5] text-ink/55 max-[700px]:line-clamp-2 max-[700px]:text-[12px]">
                       {card.desc}
@@ -286,16 +295,44 @@ export default function Lab() {
               </span>
             </div>
             <div className="relative flex h-[280px] items-center justify-center overflow-hidden border-b border-accent/10 max-[700px]:h-[180px]">
-              <selectedCard.Preview size="lg" />
+              {selectedCard.desktopOnly ? (
+                <>
+                  {/* Live demo at 700px+; below it, the same "nothing to feel on a
+                      phone" notice the piece's own /lab-detail page shows instead
+                      — a CSS-only split, so there's no flash of the wrong one
+                      before hydration. */}
+                  <div className="hidden h-full w-full items-center justify-center min-[700px]:flex">
+                    <selectedCard.Preview size="lg" />
+                  </div>
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 px-6 text-center min-[700px]:hidden">
+                    <div className="font-mono text-[10px] tracking-[0.1em] text-accent">
+                      DESKTOP PIECE
+                    </div>
+                    <p className="m-0 text-[12.5px] leading-relaxed text-ink/55">
+                      Hover + keyboard driven — nothing to feel on a phone. The write-up and code
+                      below still work.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <selectedCard.Preview size="lg" />
+              )}
             </div>
             <div className="p-7 max-[700px]:p-4">
               <div className="mb-2.5 flex items-start justify-between gap-4 max-[700px]:mb-1.5">
                 <h3 className="m-0 text-[22px] font-bold max-[700px]:text-[17px]">
                   {selectedCard.codename}
                 </h3>
-                <span className="shrink-0 rounded-full border border-accent/30 px-2.5 py-[3px] font-mono text-[10px] tracking-[0.05em] text-accent">
-                  {selectedCard.tag}
-                </span>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <span className="rounded-full border border-accent/30 px-2.5 py-[3px] font-mono text-[10px] tracking-[0.05em] text-accent">
+                    {selectedCard.tag}
+                  </span>
+                  {selectedCard.desktopOnly && (
+                    <span className="rounded-full border border-ink/15 px-2.5 py-[3px] font-mono text-[10px] tracking-[0.05em] text-ink/45">
+                      Desktop
+                    </span>
+                  )}
+                </div>
               </div>
               <p className="m-0 text-sm leading-relaxed text-ink/60">{selectedCard.desc}</p>
               {selectedCard.detailHref && (

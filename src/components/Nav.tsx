@@ -411,16 +411,9 @@ function DesktopNav({ pathname }: { pathname: string }) {
             <SocialIcon network="x" size={24} />
             <SocialIcon network="linkedin" size={24} />
           </div>
-          <a
-            href="/resume.pdf"
-            download
-            className={styles.link}
-          >
+          <Link href="/resume" className={styles.link}>
             <RollLabel label="Résumé" />
-            <span aria-hidden className="ml-1 font-mono text-[11px] text-accent/80">
-              ↓
-            </span>
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
@@ -569,13 +562,12 @@ function FooterGroup() {
         <SocialIcon network="x" size={24} />
         <SocialIcon network="linkedin" size={24} />
       </div>
-      <a
-        href="/resume.pdf"
-        download
+      <Link
+        href="/resume"
         className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.08em] text-accent/70 hover:text-accent hover:underline"
       >
-        RÉSUMÉ ↓
-      </a>
+        RÉSUMÉ →
+      </Link>
     </div>
   );
 }

@@ -148,7 +148,12 @@ export default function Home() {
               <div className="flex flex-1 flex-wrap items-stretch gap-10">
                 <div className="flex min-h-0 min-w-65 flex-1 basis-70 flex-col">
                   <div className="flex gap-4">
-                    <div className="relative w-px shrink-0 bg-white/15 before:absolute before:-top-3.5 before:-left-1.5 before:text-xs before:text-ink/30 before:content-['+']" />
+                    <div aria-hidden className="relative w-px shrink-0">
+                      <span className={styles.ruleTrack}>
+                        <span className={styles.ruleSpark} />
+                      </span>
+                      <span className={styles.rulePlus} />
+                    </div>
                     <Reveal y={18} duration={0.9}>
                       <h1 className="m-0 text-[clamp(24px,3.4vw,40px)] leading-[1.15] font-semibold tracking-[-0.02em]">
                         Great interfaces aren&apos;t designed. They&apos;re{" "}
@@ -196,20 +201,6 @@ export default function Home() {
                       priority
                     />
                   </CameraFrame>
-                  <div className="absolute top-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] leading-relaxed text-ink backdrop-blur-sm">
-                    DEE.JPG
-                    <br />
-                    <small className="text-[10px] text-ink/55">2026-08-24 17:42</small>
-                  </div>
-                  <div className="absolute top-4 right-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] text-ink/70 backdrop-blur-sm">
-                    VIEW_001
-                  </div>
-                  <div className="absolute bottom-4 left-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] text-ink/70 backdrop-blur-sm">
-                    LAGOS, NG
-                  </div>
-                  <div className="absolute right-4 bottom-4 rounded bg-[rgba(11,8,16,0.55)] px-2.5 py-1.25 font-mono text-[11px] text-ink/70 backdrop-blur-sm">
-                    3024×4032
-                  </div>
                 </div>
 
                 <div className="mt-8 hidden max-[700px]:flex max-w-105 flex-wrap items-center gap-5 border-t border-white/8 pt-10">

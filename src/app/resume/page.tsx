@@ -211,7 +211,7 @@ export default function Resume() {
                 >
                   <span
                     aria-hidden
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/15 text-base text-black transition-transform duration-300 group-hover:translate-y-0.5"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/15 text-base text-black transition-transform duration-300 group-hover:translate-y-0.5 [@media(hover:hover)]:group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]"
                   >
                     ↓
                   </span>
@@ -227,7 +227,7 @@ export default function Resume() {
                 >
                   <span
                     aria-hidden
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/12 text-base text-accent transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/12 text-base text-accent transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 [@media(hover:hover)]:group-hover:[animation:arrowPulse_0.6s_cubic-bezier(0.16,1,0.3,1)_1]"
                   >
                     ↗
                   </span>
@@ -282,12 +282,7 @@ export default function Resume() {
               <Reveal>
                 <h2 className={sectionLabel}>Education</h2>
                 <div className="flex flex-col gap-2">
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                    <h3 className="m-0 text-[18px] font-semibold">BSc Computer Science</h3>
-                    <span className="font-mono text-[11px] tracking-[0.06em] text-ink/45">
-                      2018 – 2024
-                    </span>
-                  </div>
+                  <h3 className="m-0 text-[18px] font-semibold">BSc Computer Science</h3>
                   <div className="text-[13px] text-ink/50 italic">
                     University of Nigeria, Nsukka (UNN) · Enugu State
                   </div>

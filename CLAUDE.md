@@ -20,7 +20,7 @@ Lab isn't a demo reel and it isn't developer-tool utilities (a calculator, a che
 ## Adding a Lab entry
 
 Lab lives entirely in two files:
-- `src/app/lab/previews.tsx` — one small named component per piece (e.g. `OrbitPreview`, `RipplePreview`). Keep each self-contained: inline styles or a CSS Modules class in `lab.module.css`, no new dependencies unless the effect genuinely needs one.
+- `src/app/lab/previews.tsx` — one small named component per piece (e.g. `OrbitPreview`, `DragRevealPreview`). Keep each self-contained: inline styles or a CSS Modules class in `lab.module.css`, no new dependencies unless the effect genuinely needs one.
 - `src/app/lab/page.tsx` — the `CARDS` array. Add one object: `{ id, codename, tag, desc, Preview, noPadding, devPrompt? }`.
 
 That's the whole change. The grid, modal, and keyboard handling already exist and don't need touching. Only build a full `/lab-detail`-style breakdown page if the piece genuinely needs a deeper walkthrough (see the existing `nodeSets.ts` pattern) — most entries don't.

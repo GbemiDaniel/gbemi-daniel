@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { gsap, HOUSE_EASE } from "@/lib/motion";
 import SigilD from "./SigilD";
 import SocialIcon from "./SocialIcon";
+import { useDesktopNavMotion } from "./navMotion";
 import styles from "./nav.module.css";
 
 type NavChild = { href: string; label: string; match: (p: string) => boolean };
@@ -97,7 +98,13 @@ function Waveform() {
   );
 }
 
-function WritingLetters({
+/**
+ * One whole word, revealed by a left-to-right wipe like a pen stroke.
+ * Deliberately not split into per-letter spans: inline-block letters drop
+ * the font's kerning pairs, which is what made the italic read unevenly
+ * spaced. The clip starts closed in CSS so there's no flash before GSAP runs.
+ */
+function WritingWord({
   text,
   className,
   style,
@@ -109,27 +116,35 @@ function WritingLetters({
   dataWord: string;
 }) {
   return (
-    <span className={className} style={style} data-word={dataWord} aria-label={text}>
-      {text.split("").map((ch, i) => (
-        <span key={i} data-letter className="inline-block opacity-0">
-          {ch}
-        </span>
-      ))}
+    <span
+      data-word={dataWord}
+      className={`inline-block [clip-path:inset(-30%_100%_-30%_-15%)] ${className ?? ""}`}
+      style={style}
+    >
+      {text}
     </span>
   );
 }
 
+// Clip states for the wipe. Negative insets leave room for the italic's
+// overhang and descenders so nothing is shaved off once it's fully shown.
+const WIPE_HIDDEN = "inset(-30% 100% -30% -15%)";
+const WIPE_SHOWN = "inset(-30% -15% -30% -15%)";
+
 function BrandMark({ isMobile }: { isMobile: boolean }) {
-  const gSize = isMobile ? "24px" : "32px";
-  const nameSize = isMobile ? "13px" : "16px";
-  const sigilSize = isMobile ? "20px" : "25px";
+  // Everything keys off the name size: the G, sigil and every gap are em
+  // multiples of it, so mobile and desktop share one set of proportions
+  // instead of two hand-tuned pixel sets that drift apart.
+  const nameSize = isMobile ? 13 : 16;
   const rootRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+    const words = root.querySelectorAll("[data-word]");
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(root.querySelectorAll("[data-letter], [data-mark]"), { opacity: 1, y: 0, scale: 1 });
+      gsap.set(root.querySelectorAll("[data-mark]"), { opacity: 1, y: 0, scale: 1 });
+      gsap.set(words, { clipPath: WIPE_SHOWN });
       return;
     }
 
@@ -138,25 +153,25 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
       tl.fromTo(
         root.querySelector("[data-mark='g']"),
         { opacity: 0, y: 4 },
-        { opacity: 1, y: 0, duration: 0.25 }
+        { opacity: 1, y: 0, duration: 0.3 }
       )
         .fromTo(
-          root.querySelectorAll("[data-word='bemi'] [data-letter]"),
-          { opacity: 0, y: 4 },
-          { opacity: 1, y: 0, duration: 0.22, stagger: 0.035 },
-          "-=0.05"
+          root.querySelector("[data-word='bemi']"),
+          { clipPath: WIPE_HIDDEN },
+          { clipPath: WIPE_SHOWN, duration: 0.45, ease: "power2.inOut" },
+          "-=0.12"
         )
         .fromTo(
           root.querySelector("[data-mark='sigil']"),
           { opacity: 0, scale: 0.85 },
-          { opacity: 1, scale: 1, duration: 0.3 },
-          "-=0.05"
+          { opacity: 1, scale: 1, duration: 0.35 },
+          "-=0.1"
         )
         .fromTo(
-          root.querySelectorAll("[data-word='aniel'] [data-letter]"),
-          { opacity: 0, y: 4 },
-          { opacity: 1, y: 0, duration: 0.22, stagger: 0.035 },
-          "-=0.15"
+          root.querySelector("[data-word='aniel']"),
+          { clipPath: WIPE_HIDDEN },
+          { clipPath: WIPE_SHOWN, duration: 0.5, ease: "power2.inOut" },
+          "-=0.2"
         );
     }, rootRef);
 
@@ -167,30 +182,29 @@ function BrandMark({ isMobile }: { isMobile: boolean }) {
     <Link
       ref={rootRef}
       href="/"
-      className={`flex shrink-0 items-baseline no-underline ${isMobile ? "gap-1.5" : "gap-2"}`}
+      aria-label="Gbemi Daniel — home"
+      className="flex shrink-0 items-baseline leading-none no-underline"
+      style={{ fontSize: nameSize }}
     >
-      <span className="flex items-baseline gap-px">
-        <span
-          data-mark="g"
-          className="font-script font-bold leading-none text-accent"
-          style={{ fontSize: gSize }}
-        >
+      <span aria-hidden className="flex items-baseline">
+        <span data-mark="g" className={`relative -top-[0.09em] font-script text-[1.9em] leading-none font-bold ${styles.brandG}`}>
           G
         </span>
-        <WritingLetters
+        <WritingWord
           text="bemi"
           dataWord="bemi"
-          className="font-serif-italic font-normal text-ink/85 italic"
-          style={{ fontSize: nameSize }}
+          className="-ml-[0.08em] font-serif-italic font-normal text-ink/85 italic"
         />
       </span>
-      <span className="flex items-baseline gap-1">
-        <SigilD data-mark="sigil" style={{ height: sigilSize, width: "auto" }} />
-        <WritingLetters
+      <span aria-hidden className="ml-[0.55em] flex items-baseline">
+        <SigilD
+          data-mark="sigil"
+          className="relative top-[0.1em] h-[1.5em] w-auto"
+        />
+        <WritingWord
           text="aniel"
           dataWord="aniel"
-          className="font-serif-italic font-normal text-ink/85 italic"
-          style={{ fontSize: nameSize }}
+          className="ml-[0.03em] font-serif-italic font-normal text-ink/85 italic"
         />
       </span>
     </Link>
@@ -295,6 +309,7 @@ function WorkMenu({ link, pathname }: { link: NavLink; pathname: string }) {
   return (
     <div
       ref={rootRef}
+      data-navitem
       className="relative"
       // Hover intent both ways: a cursor passing over doesn't flash it open,
       // and a slightly wide diagonal toward the menu doesn't snap it shut.
@@ -326,6 +341,7 @@ function WorkMenu({ link, pathname }: { link: NavLink; pathname: string }) {
         aria-expanded={open}
         aria-controls={id}
         data-active={active || undefined}
+        data-magnet
         className={styles.link}
       >
         <RollLabel label={link.label} />
@@ -366,9 +382,12 @@ function WorkMenu({ link, pathname }: { link: NavLink; pathname: string }) {
 
 function DesktopNav({ pathname }: { pathname: string }) {
   const floating = useScrolled();
+  const navRef = useRef<HTMLElement>(null);
+  useDesktopNavMotion(navRef);
 
   return (
     <nav
+      ref={navRef}
       aria-label="Primary"
       className={`${styles.bar} fixed inset-x-0 top-4 z-[90] hidden px-4 font-grotesk min-[700px]:block`}
       data-floating={floating || undefined}
@@ -376,44 +395,63 @@ function DesktopNav({ pathname }: { pathname: string }) {
       {/* 1168 wide with 16px padding puts the brand and Résumé exactly on the
           text edges of the pages' 1200px / px-8 content column — and at
           narrower widths, 16px inset + 16px padding lands on the same 32px. */}
-      <div
-        className={`${styles.surface} mx-auto flex h-[60px] max-w-[1168px] items-center gap-6 px-4 min-[1100px]:gap-10`}
-      >
-        <BrandMark isMobile={false} />
-
-        <div className={`${styles.list} ml-auto flex items-center gap-5`}>
-          {NAV_LINKS.map((link) => {
-            if (link.children) {
-              return <WorkMenu key={link.href} link={link} pathname={pathname} />;
-            }
-            const active = link.match(pathname);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={active ? "page" : undefined}
-                data-active={active || undefined}
-                className={styles.link}
-              >
-                <RollLabel label={link.label} serif={link.serif} />
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Socials drop out below 1100px (they're in the footer too) so the
-            links never collide with the brand on small laptops/tablets. */}
-        <span aria-hidden className="hidden h-5 w-px bg-accent/15 min-[1100px]:block" />
-
-        <div className="flex items-center gap-5">
-          <div className="hidden gap-2 min-[1100px]:flex">
-            <SocialIcon network="github" size={24} />
-            <SocialIcon network="x" size={24} />
-            <SocialIcon network="linkedin" size={24} />
+      <div className={`${styles.stage} mx-auto max-w-[1168px]`}>
+        <div className={`${styles.row} px-4`}>
+          <div className={`${styles.brand} justify-self-start`}>
+            <BrandMark isMobile={false} />
           </div>
-          <Link href="/resume" className={styles.link}>
-            <RollLabel label="Résumé" />
-          </Link>
+
+          <div data-fx="surface" className={styles.capsule}>
+            {/* Light layers: a specular sheen and a rim light that follow the
+                cursor (positioned by --gx/--gy, strength by --prox). */}
+            <span aria-hidden className={styles.glare} />
+            <span aria-hidden className={styles.rim} />
+
+            <div
+              data-fx="list"
+              className={`${styles.list} relative flex items-center gap-6 min-[1000px]:gap-7`}
+            >
+              {NAV_LINKS.map((link) => {
+                if (link.children) {
+                  return <WorkMenu key={link.href} link={link} pathname={pathname} />;
+                }
+                const active = link.match(pathname);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    data-active={active || undefined}
+                    data-navitem
+                    data-magnet
+                    className={styles.link}
+                  >
+                    <RollLabel label={link.label} serif={link.serif} />
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Socials drop out below 1100px (they're in the footer too) so
+              the three columns never collide on small laptops/tablets. */}
+          <div className="flex items-center gap-5 justify-self-end">
+            <div className="hidden gap-2 min-[1100px]:flex">
+              <SocialIcon network="github" size={32} />
+              <SocialIcon network="x" size={32} />
+              <SocialIcon network="linkedin" size={32} />
+            </div>
+            <Link
+              href="/resume"
+              aria-current={pathname.startsWith("/resume") ? "page" : undefined}
+              className={`${styles.link} ${styles.cta}`}
+            >
+              <RollLabel label="Résumé" />
+              <span aria-hidden className={styles.ctaArrow}>
+                ↗
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

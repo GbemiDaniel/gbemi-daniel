@@ -7,12 +7,6 @@ import Footer from "@/components/Footer";
 import styles from "./lab.module.css";
 import {
   OrbitPreview,
-  RipplePreview,
-  FieldPreview,
-  SparklinePreview,
-  MagnetPreview,
-  NoisePreview,
-  ProximityPreview,
   DragRevealPreview,
   RailPreview,
   TopbarPreview,
@@ -25,20 +19,6 @@ import {
   TOPBAR_CODE,
   TOPBAR_DEV_PROMPT,
 } from "./specs";
-
-const PROXIMITY_DEV_PROMPT = `Build a "proximity hover" effect for a UI element:
-
-- Track the pointer's position relative to the element's bounding box on mousemove.
-- Compute the distance from the pointer to the element's center, and normalize it
-  against the box's half-diagonal so you get a 0-1 "proximity" value (1 = pointer at
-  center, 0 = pointer at the farthest corner).
-- Drive two things off that proximity value: a scale transform (e.g. 1 -> 1.7) and a
-  glow via box-shadow (blur + spread + opacity all increasing with proximity).
-- On mouseleave, ease both back to their resting state.
-- Write the styles imperatively (element.style.transform / boxShadow) instead of
-  through React state, so the glow updates on every mousemove without a re-render.
-- Respect prefers-reduced-motion: skip the scale/glow entirely and show the resting
-  state only.`;
 
 type Card = {
   id: string;
@@ -65,55 +45,6 @@ const CARDS: Card[] = [
     Preview: OrbitPreview,
     noPadding: false,
     detailHref: "/lab-detail",
-  },
-  {
-    id: "ripple",
-    codename: "RIPPLE",
-    tag: "Motion",
-    desc: "A click-feedback ping for buttons that don't want a full ripple fill.",
-    Preview: RipplePreview,
-    noPadding: false,
-  },
-  {
-    id: "field",
-    codename: "FIELD",
-    tag: "Generative",
-    desc: "A grid of points breathing in a diagonal wave — loading state, reimagined.",
-    Preview: FieldPreview,
-    noPadding: false,
-  },
-  {
-    id: "sparkline",
-    codename: "SPARKLINE",
-    tag: "Data Viz",
-    desc: "A self-drawing trend line for dashboards that shouldn't feel static.",
-    Preview: SparklinePreview,
-    noPadding: false,
-  },
-  {
-    id: "magnet",
-    codename: "MAGNET",
-    tag: "Interaction",
-    desc: "Elements that lift toward the cursor before you actually click them.",
-    Preview: MagnetPreview,
-    noPadding: false,
-  },
-  {
-    id: "noise",
-    codename: "NOISE",
-    tag: "Generative",
-    desc: "A drifting dot field for empty states — texture instead of silence.",
-    Preview: NoisePreview,
-    noPadding: true,
-  },
-  {
-    id: "proximity",
-    codename: "PROXIMITY",
-    tag: "Interaction",
-    desc: "A dot that senses the cursor closing in — scale and glow scale with nearness, not click.",
-    Preview: ProximityPreview,
-    noPadding: false,
-    devPrompt: PROXIMITY_DEV_PROMPT,
   },
   {
     id: "drag-reveal",

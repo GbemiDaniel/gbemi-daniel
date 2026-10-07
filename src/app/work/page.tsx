@@ -158,8 +158,6 @@ const RAW_PROJECTS: RawProject[] = [
   // ChronoVault and Thrifty are real collaborations (both have a
   // collaborator and a shipped build), not exploratory concepts — they
   // belong in Featured & Collabs like everything else real right now.
-  // Nothing genuinely concept-stage exists yet, so that section stays an
-  // honest placeholder until it does.
   {
     key: "chronovault-g",
     title: "ChronoVault",
@@ -184,7 +182,20 @@ const RAW_PROJECTS: RawProject[] = [
     featured: false,
     group: "main",
   },
+  {
+    key: "still-g",
+    title: "Still",
+    description: "A breathing guide with one warm light: hold to breathe in, let go to breathe out, no account required.",
+    category: "CONCEPT",
+    tagList: ["TypeScript", "WebGL", "Vite"],
+    year: "2026",
+    href: "/concept/still",
+    imgSrc: "/images/concepts/still/free.png",
+    featured: false,
+    group: "concept",
+  },
 ];
+
 
 const countByCategory = (category: string) =>
   RAW_PROJECTS.filter((p) => p.category === category).length;

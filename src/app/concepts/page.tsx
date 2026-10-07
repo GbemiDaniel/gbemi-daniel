@@ -1,9 +1,11 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
+import { CONCEPTS } from "@/lib/concepts";
 import styles from "./concepts.module.css";
 
 const TITLE = "Concepts";
@@ -22,22 +24,17 @@ export const metadata: Metadata = {
   },
 };
 
-type ConceptProject = {
-  key: string;
-  title: string;
-  description: string;
-  category: string;
-  tagList: string[];
-  year: string;
-  href: string;
-  rot: string;
-};
-
-// Everything real right now is a collaboration, over on /work — nothing
-// concept-stage exists yet. Left empty rather than removed: the grid below
-// already renders a clean, honest state with zero items, and adding a real
-// one later is just pushing an object here.
-const PROJECTS: ConceptProject[] = [];
+const PROJECTS = Object.values(CONCEPTS).map((cp) => ({
+  key: cp.slug,
+  title: cp.title,
+  description: cp.description,
+  category: cp.category,
+  tagList: cp.tagList,
+  year: cp.year,
+  href: `/concept/${cp.slug}`,
+  rot: cp.rot,
+  imgSrc: cp.gallery?.desktop[0]?.src,
+}));
 
 export default function Concepts() {
   return (
@@ -82,12 +79,22 @@ export default function Concepts() {
                   style={{ transform: "rotate(-4deg)" }}
                 />
                 <div className="relative overflow-hidden rounded-t-[9px]">
-                  <ImageSlot
-                    alt={p.title}
-                    placeholder="Drop project image"
-                    shape="rect"
-                    className="h-[200px] w-full [filter:saturate(0.9)] max-[700px]:h-[150px]"
-                  />
+                  {p.imgSrc ? (
+                    <Image
+                      src={p.imgSrc}
+                      alt={p.title}
+                      width={640}
+                      height={200}
+                      className="h-[200px] w-full object-cover [filter:saturate(0.9)] max-[700px]:h-[150px]"
+                    />
+                  ) : (
+                    <ImageSlot
+                      alt={p.title}
+                      placeholder="Drop project image"
+                      shape="rect"
+                      className="h-[200px] w-full [filter:saturate(0.9)] max-[700px]:h-[150px]"
+                    />
+                  )}
                   <span
                     className="absolute top-3.5 right-3.5 rounded-full border border-accent/30 bg-[rgba(11,8,16,0.7)] px-2.5 py-1 font-mono text-[10px] tracking-[0.06em] text-ink/60 max-[700px]:px-2 max-[700px]:text-[9px]"
                     style={{ transform: "rotate(3deg)" }}

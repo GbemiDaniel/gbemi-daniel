@@ -25,7 +25,7 @@ export async function generateMetadata({
   const cp = CONCEPTS[slug];
   if (!cp) return {};
 
-  const description = cp.sections[0]?.body ?? `A ${cp.category.toLowerCase()} concept by Gbemi Daniel.`;
+  const description = cp.description;
   const image = cp.gallery?.desktop[0]?.src;
 
   return {

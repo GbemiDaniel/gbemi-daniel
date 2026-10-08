@@ -22,6 +22,7 @@ import Nav, { NAV_CLEARANCE } from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageSlot from "@/components/ImageSlot";
 import ProjectCard from "@/components/ProjectCard";
+import { CONCEPTS } from "@/lib/concepts";
 import styles from "./work.module.css";
 
 type CombinedItem = {
@@ -182,20 +183,21 @@ const RAW_PROJECTS: RawProject[] = [
     featured: false,
     group: "main",
   },
-  {
-    key: "still-g",
-    title: "Still",
-    description: "A breathing guide with one warm light: hold to breathe in, let go to breathe out, no account required.",
-    category: "CONCEPT",
-    tagList: ["TypeScript", "WebGL", "Vite"],
-    year: "2026",
-    href: "/concept/still",
-    imgSrc: "/images/concepts/still/free.png",
-    featured: false,
-    group: "concept",
-  },
+  ...Object.values(CONCEPTS).map(
+    (cp): RawProject => ({
+      key: `${cp.slug}-g`,
+      title: cp.title,
+      description: cp.description,
+      category: "CONCEPT",
+      tagList: cp.tagList,
+      year: cp.year,
+      href: `/concept/${cp.slug}`,
+      imgSrc: cp.gallery?.desktop[0]?.src ?? "",
+      featured: false,
+      group: "concept",
+    }),
+  ),
 ];
-
 
 const countByCategory = (category: string) =>
   RAW_PROJECTS.filter((p) => p.category === category).length;

@@ -56,8 +56,8 @@ export default function Concepts() {
             <span className={styles.cursor} />— <span className="text-accent">no client, no deadline.</span>
           </h1>
           <p className="m-0 max-w-[560px] text-[15px] text-ink/55">
-            Nothing here yet. When something doesn&apos;t need anyone&apos;s blessing to exist,
-            it&apos;ll show up here first.
+            Ideas that don&apos;t need anyone&apos;s blessing to exist. Built because I wanted
+            to see them real.
           </p>
         </section>
 
@@ -99,7 +99,7 @@ export default function Concepts() {
                     className="absolute top-3.5 right-3.5 rounded-full border border-accent/30 bg-[rgba(11,8,16,0.7)] px-2.5 py-1 font-mono text-[10px] tracking-[0.06em] text-ink/60 max-[700px]:px-2 max-[700px]:text-[9px]"
                     style={{ transform: "rotate(3deg)" }}
                   >
-                    PROTOTYPE
+                    {p.category.toUpperCase()}
                   </span>
                 </div>
                 <div className="rounded-b-[9px] bg-band p-5 max-[700px]:p-4">

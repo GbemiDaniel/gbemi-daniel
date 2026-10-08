@@ -41,28 +41,28 @@ export const CONCEPTS: Record<string, ConceptProject> = {
     rot: "-0.8deg",
     gallery: {
       desktop: [
-        { src: "/images/concepts/still/free.png", label: "Free" },
-        { src: "/images/concepts/still/guided-setup.png", label: "Guided Setup" },
-        { src: "/images/concepts/still/timer.png", label: "Timer" },
-        { src: "/images/concepts/still/find-my-pace.png", label: "Find My Pace" },
+        { src: "/images/concepts/still/free.webp", label: "Free" },
+        { src: "/images/concepts/still/guided-setup.webp", label: "Guided Setup" },
+        { src: "/images/concepts/still/timer.webp", label: "Timer" },
+        { src: "/images/concepts/still/find-my-pace.webp", label: "Find My Pace" },
       ],
       mobile: [
-        { src: "/images/concepts/still/mobile-free.png", label: "Free" },
-        { src: "/images/concepts/still/mobile-guided-setup.png", label: "Guided Setup" },
-        { src: "/images/concepts/still/mobile-timer.png", label: "Timer" },
-        { src: "/images/concepts/still/mobile-find-my-pace.png", label: "Find My Pace" },
+        { src: "/images/concepts/still/mobile-free.webp", label: "Free" },
+        { src: "/images/concepts/still/mobile-guided-setup.webp", label: "Guided Setup" },
+        { src: "/images/concepts/still/mobile-timer.webp", label: "Timer" },
+        { src: "/images/concepts/still/mobile-find-my-pace.webp", label: "Find My Pace" },
       ],
     },
     features: {
       desktop: [
-        { src: "/images/concepts/still/pace-editor.png", label: "Pace Editor" },
-        { src: "/images/concepts/still/options-sheet.png", label: "Options" },
-        { src: "/images/concepts/still/welcome.png", label: "Welcome" },
+        { src: "/images/concepts/still/pace-editor.webp", label: "Pace Editor" },
+        { src: "/images/concepts/still/options-sheet.webp", label: "Options" },
+        { src: "/images/concepts/still/welcome.webp", label: "Welcome" },
       ],
       mobile: [
-        { src: "/images/concepts/still/mobile-pace-editor.png", label: "Pace Editor" },
-        { src: "/images/concepts/still/mobile-options-sheet.png", label: "Options" },
-        { src: "/images/concepts/still/mobile-welcome.png", label: "Welcome" },
+        { src: "/images/concepts/still/mobile-pace-editor.webp", label: "Pace Editor" },
+        { src: "/images/concepts/still/mobile-options-sheet.webp", label: "Options" },
+        { src: "/images/concepts/still/mobile-welcome.webp", label: "Welcome" },
       ],
     },
     sections: [
